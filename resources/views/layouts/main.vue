@@ -22,7 +22,7 @@
                     <Link>Sharing</Link>
                 </li>
                 <li class="text-gray-800 hover:text-primary-100 font-bold py-2">
-                    <Link>Pricing</Link>
+                    <Link :href="route('pricing')" title="Pricing">Pricing</Link>
                 </li>
             </ul>
 

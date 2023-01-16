@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\AuthenticatedUser;
+use App\Http\Controllers\Auth\StandardRegistration;
 use Illuminate\Support\Facades\Route;
 use  \App\Http\Controllers\Admin\Auth\AdminAuthController;
 use  \App\Http\Controllers\Admin\Auth\AuthenticatedAdmin;
@@ -33,6 +34,8 @@ Route::group(['middleware'=>['guest']], function(){
     Route::post('auth/password-mail',[AuthController::class, 'requestStore'])->name('request.store');
     Route::get('auth/password-update',[AuthController::class, 'passwordUpdate'])->name('password.form');
     Route::post('auth/new-password',[AuthController::class, 'newPassword'])->name('new.password');
+
+    Route::get('auth/standard',[StandardRegistration::class, 'standard'])->name('standard.register');
 
 
 });

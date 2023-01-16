@@ -83,7 +83,7 @@
                 <div class="mt-10 text-center p-5">
                     <h5 class="text-xl font-bold">USD <span class="text-5xl text-primary-100">{{Number(standard.price).toFixed(2)}}</span>/Month</h5>
                     <div class="mt-8 grid">
-                        <Link class="bg-primary-100 py-3 px-5 text-white font-bold rounded-lg" title="Start Free">Start Free</Link>
+                        <Link :href="route('standard.register')" class="bg-primary-100 py-3 px-5 text-white font-bold rounded-lg" title="Start Free">Buy now</Link>
                     </div>
                 </div>
             </div>
