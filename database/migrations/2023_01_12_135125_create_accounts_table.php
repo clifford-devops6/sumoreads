@@ -19,6 +19,7 @@ class CreateAccountsTable extends Migration
             $table->bigInteger('type_id')->unsigned()->index();
             $table->bigInteger('status_id')->unsigned()->index();
             $table->string('name');
+            $table->integer('billing_date');
             $table->foreign('type_id')->references('id')
                 ->on('types')->cascadeOnDelete();
             $table->foreign('status_id')->references('id')

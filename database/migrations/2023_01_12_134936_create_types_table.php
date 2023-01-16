@@ -17,7 +17,7 @@ class CreateTypesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->integer('price');
+            $table->float('price',8,2);
             $table->integer('status_id');
         });
     }

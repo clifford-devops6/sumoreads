@@ -1,4 +1,4 @@
-<template>
+<template xmlns="http://www.w3.org/1999/html">
     <Teleport to="body">
         <toast :message="message" @remove="remove()"></toast>
     </Teleport>
@@ -28,11 +28,44 @@
 
         </div>
         <div class="py-2 pr-3 col-span-1 flex justify-end">
-            <Link class="flex px-8 h-12 py-2 bg-primary-100 rounded-full text-white hover:bg-opacity-95">
+           <div>
+               <Link v-if="!auth" :href="route('login')" class="flex px-8 h-12 py-2 bg-primary-100 rounded-full text-white hover:bg-opacity-95">
             <span class="self-center">
                 <span class="mr-2"><i class="fa-light fa-user"></i></span>Login
             </span>
-            </Link>
+               </Link>
+           </div>
+            <div class="self-center" v-if="auth">
+                <dropdown   class="relative">
+                    <template #trigger>
+                        <div class="cursor-pointer flex gap-1">
+                            <img :src="'/images/no-user.png'" class="w-8 h-8">
+                            <span class="self-center"><i class="fa-regular fa-angle-down"></i></span>
+                        </div>
+                    </template>
+                    <div class="divide-y mt-3 overflow-hidden  w-52 bg-white rounded  absolute -right-10">
+                        <div class="p-3">
+                            <Link class="hover:text-primary-100"><span class="mr-1"><i class="fa-light fa-gear"></i></span>Profile Settings</Link>
+                        </div>
+                        <div class="p-3">
+                            <Link class="hover:text-primary-100"><span class="mr-1"><i class="fa-light fa-building"></i></span>Manage Account</Link>
+                        </div>
+                        <div class="p-3">
+                            <Link class="hover:text-primary-100"><span class="mr-1"><i class="fa-light fa-calendar-range"></i></span>Billing & Subscription</Link>
+                        </div>
+                        <div class="p-3">
+                            <Link class="hover:text-primary-100"><span class="mr-1"><i class="fa-solid fa-arrow-up-from-bracket"></i></span>Upgrade Account</Link>
+                        </div>
+                        <div class="text-center hover:bg-primary-100 hover:text-white ">
+                            <Link as="button" :href="route('logout')"
+                                  method="post" class="h-full w-full py-3"><span class="mr-1"><i class="fa-light fa-lock"></i></span>Logout</Link>
+                        </div>
+                    </div>
+
+                </dropdown>
+            </div>
+
+
         </div>
     </div>
 </header>
@@ -67,6 +100,7 @@
 <script setup lang="ts">
 import {Link,usePage} from "@inertiajs/inertia-vue3";
 import { InertiaProgress } from '@inertiajs/progress'
+import { Dropdown } from 'flowbite-vue'
 InertiaProgress.init()
 import Toast from "@/views/components/toast.vue";
 import {ref} from "vue";

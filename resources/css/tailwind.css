@@ -4,23 +4,23 @@
 @tailwind utilities;
 
 .btn-primary{
-    @apply   bg-primary-100 text-white border border-primary-100 rounded-full py-2  px-5  hover:bg-opacity-100
+    @apply   bg-primary-100 text-white border border-primary-100 rounded-lg py-2  px-5  hover:bg-opacity-100
 }
 .btn-outline-primary{
-    @apply bg-none text-primary-200 border border-primary-100 rounded-full py-2  px-5 hover:bg-primary-100  hover:text-white
+    @apply bg-none text-primary-200 border border-primary-100 rounded-lg py-2  px-5 hover:bg-primary-100  hover:text-white
 }
 .btn-success{
-    @apply bg-green-600 text-white border border-green-700 rounded-md py-2  px-5 hover:bg-green-700 hover:text-white
+    @apply bg-green-600 text-white border border-green-700 rounded-lg py-2  px-5 hover:bg-green-700 hover:text-white
 }
 .btn-warning{
-    @apply bg-yellow-500 text-white border border-yellow-600 rounded-full py-2  px-5 hover:bg-yellow-600
+    @apply bg-yellow-500 text-white border border-yellow-600 rounded-lg py-2  px-5 hover:bg-yellow-600
 }
 
 .btn-danger{
-    @apply bg-red-500 text-white border border-red-800 rounded-full py-2  px-5 hover:bg-red-600
+    @apply bg-red-500 text-white border border-red-800 rounded-lg py-2  px-5 hover:bg-red-600
 }
 .btn-secondary{
-    @apply bg-gray-800 text-white border border-gray-800 rounded-full py-2  px-5 hover:bg-gray-600
+    @apply bg-gray-800 text-white border border-gray-800 rounded-lg py-2  px-5 hover:bg-gray-600
 }
 
 .btn-small{
@@ -31,7 +31,7 @@
 }
 
 .read-input{
-    @apply w-full mt-3 rounded-full border bg-gray-50 border border-gray-300 text-gray-900 focus:ring-gray-800 focus:border-gray-800 outline-0 block h-12 p-2
+    @apply w-full mt-3 rounded-lg border bg-gray-50 border border-gray-300 text-gray-900 focus:ring-gray-800 focus:border-gray-800 outline-0 block h-12 p-2
 }
 
 .read-text-input{

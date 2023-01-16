@@ -15,4 +15,7 @@ class Type extends Model
     public  function status(){
         return $this->belongsTo(Status::class);
     }
+    public function accounts(){
+        return $this->hasMany(Account::class);
+    }
 }

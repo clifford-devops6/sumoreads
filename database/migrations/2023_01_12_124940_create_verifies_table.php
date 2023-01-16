@@ -21,6 +21,7 @@ class CreateVerifiesTable extends Migration
             $table->string('verifiable_type');
             $table->string('email');
             $table->integer('status')->default(1);
+            $table->string('token');
         });
     }
 
