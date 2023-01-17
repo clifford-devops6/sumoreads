@@ -123,7 +123,7 @@
                 <div class="mt-10 text-center p-5">
                     <h5 class="text-xl font-bold">USD <span class="text-5xl text-primary-100">{{Number(enterprise.price).toFixed(2)}}</span>/Month</h5>
                     <div class="mt-8 grid">
-                        <Link class="bg-primary-100 py-3 px-5 text-white font-bold rounded-lg" title="Start Free">Buy Now</Link>
+                        <Link :href="route('enterprise.register')" class="bg-primary-100 py-3 px-5 text-white font-bold rounded-lg" title="Start Free">Buy Now</Link>
                     </div>
                 </div>
             </div>
@@ -163,7 +163,7 @@
                 <div class="mt-10 text-center p-5">
                     <h5 class="text-xl font-bold">USD <span class="text-5xl text-primary-100">{{Number(corporate.price).toFixed(2)}}</span>/Month</h5>
                     <div class="mt-8 grid">
-                        <Link class="bg-primary-100 py-3 px-5 text-white font-bold rounded-lg" title="Start Free">Buy Now</Link>
+                        <Link :href="route('corporate.register')" class="bg-primary-100 py-3 px-5 text-white font-bold rounded-lg" title="Start Free">Buy Now</Link>
                     </div>
                 </div>
             </div>

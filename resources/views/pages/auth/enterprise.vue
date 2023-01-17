@@ -1,7 +1,7 @@
 <template layout="auth">
     <Head><title>Register for Sumoreads</title></Head>
     <div class="flex place-content-center h-screen">
-        <div class="bg-white shadow-xl rounded-xl self-center md:w-2/5 p-4">
+        <div class="bg-white shadow-xl rounded-xl self-center md:w-1/2 p-4">
             <div class="flex justify-between">
                 <Link href="/" class="text-primary-100">
                     <span class="mr-3"><i class="fa-light fa-arrow-left-long"></i></span>Back
@@ -13,10 +13,11 @@
                 </Link>
             </div>
             <div class="text-center font-bold text-xl mt-5">
-                <h6>Register for Sumoreads <span class="text-primary-100">Standard Account</span></h6>
+                <h6>Register for Sumoreads <span class="text-primary-100">Enterprise Account</span></h6>
+                <p class="mt-2 text-center text-primary-100 text-sm">Primary user details</p>
             </div>
-            <div class="mt-10 px-14">
-                <form @submit.prevent="form.post(route('standard.create'))">
+            <div class="mt-10 px-14 overflow-y-scroll h-[50vh] custom-scrolling">
+                <form @submit.prevent="form.post(route('enterprise.create'))">
                     <div class="mt-5">
 
                         <input type="email" class="read-input"  placeholder="Enter your email" required v-model="form.email"/>
@@ -52,6 +53,41 @@
                             <span>{{ form.errors.password_confirmation}}</span>
                         </div>
                     </div>
+                    <!-- company details-->
+                    <div class="py-5">
+                        <h6 class="font-bold">Company Details</h6>
+                        <hr class="mt-3">
+                    </div>
+                    <div class="mt-5 grid grid-cols-2 gap-2">
+                        <div>
+                            <input type="text" class="read-input"  placeholder="Enter Company Name" required v-model="form.company_name"/>
+                            <div v-if="form.errors.company_name" class="read-error">
+                                <span>{{ form.errors.company_name }}</span>
+                            </div>
+                        </div>
+                        <div>
+                            <input type="text" class="read-input"  placeholder="Enter Company Address" required v-model="form.address"/>
+                            <div v-if="form.errors.address" class="read-error">
+                                <span>{{ form.errors.address }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 grid grid-cols-2 gap-2">
+                        <div>
+                            <input type="text" class="read-input"  placeholder="City" required v-model="form.city"/>
+                            <div v-if="form.errors.city" class="read-error">
+                                <span>{{ form.errors.city}}</span>
+                            </div>
+                        </div>
+                        <div>
+                            <input type="text" class="read-input"  placeholder="Country" required v-model="form.country"/>
+                            <div v-if="form.errors.country" class="read-error">
+                                <span>{{ form.errors.country }}</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="mt-5">
                         <label class="read-label">
                             <input type="checkbox" required class="mr-2 rounded">
@@ -78,7 +114,11 @@ let form=useForm({
     password:'',
     name:'',
     last_name:'',
-    password_confirmation:''
+    password_confirmation:'',
+    company_name:'',
+    address:'',
+    city:'',
+    country:''
 })
 </script>
 

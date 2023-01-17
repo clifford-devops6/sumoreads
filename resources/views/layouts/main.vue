@@ -1,4 +1,4 @@
-<template xmlns="http://www.w3.org/1999/html">
+<template>
     <Teleport to="body">
         <toast :message="message" @remove="remove()"></toast>
     </Teleport>
@@ -10,7 +10,7 @@
         <div class="self-center w-full col-span-4">
             <ul class="flex justify-between gap-8">
                 <li class="hover:text-primary-100 font-bold py-2">
-                    <Link>News</Link>
+                    <Link :href="route('news.index')" title="News">News</Link>
                 </li>
                 <li class="text-gray-800 hover:text-primary-100 font-bold py-2">
                     <Link>Personalize</Link>
@@ -45,13 +45,13 @@
                     </template>
                     <div class="divide-y mt-3 overflow-hidden  w-52 bg-white rounded  absolute -right-10">
                         <div class="p-3">
-                            <Link class="hover:text-primary-100"><span class="mr-1"><i class="fa-light fa-gear"></i></span>Profile Settings</Link>
+                            <Link :href="route('profile.index')" class="hover:text-primary-100"><span class="mr-1"><i class="fa-light fa-gear"></i></span>Profile Settings</Link>
                         </div>
                         <div class="p-3">
                             <Link class="hover:text-primary-100"><span class="mr-1"><i class="fa-light fa-building"></i></span>Manage Account</Link>
                         </div>
                         <div class="p-3">
-                            <Link class="hover:text-primary-100"><span class="mr-1"><i class="fa-light fa-calendar-range"></i></span>Billing & Subscription</Link>
+                            <Link :href="route('subscription.index')" class="hover:text-primary-100"><span class="mr-1"><i class="fa-light fa-calendar-range"></i></span>Billing & Subscription</Link>
                         </div>
                         <div class="p-3">
                             <Link class="hover:text-primary-100"><span class="mr-1"><i class="fa-solid fa-arrow-up-from-bracket"></i></span>Upgrade Account</Link>

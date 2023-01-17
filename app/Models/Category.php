@@ -25,4 +25,15 @@ class Category extends Model
     public  function  status(){
         return $this->belongsTo(Status::class);
     }
+    public  function articles(){
+        return $this->hasMany(Article::class);
+    }
+
+    public  function accounts(){
+        return $this->belongsToMany(Account::class);
+    }
+
+    public  function users(){
+        return $this->belongsToMany(Account::class);
+    }
 }

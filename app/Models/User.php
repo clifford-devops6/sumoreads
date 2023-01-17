@@ -56,4 +56,10 @@ class User extends Authenticatable
     public function verifiable(){
         return $this->morphMany(Verify::class,'verifiable');
     }
+    public  function sources(){
+        return $this->belongsToMany(Source::class);
+    }
+    public  function categories(){
+        return $this->belongsToMany(Category::class);
+    }
 }

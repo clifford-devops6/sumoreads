@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "90a989365c27d2465dba3c89c3028c25",
+    "content-hash": "520bc2f72427d7ae7be9c9a045808d4d",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3154,6 +3154,53 @@
                 }
             ],
             "time": "2022-12-20T19:00:15+00:00"
+        },
+        {
+            "name": "nyawach/laravel-pesapal",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Jnyawach/laravel-pesapalv3.git",
+                "reference": "7e7a37c1bcfdfa1512e56f525345164175f2ccd5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Jnyawach/laravel-pesapalv3/zipball/7e7a37c1bcfdfa1512e56f525345164175f2ccd5",
+                "reference": "7e7a37c1bcfdfa1512e56f525345164175f2ccd5",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Nyawach\\LaravelPesapal\\PesaPalServiceProvider"
+                    ],
+                    "aliases": {
+                        "LaravelPesapal": "Nyawach\\LaravelPesapal\\Facades"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nyawach\\LaravelPesapal\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "jnyawach",
+                    "email": "nyawach41@gmail.com"
+                }
+            ],
+            "description": "A simple pesapal payment v3 integration into laravel",
+            "support": {
+                "issues": "https://github.com/Jnyawach/laravel-pesapalv3/issues",
+                "source": "https://github.com/Jnyawach/laravel-pesapalv3/tree/1.0.0"
+            },
+            "time": "2022-11-19T03:09:51+00:00"
         },
         {
             "name": "pestphp/pest",

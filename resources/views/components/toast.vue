@@ -6,7 +6,7 @@
         leave-active-class="duration-500"
         leave-to-class="translate-x-full opacity-0"
     >
-        <div v-if="message"  class="z-[10000] fixed top-4 right-4 flex items-center p-4 w-full max-w-xs text-gray-500 bg-white rounded-lg shadow " role="alert">
+        <div v-if="message"  class="z-[100000] fixed top-4 right-4 flex items-center p-4 w-full max-w-xs text-gray-500 bg-white rounded-lg shadow " role="alert">
             <div class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-teal-500 bg-teal-100 rounded-lg">
                 <span><i class="far fa-info-circle"></i></span>
             </div>

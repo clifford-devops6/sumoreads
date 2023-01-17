@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Account;
-use App\Models\Balance;
 use App\Models\Category;
 use App\Models\Source;
 use App\Models\User;
@@ -13,34 +12,47 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class StandardRegistration extends Controller
+class EnterpriseRegistration extends Controller
 {
     //
-    public function standard(){
-        return inertia::render('auth.standard');
+    public function enterprise(){
+        return inertia::render('auth.enterprise');
     }
 
-    public function create(Request  $request){
+    public function create(Request $request){
         $data=$request->validate([
-            'name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'company_name' => ['required', 'string', 'max:255'],
+            'address' => ['required', 'string', 'max:255'],
+            'city' => ['required', 'string', 'max:255'],
+            'country' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
+        //create account
         $account=Account::create([
             'name'=>$data['name'],
-            'type_id'=>1,
+            'type_id'=>2,
             'status_id'=>1,
             'billing_date'=>Carbon::today()->isoFormat('D')
+
         ]);
-        $role=Role::findOrFail(4);
-        $permission=Permission::findOrFail(7);
+
+        //create company if available
+        $account->company()->create([
+            'name'=>$data['company_name'],
+            'address'=>$data['address'],
+            'city'=>$data['city'],
+            'country'=>$data['country']
+        ]);
+
+        //save user to db
         $user=User::create([
             'name' => $data['name'],
             'last_name'=>$data['last_name'],
@@ -50,19 +62,11 @@ class StandardRegistration extends Controller
         ]);
         $user->administrator()->create([
             'account_id'=>$account->id,
-            'slot'=>1
+            'slot'=>5
         ]);
 
-        Balance::create([
-            'description'=>'Payment for a Standard Account',
-            'amount'=>$account->type->price,
-            'status'=>'Pending',
-            'account_id'=>$account->id,
-            'balance_id'=>Str::upper(Str::random(6)),
-            'slots'=>1,
-            'expires'=>Carbon::today()->addMonth(),
-            'balance_type'=>'Full'
-        ]);
+        $role=Role::findOrFail(9);
+        $permission=Permission::findOrFail(6);
         $user->assignRole($role);
         $user->givePermissionTo($permission);
         $sources=Source::inRandomOrder()->limit(5)->pluck('id');
@@ -70,10 +74,7 @@ class StandardRegistration extends Controller
         $user->sources()->syncWithoutDetaching($sources);
         $user->categories()->syncWithoutDetaching($categories);
         $user->notify(new WelcomeOnboardNotification());
-
         Auth::login($user);
-        return redirect()->route('payments.index');
+        return redirect()->route('account-setup.index');
     }
-
-
 }

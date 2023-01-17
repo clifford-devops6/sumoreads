@@ -49,4 +49,11 @@ class Source extends Model implements HasMedia
             ->height(100);
 
     }
+    public  function accounts(){
+        return $this->belongsToMany(Account::class);
+    }
+
+    public function articles(){
+        return $this->hasMany(Article::class);
+    }
 }

@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\AuthenticatedUser;
+use App\Http\Controllers\Auth\CorporateRegistration;
+use App\Http\Controllers\Auth\EnterpriseRegistration;
 use App\Http\Controllers\Auth\StandardRegistration;
 use Illuminate\Support\Facades\Route;
 use  \App\Http\Controllers\Admin\Auth\AdminAuthController;
@@ -36,6 +38,13 @@ Route::group(['middleware'=>['guest']], function(){
     Route::post('auth/new-password',[AuthController::class, 'newPassword'])->name('new.password');
 
     Route::get('auth/standard',[StandardRegistration::class, 'standard'])->name('standard.register');
+    Route::post('auth/standard-create',[StandardRegistration::class, 'create'])->name('standard.create');
+
+    Route::get('auth/enterprise',[EnterpriseRegistration::class, 'enterprise'])->name('enterprise.register');
+    Route::post('auth/enterprise-create',[EnterpriseRegistration::class, 'create'])->name('enterprise.create');
+
+    Route::get('auth/corporate',[CorporateRegistration::class, 'corporate'])->name('corporate.register');
+    Route::post('auth/corporate-create',[CorporateRegistration::class, 'create'])->name('corporate.create');
 
 
 });

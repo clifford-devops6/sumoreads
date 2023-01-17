@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\General;
+namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class NewsController extends Controller
+class AccountSubscriptionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class NewsController extends Controller
     public function index()
     {
         //
-        return inertia::render('news.index');
+        return inertia::render('account.subscription.index');
     }
 
     /**
