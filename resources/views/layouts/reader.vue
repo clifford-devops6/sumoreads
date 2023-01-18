@@ -35,7 +35,7 @@
             </span>
                     </Link>
                 </div>
-                <div class="self-center mr-3" v-if="$page.props.auth">
+                <div class="self-center mr-3" v-if="auth">
                     <dropdown   class="relative">
                         <template #trigger>
                             <div class="cursor-pointer flex gap-1">
@@ -47,8 +47,8 @@
                             <div class="p-3">
                                 <Link :href="route('profile.index')" class="hover:text-primary-100"><span class="mr-1"><i class="fa-light fa-gear"></i></span>Profile Settings</Link>
                             </div>
-                            <div class="p-3">
-                                <Link class="hover:text-primary-100"><span class="mr-1"><i class="fa-light fa-building"></i></span>Manage Account</Link>
+                            <div v-if="auth.role==='Enterprise'" class="p-3">
+                                <Link :href="route('manage.index')" class="hover:text-primary-100"><span class="mr-1"><i class="fa-light fa-building"></i></span>Manage Account</Link>
                             </div>
                             <div class="p-3">
                                 <Link :href="route('subscription.index')" class="hover:text-primary-100"><span class="mr-1"><i class="fa-light fa-calendar-range"></i></span>Billing & Subscription</Link>
@@ -69,11 +69,11 @@
             </div>
         </div>
     </header>
-<div class="grid grid-cols-12 min-h-screen">
-    <div class="col-span-2 grid">
-        <aside class="top-0 relative bg-primary-100 min-h-screen shadow-lg">
+<div class="grid grid-cols-12 min-h-screen overflow-hidden">
+    <div class="col-span-2 grid overflow-hidden">
+        <aside class="top-0 relative bg-primary-100 min-h-screen shadow-lg overflow-hidden">
             <div class="min-h-screen  w-full pt-20 overflow-hidden">
-             <div class="fixed w-64 h-screen">
+             <div class="fixed w-64 h-screen overflow-hidden">
                  <slot name="sidebar"></slot>
              </div>
             </div>
@@ -128,6 +128,7 @@ let removeEventListener=Inertia.on("finish",()=>{
 function remove(){
     message.value=null
 }
+const auth=page.props.value.auth
 </script>
 
 <style scoped>

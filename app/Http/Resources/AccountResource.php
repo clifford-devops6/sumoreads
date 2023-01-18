@@ -17,9 +17,12 @@ class AccountResource extends JsonResource
         return [
             'id'=>$this->id,
             'name'=>$this->name,
-            'type_id'=>$this->typed_id,
+            'type_id'=>$this->type_id,
             'administrator'=>new AdministratorResource($this->whenLoaded('administrator')),
-            'type'=>new TypeResource($this->whenLoaded('type'))
+            'type'=>new TypeResource($this->whenLoaded('type')),
+            'invitations'=>InvitationResource::collection($this->whenLoaded('invitations')),
+            'groups'=>GroupResource::collection($this->whenLoaded('groups')),
+            'users'=>UserResource::collection($this->whenLoaded('users'))
 
         ];
     }

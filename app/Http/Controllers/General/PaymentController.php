@@ -8,6 +8,7 @@ use App\Mail\PaymentReciept;
 use App\Models\Balance;
 use App\Models\Payment;
 use App\Models\Token;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -170,7 +171,7 @@ class PaymentController extends Controller
                         'slots'=>$balance->slots
                     ]);
                 }elseif($balance->balance_type=='Additional'){
-                    $token=$account->tokens()->latest()->first();
+                    $token=$account->tokens()->where('expiry','>',Carbon::today())->latest()->first();
                     $token->update([
                         'slots'=>$token->slots+$balance->slots
                     ]);

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,5 +33,18 @@ class Account extends Model
     }
     public function balances(){
         return $this->hasMany(Balance::class);
+    }
+    public function invitations() {
+        return $this->hasMany(Invitation::class);
+    }
+
+    public function groups() {
+        return $this->hasMany(Group::class);
+    }
+
+    public function tokens()
+    {
+        return  $this->hasMany(Token::class);
+
     }
 }
