@@ -17,6 +17,10 @@ class GroupResource extends JsonResource
         return [
             'id'=>$this->id,
             'name'=>$this->name,
+            'account_id'=>$this->account_id,
+            'sources'=>SourceResource::collection($this->whenLoaded('sources')),
+            'users'=>UserResource::collection($this->whenLoaded('users')),
+            'categories'=>CategoryResource::collection($this->whenLoaded('categories'))
         ];
     }
 }

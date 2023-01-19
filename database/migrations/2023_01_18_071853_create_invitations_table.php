@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('invitations', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('email')->unique();
-            $table->string('status')->nullable()->default('pending');
+            $table->string('email');
+            $table->string('status')->nullable()->default('0');
+            $table->string('token')->nullable();
             $table->bigInteger('account_id')->unsigned()->index();
             $table->foreign('account_id')->references('id')
                 ->on('accounts')->cascadeOnDelete();

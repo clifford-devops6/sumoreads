@@ -45,3 +45,7 @@
 .read-error{
     @apply mt-3 text-red-800 text-xs
 }
+.read-check{
+    @apply rounded checked:outline-primary-100
+     focus:outline-primary-100 checked:bg-primary-100 checked:ring-primary-100 focus:ring-primary-100
+}

@@ -4,9 +4,17 @@ namespace App\Http\Controllers\Enterprise;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AccountResource;
+use App\Http\Resources\GroupResource;
 use App\Models\Account;
+use App\Models\Group;
+use App\Models\Invitation;
+use App\Models\User;
+use App\Notifications\CancelSubscription;
+use App\Notifications\MemberOnboard;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class ManageAccountcontroller extends Controller
@@ -21,9 +29,10 @@ class ManageAccountcontroller extends Controller
         //
         $user=Auth::user();
         $account=Auth::user()->account()->first();
-        $account=new AccountResource(Account::with(['users','administrator','groups','invitations'])->findOrFail($account->id));
+        $groups=GroupResource::collection(Group::where('account_id',$account->id)->with(['users','categories','sources'])->get());
+        $account=new AccountResource(Account::with(['users','administrator','invitations'])->findOrFail($account->id));
 
-        return inertia::render('account.manage.index', compact('account'));
+        return inertia::render('account.manage.index', compact('account', 'groups'));
     }
 
     /**
@@ -90,5 +99,65 @@ class ManageAccountcontroller extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function sendInvitation(Request $request){
+        $validated=$request->validate([
+            'account_id'=>'required|integer',
+            'email'=>'required|email|string|max:100'
+        ]);
+       $user=User::where('email',$validated['email'])->first();
+       if ($user){
+           if ($role=$user->getRoleNames()->first()){
+               /*Ensure that invitation can only be sent to a free user or user not registered
+                Enterprise users are responsible for managing enterprise accounts.
+                Readers belong to an enterprise account
+               */
+
+               if ($role==='Enterprise' OR $role==='Reader' ){
+                   return redirect()->back()
+                       ->withErrors([
+                           'email'=>'The use is already registered as enterprise user'
+                       ])->onlyInput('email');
+               }
+           }
+       }
+
+       $invite=Invitation::create([
+           'account_id'=>$validated['account_id'],
+           'email'=>$validated['email'],
+           'token'=>Str::random(16)
+       ]);
+        $invite->notify(new MemberOnboard($invite));
+        return redirect()->back()
+            ->with('status','Invitation successfully sent');
+    }
+
+    public function removeUser($id){
+
+     $user=User::findOrFail($id);
+        $account=Account::create([
+            'name'=>$user->name,
+            'type_id'=>5,
+            'status_id'=>1,
+            'billing_date'=>Carbon::today()->isoFormat('D')
+        ]);
+        $user->update([
+            'account_id'=>$account->id
+        ]);
+        $user->syncPermissions([]);
+        $user->syncRoles([]);
+        $user->givePermissionTo('free-account');
+        $user->assignRole('Free');
+        $user->notify(new CancelSubscription());
+        return redirect()->back()
+            ->with('status','Subscription cancelled successfully');
+    }
+
+    public function deleteInvite($id){
+        $invite=Invitation::findOrFail($id);
+        $invite->delete();
+        return redirect()->back()
+            ->with('status','Invitation successfully deleted');
     }
 }

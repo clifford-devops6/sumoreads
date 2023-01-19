@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\AuthenticatedUser;
 use App\Http\Controllers\Auth\CorporateRegistration;
 use App\Http\Controllers\Auth\EnterpriseRegistration;
+use App\Http\Controllers\Auth\InvitationController;
 use App\Http\Controllers\Auth\StandardRegistration;
 use Illuminate\Support\Facades\Route;
 use  \App\Http\Controllers\Admin\Auth\AdminAuthController;
@@ -46,6 +47,9 @@ Route::group(['middleware'=>['guest']], function(){
     Route::get('auth/corporate',[CorporateRegistration::class, 'corporate'])->name('corporate.register');
     Route::post('auth/corporate-create',[CorporateRegistration::class, 'create'])->name('corporate.create');
 
+    //invitation
+    Route::get('auth/invitation/{id}',[InvitationController::class, 'invite'])->name('user.invite');
+    Route::post('auth/invitation-save',[InvitationController::class, 'inviteSave'])->name('invite.save');
 
 });
 

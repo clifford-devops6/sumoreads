@@ -29,6 +29,12 @@
                     <span>{{ form.errors.password}}</span>
                 </div>
             </div>
+            <div class="my-5">
+                <label class="read-label flex gap-3">
+                    <input type="checkbox" v-model="form.remember" class="read-check">
+                    <span>Remember me</span>
+                </label>
+            </div>
             <div class="grid mt-4">
                 <button type="submit" class="btn-primary  m-1">Login</button>
             </div>
@@ -52,7 +58,8 @@
 import {Head,Link,useForm} from "@inertiajs/inertia-vue3";
 let form=useForm({
     email:'',
-    password:''
+    password:'',
+    remember:''
 })
 </script>
 

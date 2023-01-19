@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('groups', function (Blueprint $table) {
+        Schema::create('group_user', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('name');
-            $table->string('slug');
-            $table->bigInteger('account_id')->unsigned()->index();
-            $table->foreign('account_id')->references('id')
-                ->on('accounts')->cascadeOnDelete();
+            $table->bigInteger('user_id')->unsigned()->index();
+            $table->bigInteger('group_id')->unsigned()->index();
+            $table->foreign('group_id')->references('id')
+            ->on('groups')->cascadeOnDelete();
+
         });
     }
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('groups');
+        Schema::dropIfExists('group_user');
     }
 };
