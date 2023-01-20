@@ -89,15 +89,23 @@
                     <tbody class="divide-y">
                     <tr  v-for="group in groups.data" :key="group.id">
                         <td class="py-3 px-4">
-                            <button @click="initiateGroup(group)" class="text-primary-100 font-bold">{{group.name}}<span class="ml-2"><i class="fa-light fa-pen"></i></span></button>
+                            <button @click="updateGroupModal=true" class="text-primary-100 font-bold">{{group.name}}<span class="ml-2"><i class="fa-light fa-pen"></i></span></button>
+                            <update-group  :show="updateGroupModal" @close="updateGroupModal=false" :group="group"></update-group>
                         </td>
                         <td class="py-3 px-4">
-                            <button class="hover:text-primary-100" @click="addUser(group)">
+                            <button class="hover:text-primary-100" @click="groupUserModal=true">
                                 <span v-if="group.users.length">{{group.users.length}}</span>
                                 <span> Member(s) <span class="ml-2"><i class="fa-light fa-pen"></i></span></span>
                             </button>
+                            <group-users :key="group.id"  :show="groupUserModal" @close="groupUserModal=false"  :group="group" :admin="account.data.administrator.user_id"></group-users><!--add members to a group-->
                         </td>
-                        <td class="py-3 px-4"></td>
+                        <td class="py-3 px-4">
+                            <button class="hover:text-primary-100" @click="groupSourceModal=true">
+                                <span v-if="group.sources.length">{{group.sources.length}}</span>
+                                <span> Streams(s) <span class="ml-2"><i class="fa-light fa-pen"></i></span></span>
+                            </button>
+                            <group-source :key="group.id" :show="groupSourceModal" @close="groupSourceModal" :group="group"></group-source>
+                        </td>
                         <td class="py-3 px-4"></td>
                         <td class="py-3 px-4">
                         </td>
@@ -117,8 +125,7 @@
         <add-member :show="addMemberModal" @close="addMemberModal=false" :account="account.data"></add-member><!--add member-->
         <add-group :show="addGroupModal" @close="addGroupModal=false" :account="account.data"></add-group><!--create group-->
 
-        <update-group  :show="updateGroupModal" @close="updateGroupModal=false" :group="specificGroup"></update-group><!--update group name-->
-        <group-users  :show="groupUserModal" @close="groupUserModal=false" :users="users" :group="groupUser" :admin="account.data.administrator.user_id"></group-users><!--add members to a group-->
+
     </div>
 </reader>
 </template>
@@ -136,6 +143,7 @@ import {Inertia} from "@inertiajs/inertia";
 import AddGroup from "@/views/components/enterprise/add-group.vue";
 import UpdateGroup from "@/views/components/enterprise/update-group.vue";
 import GroupUsers from "@/views/components/enterprise/group-users.vue";
+import GroupSource from "@/views/components/enterprise/group-source.vue";
 
 
 let props=defineProps({
@@ -181,21 +189,12 @@ function deleteInvite(invite:Number){
 //group create
 const addGroupModal=ref(false)
 //update group
-const specificGroup=ref<Object>()
 const updateGroupModal=ref(false)
-const updateProcessing=ref(false)
-const initiateGroup=(groups:Object)=>{
-    group.value=groups;
-    updateGroupModal.value=true
-
-}
 //add members to group
 const groupUserModal=ref(false)
-const groupUser=ref('');
-const addUser=(group:any)=>{
-  groupUser.value=group
-    groupUserModal.value=true
-}
+const groupSourceModal=ref(false)
+
+
 </script>
 
 <style scoped>

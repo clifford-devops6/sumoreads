@@ -5,6 +5,7 @@ use App\Http\Controllers\General\ContactController;
 use App\Http\Controllers\General\NewsController;
 use App\Http\Controllers\General\PaymentController;
 use App\Http\Controllers\General\ReportBugController;
+use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,10 +19,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return inertia('welcome');
-});
-
+Route::resource('/', MainController::class);
 //Do not require authentication
 Route::group([], function (){
 

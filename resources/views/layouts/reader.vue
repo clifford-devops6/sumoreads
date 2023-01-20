@@ -2,10 +2,12 @@
     <Teleport to="body">
         <toast :message="message" @remove="remove()"></toast>
     </Teleport>
-    <header class="fixed w-screen z-[10001]">
+    <header class="fixed w-screen z-[1000]">
         <div class="bg-white grid grid-cols-7 gap-8 px-3 drop-shadow justify-between">
             <div class="py-2 col-span-2">
-                <img :src="'/images/readslogo.svg'" class="h-12">
+                <Link href="/">
+                    <img :src="'/images/readslogo.svg'" class="h-12">
+                </Link>
             </div>
             <div class="self-center w-full col-span-4">
                 <ul class="flex justify-between gap-8">

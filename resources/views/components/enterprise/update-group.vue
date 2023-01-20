@@ -71,16 +71,12 @@ let props=defineProps({
     group:Object
 
 })
-const name=props.group.name
+
 let form=useForm({
-    name: ''
+    name: props.group.name
 
 })
-function groupAvailable(){
-    if (name){
-        form.name=name
-    }
-}
+
 const submit=()=>{
 
 

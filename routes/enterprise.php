@@ -7,6 +7,8 @@ use App\Http\Controllers\Enterprise\ManageAccountcontroller;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware'=>['auth:web','role:Enterprise|super-admin']],function (){
+    Route::post('group/remove-users',[GroupController::class,'removeUsers'])->name('group.remove.users');
+    Route::post('group/add-users',[GroupController::class,'addUsers'])->name('group.add.users');
     Route::patch('group/update/{id}',[GroupController::class,'update'])->name('group.update');
     Route::post('group/create',[GroupController::class,'create'])->name('group.create');
     Route::delete('account/manage/delete-invite/{id}',[ManageAccountcontroller::class,'deleteInvite'])->name('invite.delete');

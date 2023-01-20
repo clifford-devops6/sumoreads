@@ -43,7 +43,8 @@ class HandleInertiaRequests extends Middleware
                 'name'=>Auth::user()->name,
                 'last_name'=>Auth::user()->last_name,
                 'email'=>Auth::user()->email,
-                'id'=>Auth::id()
+                'id'=>Auth::id(),
+                'account_id'=>Auth::user()->account_id
             ];
 
         }else{

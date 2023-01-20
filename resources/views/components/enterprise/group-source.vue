@@ -27,48 +27,48 @@
 
                     </header>
                     <div class="text-center">
-                        <h6 class="font-bold text-xl my-2">Manage {{group.name}} Group Members</h6>
+                        <h6 class="font-bold text-xl my-2">Manage {{group.name}} Group Sources</h6>
                         <hr>
                     </div>
                     <div class="p-3">
 
 
                         <div class="my-2 w-2/6 px-3">
-                            <input v-model="search" type="search" placeholder="Search members in Enterprise..."
+                            <input v-model="search" type="search" placeholder="Search sources in Enterprise..."
                                    class="w-full p-1 border-t-0 border-l-0 border-r-0 focus:outline-none focus:ring-0">
                         </div>
                         <div class="px-3 flex justify-between">
-                            <h6>Enterprise Users</h6>
+                            <h6>Sources</h6>
                             <h6>Available in group</h6>
                         </div>
 
                         <div class="grid grid-cols-8 gap-3 px-3 py-5">
-                           <div class="col-span-3 border rounded-lg p-3 shadow">
+                            <div class="col-span-3 border rounded-lg p-3 shadow">
 
 
-                               <div class="flex justify-between font-bold">
-                                   <div>
-                                       <p>{{selectedUser.length}} Selected of {{users.length}}</p>
-                                   </div>
-                                   <div>
-                                       <button v-if="selectedUser.length" @click="unselectAll">UnSelect All</button>
-                                       <button v-else @click="selectAll">Select all</button>
-                                   </div>
-                               </div>
-                               <hr class="my-3">
-                               <div class="p-1">
-                                   <div class="my-3 space-y-3 h-[180px] overflow-y-auto custom-scrolling">
-                                       <div v-for="user in filteredPeople" :key="user.id" class="">
-                                           <label class="read-label flex gap-3 justify-between">
-                                               <input name="selectedUser" type="checkbox" :value="user.id" class="peer hidden" v-model="selectedUser">
-                                               <span class="capitalize peer-checked:bg-primary-100 p-1 rounded peer-checked:text-white">{{user.name}} {{user.last_name}}</span>
-                                               <span v-if="user.id===admin" class="p-1 text-primary-100">Primary User</span>
+                                <div class="flex justify-between font-bold">
+                                    <div>
+                                        <p>{{selectedSource.length}} Selected of {{sources.length}}</p>
+                                    </div>
+                                    <div>
+                                        <button v-if="selectedSource.length" @click="unselectAll">UnSelect All</button>
+                                        <button v-else @click="selectAll">Select all</button>
+                                    </div>
+                                </div>
+                                <hr class="my-3">
+                                <div class="p-1">
+                                    <div class="my-3 space-y-3 h-[180px] overflow-y-auto custom-scrolling">
+                                        <div v-for="source in filteredSource" :key="source.id" class="">
+                                            <label class="read-label flex gap-3 justify-between">
+                                                <input name="selectedUser" type="checkbox" :value="source.id" class="peer hidden" v-model="selectedSource">
+                                                <span class="capitalize peer-checked:bg-primary-100 p-1 rounded peer-checked:text-white">{{source.name}}</span>
 
-                                           </label>
-                                       </div>
-                                   </div>
-                               </div>
-                           </div>
+
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-span-2  self-center grid gap-2">
                                 <button @click="addToGroup" class="text-start flex justify-between hover:text-white hover:bg-primary-100
                                 border rounded-lg p-3 shadow py-2"><span>Add to Group</span> <span><i class="fa-solid fa-caret-right"></i></span></button>
@@ -79,21 +79,21 @@
                             <div class="col-span-3 border rounded-lg p-3 shadow">
                                 <div class="flex justify-between font-bold">
                                     <div>
-                                        <p>{{availableUser.length}} Selected of {{ group.users.length}}</p>
+                                        <p>{{availableSource.length}} Selected of {{ group.sources.length}}</p>
                                     </div>
                                     <div>
-                                        <button v-if="availableUser.length" @click="unselectExisting">UnSelect All</button>
+                                        <button v-if="availableSource.length" @click="unselectExisting">UnSelect All</button>
                                         <button v-else @click="selectExisting">Select all</button>
                                     </div>
                                 </div>
                                 <hr class="my-3">
                                 <div class="p-1">
                                     <div class="my-3 space-y-3 h-[180px] overflow-y-auto custom-scrolling">
-                                        <div v-for="user in group.users" :key="user.id" class="">
+                                        <div v-for="source in group.sources" :key="source.id" class="">
                                             <label class="read-label flex gap-3 justify-between">
                                                 <input name="selectedUser" type="checkbox" :value="user.id" class="peer hidden" v-model="availableUser">
                                                 <span class="capitalize peer-checked:bg-primary-100 p-1 rounded peer-checked:text-white">{{user.name}} {{user.last_name}}</span>
-                                                <span v-if="user.id===admin" class="p-1 text-primary-100">Primary User</span>
+
 
                                             </label>
                                         </div>
@@ -125,49 +125,49 @@ emits("close")
 let props=defineProps({
     show:Boolean,
     group:Object,
-    admin:Number
+
 
 })
 const page=usePage()
 const account=page.props.value.auth.account_id
-const users=ref([])
+const sources=ref([])
 
-const selectedUser=ref ([]);
-const availableUser=ref([]);
+const selectedSource=ref ([]);
+const availableSource=ref([]);
 const  selectAll=()=>{
-    selectedUser.value=users.value.map((user: { id: any; }) => user.id)
+    selectedSource.value=sources.value.map((source: { id: any; }) => source.id)
 }
 const unselectAll=()=>{
-    selectedUser.value=[]
+    selectedSource.value=[]
 }
 const selectExisting=()=>{
-    availableUser.value=props.group.users.map((user: { id: any; }) => user.id)
+    availableSource.value=props.group.sources.map((source: { id: any; }) => source.id)
 }
 
 const unselectExisting=()=>{
-    availableUser.value=[]
+    availableSource.value=[]
 }
 
 const search=ref('')
-const searchAvailable=ref('')
+
 
 
 onMounted(()=>{
     axios
-        .get('api/group/user/'+account)
+        .get('api/get/sources')
         .then((response: { data: never[]; }) => {
-            users.value = response.data;
+            sources.value = response.data;
         })
         .catch((error: any) => console.log(error))
 
 })
 
 
-let filteredPeople = computed(() =>
+let filteredSource = computed(() =>
     search.value === ''
-        ? users.value
-        : users.value.filter((user: { name: string; }) =>
-            user.name
+        ? sources.value
+        : sources.value.filter((source: { name: string; }) =>
+            source.name
                 .toLowerCase()
                 .replace(/\s+/g, '')
                 .includes(search.value.toLowerCase().replace(/\s+/g, ''))
@@ -179,14 +179,14 @@ let filteredPeople = computed(() =>
 //save to group
 const addToGroup=()=>{
 
-        Inertia.post(route('group.add.users'),{
-            ids:selectedUser.value,
-            group:props.group.id
-        },{
-            onSuccess:()=>{
-                selectedUser.value=[]
-            }
-        })
+    Inertia.post(route('group.add.users'),{
+        ids:selectedSource.value,
+        group:props.group.id
+    },{
+        onSuccess:()=>{
+            selectedSource.value=[]
+        }
+    })
 
 
 }
@@ -194,11 +194,11 @@ const addToGroup=()=>{
 //remove from group
 const removeFromGroup=()=>{
     Inertia.post(route('group.remove.users'),{
-        ids:availableUser.value,
+        ids:availableSource.value,
         group:props.group.id
     },{
         onSuccess:()=>{
-            availableUser.value=[]
+            availableSource.value=[]
         }
     })
 }
