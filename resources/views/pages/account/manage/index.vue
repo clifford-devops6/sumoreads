@@ -104,7 +104,7 @@
                                 <span v-if="group.sources.length">{{group.sources.length}}</span>
                                 <span> Streams(s) <span class="ml-2"><i class="fa-light fa-pen"></i></span></span>
                             </button>
-                            <group-source :key="group.id" :show="groupSourceModal" @close="groupSourceModal" :group="group"></group-source>
+                            <group-source :key="group.id" :show="groupSourceModal" @close="groupSourceModal=false" :group="group"></group-source>
                         </td>
                         <td class="py-3 px-4"></td>
                         <td class="py-3 px-4">

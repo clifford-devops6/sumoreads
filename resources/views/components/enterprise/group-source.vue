@@ -91,10 +91,8 @@
                                     <div class="my-3 space-y-3 h-[180px] overflow-y-auto custom-scrolling">
                                         <div v-for="source in group.sources" :key="source.id" class="">
                                             <label class="read-label flex gap-3 justify-between">
-                                                <input name="selectedUser" type="checkbox" :value="user.id" class="peer hidden" v-model="availableUser">
-                                                <span class="capitalize peer-checked:bg-primary-100 p-1 rounded peer-checked:text-white">{{user.name}} {{user.last_name}}</span>
-
-
+                                                <input name="selectedUser" type="checkbox" :value="source.id" class="peer hidden" v-model="availableSource">
+                                                <span class="capitalize peer-checked:bg-primary-100 p-1 rounded peer-checked:text-white">{{source.name}}</span>
                                             </label>
                                         </div>
                                     </div>
@@ -179,7 +177,7 @@ let filteredSource = computed(() =>
 //save to group
 const addToGroup=()=>{
 
-    Inertia.post(route('group.add.users'),{
+    Inertia.post(route('group.add.sources'),{
         ids:selectedSource.value,
         group:props.group.id
     },{
@@ -193,7 +191,7 @@ const addToGroup=()=>{
 
 //remove from group
 const removeFromGroup=()=>{
-    Inertia.post(route('group.remove.users'),{
+    Inertia.post(route('group.remove.sources'),{
         ids:availableSource.value,
         group:props.group.id
     },{

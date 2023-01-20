@@ -61,4 +61,27 @@ class GroupController extends Controller
         return redirect()->back()
             ->with('status', 'Users successfully removed from group');
     }
+
+    public function addSource(Request $request){
+        $validate=$request->validate([
+            'ids'=>'required|array',
+            'group'=>'required|integer'
+        ]);
+        $group=Group::findOrFail($validate['group']);
+        $group->sources()->syncWithoutDetaching($validate['ids']);
+        return redirect()->back()
+            ->with('status', 'Sources successfully added to group');
+    }
+
+    public function removeSource(Request  $request){
+        $validate=$request->validate([
+            'ids'=>'required|array',
+            'group'=>'required|integer'
+        ]);
+
+        $group=Group::findOrFail($validate['group']);
+        $group->sources()->detach($validate['ids']);
+        return redirect()->back()
+            ->with('status', 'Users successfully added to group');
+    }
 }
