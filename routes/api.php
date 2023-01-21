@@ -23,4 +23,5 @@ Route::group([], function (){
     Route::get('group/user/{id}',[ApiController::class, 'getUsers']);
     Route::get('group/group-user/{id}',[ApiController::class, 'getGroupUsers']);
     Route::get('get/sources',[ApiController::class, 'getSources']);
+    Route::get('get/categories',[ApiController::class, 'getCategories']);
 });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Group;
 use App\Models\Source;
 use App\Models\User;
@@ -23,5 +24,9 @@ class ApiController extends Controller
 
     public function getSources(){
         return Source::select('id','name')->get();
+    }
+
+    public function getCategories(){
+        return Category::select('id','name')->get();
     }
 }

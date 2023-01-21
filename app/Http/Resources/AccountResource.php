@@ -22,7 +22,9 @@ class AccountResource extends JsonResource
             'type'=>new TypeResource($this->whenLoaded('type')),
             'invitations'=>InvitationResource::collection($this->whenLoaded('invitations')),
             'groups'=>GroupResource::collection($this->whenLoaded('groups')),
-            'users'=>UserResource::collection($this->whenLoaded('users'))
+            'users'=>UserResource::collection($this->whenLoaded('users')),
+            'categories'=>CategoryResource::collection($this->whenLoaded('categories')),
+            'sources'=>SourceResource::collection($this->whenLoaded('sources'))
 
         ];
     }

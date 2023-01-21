@@ -23,6 +23,13 @@ class GroupController extends Controller
             ->with('status','Group created successfully');
     }
 
+    public function delete($id){
+     $group=Group::findOrFail($id);
+     $group->delete();
+     return redirect()->back()
+         ->with('status','Group deleted successfully');
+    }
+
     public function update(Request $request, $id){
 
         $validated=$request->validate([
@@ -56,6 +63,7 @@ class GroupController extends Controller
             'ids'=>'required|array',
             'group'=>'required|integer'
         ]);
+        return $validate;
      $group=Group::findOrFail($validate['group']);
      $group->users()->detach($validate['ids']);
         return redirect()->back()
@@ -81,6 +89,29 @@ class GroupController extends Controller
 
         $group=Group::findOrFail($validate['group']);
         $group->sources()->detach($validate['ids']);
+        return redirect()->back()
+            ->with('status', 'Users successfully added to group');
+    }
+
+    public function addCategory(Request $request){
+        $validate=$request->validate([
+            'ids'=>'required|array',
+            'group'=>'required|integer'
+        ]);
+        $group=Group::findOrFail($validate['group']);
+        $group->categories()->syncWithoutDetaching($validate['ids']);
+        return redirect()->back()
+            ->with('status', 'Sources successfully added to group');
+    }
+
+    public function removeCategory(Request  $request){
+        $validate=$request->validate([
+            'ids'=>'required|array',
+            'group'=>'required|integer'
+        ]);
+
+        $group=Group::findOrFail($validate['group']);
+        $group->categories()->detach($validate['ids']);
         return redirect()->back()
             ->with('status', 'Users successfully added to group');
     }

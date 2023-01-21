@@ -148,4 +148,8 @@ class AccountProfileController extends Controller
 
 
     }
+
+    public function upgrade(){
+        return inertia::render('account.upgrade');
+    }
 }

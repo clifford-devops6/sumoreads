@@ -106,8 +106,17 @@
                             </button>
                             <group-source :key="group.id" :show="groupSourceModal" @close="groupSourceModal=false" :group="group"></group-source>
                         </td>
-                        <td class="py-3 px-4"></td>
                         <td class="py-3 px-4">
+                            <button class="hover:text-primary-100" @click="groupCategoryModal=true">
+                                <span v-if="group.categories.length">{{group.categories.length}}</span>
+                                <span> Categories<span class="ml-2"><i class="fa-light fa-pen"></i></span></span>
+                            </button>
+                            <group-category :key="group.id" :show="groupCategoryModal" @close="groupCategoryModal=false" :group="group"></group-category>
+                        </td>
+                        <td class="py-3 px-4">
+                            <Link :href="route('group.delete',group.id)" class="text-red-800" as="button" method="delete">
+                                Delete <span><i class="fas fa-trash-alt"></i></span>
+                            </Link>
                         </td>
 
                     </tr>
@@ -144,6 +153,7 @@ import AddGroup from "@/views/components/enterprise/add-group.vue";
 import UpdateGroup from "@/views/components/enterprise/update-group.vue";
 import GroupUsers from "@/views/components/enterprise/group-users.vue";
 import GroupSource from "@/views/components/enterprise/group-source.vue";
+import GroupCategory from "@/views/components/enterprise/group-category.vue";
 
 
 let props=defineProps({
@@ -193,6 +203,7 @@ const updateGroupModal=ref(false)
 //add members to group
 const groupUserModal=ref(false)
 const groupSourceModal=ref(false)
+const groupCategoryModal=ref(false)
 
 
 </script>

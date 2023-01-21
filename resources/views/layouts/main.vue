@@ -15,7 +15,7 @@
                     <Link :href="route('news.index')" title="News">News</Link>
                 </li>
                 <li class="text-gray-800 hover:text-primary-100 font-bold py-2">
-                    <Link>Personalize</Link>
+                    <Link :href="route('personalize.index')" title="Personalize feeds">Personalize</Link>
                 </li>
                 <li class="text-gray-800 hover:text-primary-100 font-bold py-2">
                     <Link>Read List</Link>

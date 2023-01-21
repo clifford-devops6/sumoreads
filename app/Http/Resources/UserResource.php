@@ -20,7 +20,9 @@ class UserResource extends JsonResource
             'last_name'=>$this->last_name,
             'email'=>$this->email,
             'account_id'=>$this->account_id,
-            'account'=>new AccountResource($this->whenLoaded('account'))
+            'account'=>new AccountResource($this->whenLoaded('account')),
+            'categories'=>CategoryResource::collection($this->whenLoaded('categories')),
+            'sources'=>SourceResource::collection($this->whenLoaded('sources'))
         ];
     }
 }
