@@ -49,8 +49,8 @@
                         <div class="p-3">
                             <Link :href="route('profile.index')" class="hover:text-primary-100"><span class="mr-1"><i class="fa-light fa-gear"></i></span>Profile Settings</Link>
                         </div>
-                        <div class="p-3">
-                            <Link class="hover:text-primary-100"><span class="mr-1"><i class="fa-light fa-building"></i></span>Manage Account</Link>
+                        <div v-if="auth.role==='Enterprise'" class="p-3">
+                            <Link :href="route('manage.index')" class="hover:text-primary-100"><span class="mr-1"><i class="fa-light fa-building"></i></span>Manage Account</Link>
                         </div>
                         <div class="p-3">
                             <Link :href="route('subscription.index')" class="hover:text-primary-100"><span class="mr-1"><i class="fa-light fa-calendar-range"></i></span>Billing & Subscription</Link>
