@@ -8,7 +8,7 @@
             leave-from-class="opacity-100 scale-100"
             leave-to-class="opacity-0 scale-125"
         >
-            <div @click="$emit('close')" v-if="show" class="inset-0 fixed bg-gray-900 bg-opacity-70 z-50 grid place-items-center p-5" >
+            <div @click.self="$emit('close')" v-if="show" class="inset-0 fixed bg-gray-900 bg-opacity-70 z-50 grid place-items-center p-5" >
                 <div class="bg-white lg:w-1/2  w-full rounded-xl">
                     <header class="p-3">
                         <div class="flex justify-between">

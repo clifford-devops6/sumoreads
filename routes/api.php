@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Controllers\General\NewsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,4 +25,5 @@ Route::group([], function (){
     Route::get('group/group-user/{id}',[ApiController::class, 'getGroupUsers']);
     Route::get('get/sources',[ApiController::class, 'getSources']);
     Route::get('get/categories',[ApiController::class, 'getCategories']);
+    Route::get('get/posts',[NewsController::class, 'index']);
 });

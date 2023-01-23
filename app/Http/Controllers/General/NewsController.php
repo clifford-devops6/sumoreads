@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\General;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ArticleResource;
+use App\Models\Article;
+use App\Models\Category;
+use App\Models\Source;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -13,10 +17,20 @@ class NewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request  $request)
     {
         //
-        return inertia::render('news.index');
+        $trending=ArticleResource::collection(Article::with('source','source.category')->latest()->limit(12)->get());
+        $latest=ArticleResource::collection(Article::orderBy('published')->with('source','source.category')->limit(6)->get());
+        $categories=Category::select('id','name')->get();
+        $sources=Source::select('id','name')->get();
+
+        $posts=ArticleResource::collection(Article::orderBy('published')->with('source','source.category')->limit(20)->get());
+        if ($request->wantsJson()){
+            return $posts;
+        }
+
+        return inertia::render('news.index', compact('trending','sources','categories','latest'));
     }
 
     /**

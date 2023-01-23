@@ -102,13 +102,20 @@
 
         </div>
     </div>
+    <div class="my-10">
+     <trending :articles="articles"></trending>
+    </div>
 </template>
 <script setup lang="ts">
 import {Head} from "@inertiajs/inertia-vue3";
 import {Link} from "@inertiajs/inertia-vue3";
-defineProps({
+import Trending from "@/views/components/news/trending.vue";
+let props=defineProps({
     sources:Object,
     free:Object,
-    enterprise:Object
+    enterprise:Object,
+    articles:Object
 })
+
+
 </script>
