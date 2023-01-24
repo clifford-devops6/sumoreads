@@ -26,7 +26,8 @@ class ArticleResource extends JsonResource
             'content'=>$this->content,
             'published'=>$this->published,
             'source_id'=>$this->source_id,
-            'source'=>new SourceResource($this->source)
+            'source'=>new SourceResource($this->source),
+            'category'=>new CategoryResource($this->category)
         ];
     }
 }

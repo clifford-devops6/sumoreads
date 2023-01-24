@@ -3,9 +3,11 @@
 use App\Http\Controllers\Account\AccountProfileController;
 use App\Http\Controllers\Account\AccountSubscriptionController;
 use App\Http\Controllers\General\PersonalizeController;
+use App\Http\Controllers\General\ReadlistController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([],function (){
+    Route::resource('readlist',ReadlistController::class);
     Route::post('personalize/remove-categories',[PersonalizeController::class,'removeCategoryPersonal'])->name('personalize.remove.categories');
     Route::post('personalize/add-categories',[PersonalizeController::class,'addCategoryPersonal'])->name('personalize.add.categories');
     Route::post('personalize/remove-sources',[PersonalizeController::class,'removeSource'])->name('personalize.remove.sources');

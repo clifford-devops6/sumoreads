@@ -1,29 +1,8 @@
 <template>
 <div>
-    <div class="flex justify-between my-8">
-        <div>
-            <h1 class="font-bold text-3xl">Latest News</h1>
-        </div>
-        <div class="flex gap-1">
-            <div>
-                <button class="bg-primary-100 text-white h-10 w-10 rounded-lg"><span><i class="fa-solid fa-arrows-retweet"></i></span></button>
-            </div>
-            <div>
-                <select class="rounded-lg h-10 focus:border-primary-100 focus:ring-primary-100 w-56">
-                    <option>All categories</option>
-                    <option v-for="category in categories" :value="category.name" :key="category.id">{{category.name}}</option>
-                </select>
-            </div>
-            <div>
-                <select class="rounded-lg h-10 focus:border-primary-100 focus:ring-primary-100 w-56">
-                    <option>All Streams</option>
-                    <option v-for="source in sources" :value="source.name" :key="source.id">{{source.name}}</option>
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="my-5 relative">
-        <div v-show="slideActive===index" class="grid grid-cols-3 gap-2" v-for="(article,index) in latest" :key="index">
+
+    <div v-if="articles.length" class="my-5 relative">
+        <div v-show="slideActive===index" class="grid grid-cols-3 gap-2" v-for="(article,index) in chunk(articles,2)" :key="index">
             <div @click="submitPost(article[0].id)" class="grid cursor-pointer">
                 <div class="rounded-lg overflow-hidden h-[220px] grid">
                     <img :src="article[0].image" :alt="article[0].title" class="object-cover w-full h-full">
@@ -65,6 +44,9 @@
             </button>
         </div>
     </div>
+    <div v-else class="py-5">
+        <p class="text-2xl">No articles in trending!</p>
+    </div>
     <post-modal v-if="postModal"  :show="postModal" @close="postModal=false" :posts="articles" :currentPost="currentPost"></post-modal>
 </div>
 </template>
@@ -75,15 +57,13 @@ import {useTruncate} from "@/scripts/use/useTruncate";
 import {ref} from "vue";
 import PostModal from "@/views/components/news/post-modal.vue";
 let props=defineProps({
-    categories:Object,
-    sources:Object,
     articles:Object
 })
-const articles=props.articles
+
 const slideActive=ref(0)
-const latest=chunk(articles,2)
+
 function slideNext(){
-    if (slideActive.value<latest.length-1){
+    if (slideActive.value<chunk(props.articles,2).length-1){
         slideActive.value++
     }else{
         slideActive.value=0
@@ -93,14 +73,14 @@ function slidePrevious(){
     if (slideActive.value){
         slideActive.value--
     }else{
-        slideActive.value=latest.length-1
+        slideActive.value=chunk(props.articles,2).length-1
     }
 }
 
 const postModal=ref(false)
 const currentPost=ref<Number>()
 const submitPost=(post:Number)=>{
-    currentPost.value=articles.findIndex(article => article.id === post);
+    currentPost.value=props.articles.findIndex(article => article.id === post);
     postModal.value=true
 }
 </script>

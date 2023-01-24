@@ -39,6 +39,7 @@ class ArticleRetrieve extends Command
             $domain=$source->domain;
             $response=Http::get('https://newsapi.org/v2/everything?domains='.$domain.'&from='.$date.'&language='.config('news.language').'&apiKey='.config('news.key'));
             $news=json_decode($response);
+
             foreach ($news->articles as $article){
                 $article= Article::firstOrCreate([
                     'author'=>$article->author,
@@ -49,10 +50,13 @@ class ArticleRetrieve extends Command
                     'article_url'=>$article->url,
                     'published'=>$article->publishedAt,
                     'status_id'=>1,
-                    'source_id'=>$source->id
+                    'source_id'=>$source->id,
+                    'category_id'=>$source->category_id
                 ]);
 
             }
         }
+
+        $posts=Article::where('description',null)->delete();
     }
 }

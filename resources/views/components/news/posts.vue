@@ -1,7 +1,7 @@
 <template>
-    <div v-for="(posts, index) in chunk(articles,5)" :key="index">
+    <div v-for="chunk in chunk(articles,5)">
         <div class="grid grid-cols-2 gap-2">
-            <div @click="submitPost(article.id)" v-for="article in posts" :key="article.id">
+            <div @click="submitPost(article.id)" v-for="article in chunk" :key="article.id">
                 <div class="grid grid-cols-6 gap-1 rounded-lg overflow-hidden h-[150px] border shadow cursor-pointer">
                     <div class="col-span-2 grid bg-cover bg-center bg-black" :style="{ 'background-image': 'url(' + article.image + ')' }">
 
@@ -10,7 +10,7 @@
                         <h6 class="font-libre font-bold text-lg">{{useTruncate(article.title,100)}}</h6>
                         <div class="absolute bottom-2 flex justify-end w-full px-2 gap-3">
                             <p class="text-sm"><span class="text-primary-100 font-semibold">{{article.source.name}}</span> | <span>{{article.source.category.name}}</span></p>
-                            
+                            <Link title="Save to read list"><span class="text-primary-100"><i class="fa-solid fa-bookmark"></i></span></Link>
                         </div>
                     </div>
 
@@ -35,13 +35,7 @@
             </div>
         </div>
     </div>
-    <div class="py-3 flex justify-center">
-        <button @click="getPostsOnScroll" class="btn-primary">
-            Load More articles
-            <span v-if="loading" class="animate-ping ">
-                 <i class="fas fa-ellipsis-h"></i>
-                </span>
-        </button>
+    <div ref="el">
     </div>
     <div>
         <post-modal v-if="postModal"  :show="postModal" @close="postModal=false" :posts="articles" :currentPost="currentPost"></post-modal>
@@ -49,33 +43,52 @@
 </template>
 
 <script setup lang="ts">
-
-import PostModal from "@/views/components/news/post-modal.vue"
-import {ref} from "vue";
-import {chunk} from "@/scripts/use/useChunk";
+import {useIntersectionObserver } from "@vueuse/core";
+import useGetPosts from "@/scripts/use/useArticles";
 import {useTruncate} from "@/scripts/use/useTruncate";
+import PostModal from "@/views/components/news/post-modal.vue";
+import {ref} from "vue";
 import {Link} from "@inertiajs/inertia-vue3";
-import {Inertia} from "@inertiajs/inertia";
-let props=defineProps({
-    articles:Object,
-    link:String
-})
+import {chunk} from "@/scripts/use/useChunk";
 
+
+
+
+const el=ref<HTMLElement | null>(null)
+const showPosts=2;
+const articles=ref(await useGetPosts(showPosts,0,));
+const fetchingData=ref(false)
+const getPostsOnScroll= async()=>{
+    fetchingData.value=true
+    try {
+        const newPosts= await useGetPosts(
+            showPosts,
+            articles.value.length,
+
+        );
+        articles.value.push(...newPosts);
+    }catch (err){
+        console.log(err)
+    }
+    fetchingData.value=false
+}
+useIntersectionObserver (
+    el,
+    async ()=>{
+        await getPostsOnScroll()
+    },
+    {
+        threshold: 0.5,
+    }
+);
 const postModal=ref(false)
 const currentPost=ref<Number>()
 const submitPost=(post:Number)=>{
-    currentPost.value=props.articles.findIndex(article => article.id === post);
+    currentPost.value=articles.value.findIndex(article => article.id === post);
     postModal.value=true
 }
-const loading=ref(false)
-const getPostsOnScroll= ()=>{
-    loading.value=true
-    Inertia.get(props.link,{
-       limit:props.articles.length+20
-    }, {preserveState:true, replace:true,preserveScroll:true})
-    loading.value=false
-
-}
-
 </script>
 
+<style scoped>
+
+</style>

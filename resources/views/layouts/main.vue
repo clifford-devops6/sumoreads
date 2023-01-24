@@ -18,7 +18,8 @@
                     <Link :href="route('personalize.index')" title="Personalize feeds">Personalize</Link>
                 </li>
                 <li class="text-gray-800 hover:text-primary-100 font-bold py-2">
-                    <Link>Read List</Link>
+                    <Link class="flex" :href="route('readlist.index')" title="My Read list">Read List <span v-if="readlist" class="self-center bg-primary-100 text-white p-1 
+                        rounded-full ml-2 h-6 w-6 text-xs flex place-content-center"><span>{{ readlist }}</span></span></Link>
                 </li>
                 <li class="text-gray-800 hover:text-primary-100 font-bold py-2">
                     <Link>Sharing</Link>
@@ -120,6 +121,8 @@ let removeEventListener=Inertia.on("finish",()=>{
 function remove(){
     message.value=null
 }
+
+const readlist=ref(page.props.value.readlist)
 </script>
 
 <style scoped>

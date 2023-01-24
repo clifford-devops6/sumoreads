@@ -1,15 +1,17 @@
 <template>
-    <div v-for="(posts, index) in chunk(articles,5)" :key="index">
+   <reader>
+    <div class="my-10">
+        <div v-for="(article, index) in chunk(articles.data,5)" :key="index">
         <div class="grid grid-cols-2 gap-2">
-            <div @click="submitPost(article.id)" v-for="article in posts" :key="article.id">
+            <div @click="submitPost(post.id)" v-for="post in article" :key="post.id">
                 <div class="grid grid-cols-6 gap-1 rounded-lg overflow-hidden h-[150px] border shadow cursor-pointer">
-                    <div class="col-span-2 grid bg-cover bg-center bg-black" :style="{ 'background-image': 'url(' + article.image + ')' }">
+                    <div class="col-span-2 grid bg-cover bg-center bg-black" :style="{ 'background-image': 'url(' + post.article.image + ')' }">
 
                     </div>
                     <div class="col-span-4 grid p-1 py-2 relative">
-                        <h6 class="font-libre font-bold text-lg">{{useTruncate(article.title,100)}}</h6>
+                        <h6 class="font-libre font-bold text-lg">{{useTruncate(post.article.title,100)}}</h6>
                         <div class="absolute bottom-2 flex justify-end w-full px-2 gap-3">
-                            <p class="text-sm"><span class="text-primary-100 font-semibold">{{article.source.name}}</span> | <span>{{article.source.category.name}}</span></p>
+                            <p class="text-sm"><span class="text-primary-100 font-semibold">{{post.article.source.name }}</span> | <span>{{post.article.category.name }}</span></p>
                             
                         </div>
                     </div>
@@ -35,47 +37,32 @@
             </div>
         </div>
     </div>
-    <div class="py-3 flex justify-center">
-        <button @click="getPostsOnScroll" class="btn-primary">
-            Load More articles
-            <span v-if="loading" class="animate-ping ">
-                 <i class="fas fa-ellipsis-h"></i>
-                </span>
-        </button>
     </div>
     <div>
-        <post-modal v-if="postModal"  :show="postModal" @close="postModal=false" :posts="articles" :currentPost="currentPost"></post-modal>
+       
+    <second-post-modal v-if="postModal" :show="postModal" @close="postModal=false" :posts="articles.data" :currentPost="currentPost"></second-post-modal>
     </div>
+   </reader> 
 </template>
-
 <script setup lang="ts">
-
+import Reader from "@/views/layouts/reader.vue"
 import PostModal from "@/views/components/news/post-modal.vue"
-import {ref} from "vue";
-import {chunk} from "@/scripts/use/useChunk";
-import {useTruncate} from "@/scripts/use/useTruncate";
-import {Link} from "@inertiajs/inertia-vue3";
-import {Inertia} from "@inertiajs/inertia";
+import SecondPostModal from "@/views/components/news/second-post-modal.vue"
+import { useTruncate } from "@/scripts/use/useTruncate";
+import { chunk } from "@/scripts/use/useChunk";
+import { ref } from "vue";
+
 let props=defineProps({
-    articles:Object,
-    link:String
+    articles:Object
 })
+
 
 const postModal=ref(false)
 const currentPost=ref<Number>()
 const submitPost=(post:Number)=>{
-    currentPost.value=props.articles.findIndex(article => article.id === post);
+    
+    currentPost.value=props.articles.data.findIndex(article => article.id === post);
+    
     postModal.value=true
 }
-const loading=ref(false)
-const getPostsOnScroll= ()=>{
-    loading.value=true
-    Inertia.get(props.link,{
-       limit:props.articles.length+20
-    }, {preserveState:true, replace:true,preserveScroll:true})
-    loading.value=false
-
-}
-
 </script>
-

@@ -11,19 +11,20 @@
             </div>
             <div class="self-center w-full col-span-4">
                 <ul class="flex justify-between gap-8">
-                    <li class="hover:text-primary-100 font-bold py-2">
+                    <li class="hover:text-primary-100 font-bold py-5" :class="{ 'border-b border-b-2 border-b-primary-100': $page.url === '/news' }">
                         <Link :href="route('news.index')" title="News">News</Link>
                     </li>
-                    <li class="text-gray-800 hover:text-primary-100 font-bold py-2">
+                    <li class="text-gray-800 hover:text-primary-100 font-bold py-5" :class="{ 'border-b border-b-2 border-b-primary-100': $page.url === '/account/personalize' }">
                         <Link :href="route('personalize.index')" title="Personalize feeds">Personalize</Link>
                     </li>
-                    <li class="text-gray-800 hover:text-primary-100 font-bold py-2">
-                        <Link>Read List</Link>
+                    <li class="text-gray-800 hover:text-primary-100 font-bold py-5" :class="{ 'border-b border-b-2 border-b-primary-100': $page.url === '/readlist' }">
+                    <Link class="flex" :href="route('readlist.index')" title="My Read list">Read List <span v-if="readlist" class="self-center bg-primary-100 text-white p-1 
+                        rounded-full ml-2 h-6 w-6 text-xs flex place-content-center"><span>{{ readlist }}</span></span></Link>
                     </li>
-                    <li class="text-gray-800 hover:text-primary-100 font-bold py-2">
-                        <Link>Sharing</Link>
+                    <li class="text-gray-800 hover:text-primary-100 font-bold py-5">
+                        <Link href="#">Sharing</Link>
                     </li>
-                    <li class="text-gray-800 hover:text-primary-100 font-bold py-2">
+                    <li v-if="!auth" class="text-gray-800 hover:text-primary-100 font-bold py-5">
                         <Link :href="route('pricing')" title="Pricing">Pricing</Link>
                     </li>
                 </ul>
@@ -56,7 +57,7 @@
                                 <Link :href="route('subscription.index')" class="hover:text-primary-100"><span class="mr-1"><i class="fa-light fa-calendar-range"></i></span>Billing & Subscription</Link>
                             </div>
                             <div class="p-3">
-                                <Link class="hover:text-primary-100"><span class="mr-1"><i class="fa-solid fa-arrow-up-from-bracket"></i></span>Upgrade Account</Link>
+                                <Link href="#" class="hover:text-primary-100"><span class="mr-1"><i class="fa-solid fa-arrow-up-from-bracket"></i></span>Upgrade Account</Link>
                             </div>
                             <div class="text-center hover:bg-primary-100 hover:text-white ">
                                 <Link as="button" :href="route('logout')"
@@ -118,19 +119,25 @@ import { InertiaProgress } from '@inertiajs/progress'
 import { Dropdown } from 'flowbite-vue'
 InertiaProgress.init()
 import Toast from "@/views/components/toast.vue";
-import {ref} from "vue";
+import {reactive, ref} from "vue";
 import {Inertia} from "@inertiajs/inertia";
 const page=usePage()
 const message=ref('')
+const readlist=ref(page.props.value.readlist )
+const auth=page.props.value.auth
 let removeEventListener=Inertia.on("finish",()=>{
     if (page.props.value.status){
         message.value=page.props.value.status
+    }
+    if(page.props.value.readlist){
+        readlist.value=page.props.value.readlist 
     }
 })
 function remove(){
     message.value=null
 }
-const auth=page.props.value.auth
+
+
 </script>
 
 <style scoped>

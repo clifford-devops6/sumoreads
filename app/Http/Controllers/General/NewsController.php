@@ -20,17 +20,41 @@ class NewsController extends Controller
     public function index(Request  $request)
     {
         //
-        $trending=ArticleResource::collection(Article::with('source','source.category')->latest()->limit(12)->get());
-        $latest=ArticleResource::collection(Article::orderBy('published')->with('source','source.category')->limit(6)->get());
         $categories=Category::select('id','name')->get();
         $sources=Source::select('id','name')->get();
+        //trending posts
 
-        $posts=ArticleResource::collection(Article::orderBy('published')->with('source','source.category')->limit(20)->get());
-        if ($request->wantsJson()){
-            return $posts;
-        }
+        $trending=ArticleResource::collection(Article::query()
+            ->when(request('trending_source'),function ($query,$trending_source){
+                $query->where('source_id',$trending_source);
+          })
+            ->when(request('trending_category'),function ($query,$trending_category){
+                $query->where('category_id',$trending_category);
+            })
+            ->with('source','source.category')->orderBy('published')->limit(12)->get());
 
-        return inertia::render('news.index', compact('trending','sources','categories','latest'));
+        $latest=ArticleResource::collection(Article::query()
+            ->when(request('latest_source'),function ($query,$latest_source){
+                $query->where('source_id',$latest_source);
+            })
+            ->when(request('latest_category'),function ($query,$latest_category) {
+                $query->where('category_id', $latest_category);
+            })
+        ->orderBy('published')->with('source','source.category')->limit(6)->get());
+
+       // all articles
+        $posts=ArticleResource::collection(Article::query()
+            ->when(request('source'),function ($query,$source){
+                $query->where('source_id',$source);
+            })
+            ->when(request('category'),function ($query,$category) {
+                $query->where('category_id', $category);
+            })
+        ->orderBy('published')->with('source','source.category')->limit(20+request('limit'))->get());
+
+        
+        $filters=request()->only(['trending_category','trending_source','category','source','latest_category','latest_source']);
+        return inertia::render('news.index', compact('trending','sources','categories','latest','filters','posts'));
     }
 
     /**

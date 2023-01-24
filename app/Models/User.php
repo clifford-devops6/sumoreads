@@ -62,4 +62,10 @@ class User extends Authenticatable
     public  function categories(){
         return $this->belongsToMany(Category::class);
     }
+
+    public function readlist(){
+        return $this->hasMany(Readlist::class);
+    }
+
+    
 }

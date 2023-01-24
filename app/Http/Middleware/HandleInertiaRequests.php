@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Readlist;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -47,11 +48,15 @@ class HandleInertiaRequests extends Middleware
                 'account_id'=>Auth::user()->account_id
             ];
 
+            $readlist=Readlist::where('user_id',Auth::id())->count();
+
         }else{
             $auth=null;
+            $readlist=0;
         }
         return array_merge(parent::share($request), [
             'auth' =>$auth,
+            'readlist'=>$readlist,
             'status' => $request->session()->get('status')?$request->session()->get('status'):null,
         ]);
     }

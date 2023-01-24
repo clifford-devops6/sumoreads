@@ -26,7 +26,7 @@ class Article extends Model
 
     protected $fillable=[
         'source_id','author','title','description','image_url','content','published','status_id',
-        'article_url'
+        'article_url','category_id'
     ];
 
     public function status(){
@@ -39,6 +39,10 @@ class Article extends Model
 
     public function source(){
         return $this->belongsTo(Source::class);
+    }
+
+    public function readlist(){
+        return $this->hasMany(Readlist::class);
     }
 
 }
