@@ -33,9 +33,9 @@
                                 <h6 class="font-libre text-xl font-bold">{{post.article.title}}</h6>
                                 <p class="my-2">{{post.article.description}}</p>
                                 <div class="my-3 flex justify-end gap-2">
-                                    <a class="btn-secondary" :href="post.article.article_url" target="_blank">Read full article</a>
-                                    <Link v-show="auth" preserve-scroll as="button" method="patch" :href="route('readlist.update',post.article.id)" class="btn-primary" title="Save to read list">Read later<span class="ml-2"><i class="fa-light fa-bookmark"></i></span></Link>
-                                    <Link href="#" v-show="auth" preserve-scroll class="btn-primary" title="Share articles">Share<span class="ml-2"><i class="fa-light fa-share-nodes"></i></span></Link>
+                                    <a @click="confirmRead(post.id)" class="btn-secondary" :href="post.article.article_url" target="_blank">Read full article</a>
+                                    <button  type="button" @click="deleteReadlist(post.id)"  class="btn-danger" title="Remove from read list">Remove</button>
+                                    <Link href="#"  preserve-scroll class="btn-primary" title="Share articles">Share<span class="ml-2"><i class="fa-light fa-share-nodes"></i></span></Link>
                                    
                                 </div>
                             </div>
@@ -50,6 +50,7 @@
 </template>
 
 <script setup lang="ts">
+import { Inertia } from "@inertiajs/inertia";
 import {Link, usePage} from "@inertiajs/inertia-vue3";
 import {computed, ref} from "vue";
 const emits=defineEmits(['close'])
@@ -80,7 +81,15 @@ function slidePrevious(){
     }
 }
 const slideActive=ref(props.currentPost);
+const deleteReadlist=(article:number)=>{
+   Inertia.delete(route('readlist.destroy',article))
+   emits('close')
+}
 
+const confirmRead=(post:number)=>{
+    console.log(post)
+ Inertia.patch(route('confirm.read',post))
+}
 </script>
 
 <style scoped>

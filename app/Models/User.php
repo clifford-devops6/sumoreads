@@ -67,5 +67,12 @@ class User extends Authenticatable
         return $this->hasMany(Readlist::class);
     }
 
-    
+    public function sender(){
+        return $this->hasMany(Share::class,'sender_id');
+    }
+    public function shares(){
+        return $this->morphToMany(Share::class,'shareable');
+    }
+
+
 }

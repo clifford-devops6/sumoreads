@@ -29,16 +29,18 @@
                                 </div>
                             </div>
                             <div class="p-3">
-                                <p class="my-2 flex justify-between"><span>| {{post.source.name}}</span> <span>{{post.source.category.name}} |</span></p>
+                                <p class="my-2 flex justify-between"><span>| {{post.source.name}}</span> <span>{{post.category.name}} |</span></p>
                                 <h6 class="font-libre text-xl font-bold">{{post.title}}</h6>
                                 <p class="my-2">{{post.description}}</p>
                                 <div class="my-3 flex justify-end gap-2">
                                     <a class="btn-secondary" :href="post.article_url" target="_blank">Read full article</a>
                                     <Link v-show="auth" preserve-scroll as="button" method="patch" :href="route('readlist.update',post.id)" class="btn-primary" title="Save to read list">Read later<span class="ml-2"><i class="fa-light fa-bookmark"></i></span></Link>
-                                    <Link href="#" v-show="auth" preserve-scroll class="btn-primary" title="Share articles">Share<span class="ml-2"><i class="fa-light fa-share-nodes"></i></span></Link>
-                                   
+                                    <button @click="sharePost(post)" type="button" v-show="auth"  class="btn-primary" title="Share articles">Share<span class="ml-2"><i class="fa-light fa-share-nodes"></i></span></button>
+
                                 </div>
                             </div>
+
+
                         </div>
 
                     </div>
@@ -46,12 +48,18 @@
                 </div>
             </div>
         </Transition>
+        <div>
+            <share v-if="shareModal" :article="article"   :show="shareModal" @closeShare="shareModal=false">
+
+            </share>
+        </div>
     </teleport>
 </template>
 
 <script setup lang="ts">
 import {Link, usePage} from "@inertiajs/inertia-vue3";
 import {computed, ref} from "vue";
+import Share from "@/views/components/news/share.vue";
 const emits=defineEmits(['close'])
 
 let props=defineProps({
@@ -80,9 +88,12 @@ function slidePrevious(){
     }
 }
 const slideActive=ref(props.currentPost);
+const article=ref()
+const shareModal =ref(false)
 
+const sharePost=(post:any)=>{
+    article.value=post
+    shareModal.value=true
+}
 </script>
 
-<style scoped>
-
-</style>

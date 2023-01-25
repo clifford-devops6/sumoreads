@@ -102,8 +102,8 @@
 
         </div>
     </div>
-    <div class="my-10">
-     <trending :articles="articles"></trending>
+    <div class="p-10">
+     <trending :articles="articles.data"></trending>
     </div>
 </template>
 <script setup lang="ts">

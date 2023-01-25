@@ -45,18 +45,21 @@ class HandleInertiaRequests extends Middleware
                 'last_name'=>Auth::user()->last_name,
                 'email'=>Auth::user()->email,
                 'id'=>Auth::id(),
-                'account_id'=>Auth::user()->account_id
+                'account_id'=>Auth::user()->account_id,
             ];
 
-            $readlist=Readlist::where('user_id',Auth::id())->count();
+            $readlist=Readlist::where('user_id',Auth::id())->where('read_status',0)->count();
+            $shares=Auth::user()->shares()->where('read_status',0)->count();
 
         }else{
             $auth=null;
             $readlist=0;
+            $shares=0;
         }
         return array_merge(parent::share($request), [
             'auth' =>$auth,
             'readlist'=>$readlist,
+            'shares'=>$shares,
             'status' => $request->session()->get('status')?$request->session()->get('status'):null,
         ]);
     }

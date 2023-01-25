@@ -20,7 +20,8 @@ class GroupResource extends JsonResource
             'account_id'=>$this->account_id,
             'sources'=>SourceResource::collection($this->whenLoaded('sources')),
             'users'=>UserResource::collection($this->whenLoaded('users')),
-            'categories'=>CategoryResource::collection($this->whenLoaded('categories'))
+            'categories'=>CategoryResource::collection($this->whenLoaded('categories')),
+            'shares'=>ShareResource::collection($this->whenLoaded('shares'))
         ];
     }
 }

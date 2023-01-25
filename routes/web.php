@@ -22,8 +22,6 @@ use Illuminate\Support\Facades\Route;
 Route::resource('/', MainController::class);
 //Do not require authentication
 Route::group([], function (){
-
-    Route::resource('news',NewsController::class);
     Route::resource('contact-us',ContactController::class);
     Route::resource('report-bug',ReportBugController::class);
 });
@@ -31,6 +29,7 @@ Route::group([], function (){
 Route::group(['middleware'=>['auth:web']],function (){
     Route::get('payments/callback/{id}',[PaymentController::class, 'callback'])->name('callback');
     Route::resource('payments',PaymentController::class);
+    Route::resource('news',NewsController::class);
 });
 
 

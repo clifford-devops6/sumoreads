@@ -8,7 +8,7 @@
                        <div class="grid relative bg-gradient-to-b from-transparent to-black h-full w-full">
                            <div class="absolute bottom-2 p-3">
                                <h6 class="font-libre text-2xl font-bold">{{useTruncate(trend[0].title,100)}}</h6>
-                               <p class="my-2 flex justify-between"><span>| {{trend[0].source.name}}</span> <span>{{trend[0].source.category.name}} |</span></p>
+                               <p class="my-2 flex justify-between"><span>| {{trend[0].source.name}}</span> <span>{{trend[0].category.name}} |</span></p>
                            </div>
                        </div>
                    </div>
@@ -18,7 +18,7 @@
                                <div class="grid relative bg-gradient-to-b from-transparent to-black h-full w-full">
                                    <div class="absolute bottom-2 p-2 text-white w-full">
                                        <h6 class="font-libre text-lg font-bold">{{useTruncate(trend[1].title,60)}}</h6>
-                                       <p class="my-1 flex justify-between"><span>| {{trend[1].source.name}}</span> <span>{{trend[1].source.category.name}} |</span></p>
+                                       <p class="my-1 flex justify-between"><span>| {{trend[1].source.name}}</span> <span>{{trend[1].category.name}} |</span></p>
                                    </div>
                                </div>
                            </div>
@@ -26,7 +26,7 @@
                                <div class="grid relative bg-gradient-to-b from-transparent to-black h-full w-full">
                                    <div class="absolute bottom-2 p-2 text-white w-full">
                                        <h6 class="font-libre text-lg font-bold">{{useTruncate(trend[2].title,60)}}</h6>
-                                       <p class="my-1 flex justify-between"><span>| {{trend[2].source.name}}</span> <span>{{trend[2].source.category.name}} |</span></p>
+                                       <p class="my-1 flex justify-between"><span>| {{trend[2].source.name}}</span> <span>{{trend[2].category.name}} |</span></p>
                                    </div>
                                </div>
                            </div>
@@ -36,7 +36,7 @@
                                <div class="grid relative bg-gradient-to-b from-transparent to-black h-full w-full">
                                    <div class="absolute bottom-2 p-2 text-white w-full">
                                        <h6 class="font-libre text-lg font-bold">{{useTruncate(trend[3].title,60)}}</h6>
-                                       <p class="my-1 flex justify-between"><span>| {{trend[3].source.name}}</span> <span>{{trend[3].source.category.name}} |</span></p>
+                                       <p class="my-1 flex justify-between"><span>| {{trend[3].source.name}}</span> <span>{{trend[3].category.name}} |</span></p>
                                    </div>
                                </div>
                            </div>

@@ -1,17 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\General;
 
-use App\Http\Resources\ArticleResource;
-use App\Http\Resources\SourceResource;
-use App\Models\Article;
-use App\Models\Category;
-use App\Models\Source;
-use App\Models\Type;
+use App\Events\ShareEvent;
+use App\Http\Controllers\Controller;
+use App\Models\Share;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class MainController extends Controller
+class ShareController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,15 +19,8 @@ class MainController extends Controller
     public function index()
     {
         //
-        $sources=SourceResource::collection(Source::inRandomOrder()->limit(100)->get());
-        $free=Type::where('name','Free')->select('id','name','price')->first();
-        $enterprise=Type::where('name','Enterprise')->select('id','name','price')->first();
-        $articles=ArticleResource::collection(Article::with(['source','category'])->latest()->limit(12)->get());
 
-
-
-
-        return inertia::render('welcome', compact('sources','free','enterprise', 'articles'));
+        return inertia::render('account.share.index');
     }
 
     /**
@@ -51,6 +42,34 @@ class MainController extends Controller
     public function store(Request $request)
     {
         //
+        $validated=$request->validate([
+            'share'=>'nullable|string|max:50',
+            'selectedUsers'=>'nullable',
+            'selectedGroups'=>'nullable',
+            'article_id'=>'integer|required',
+            'comment'=>'nullable|max:1000'
+        ]);
+
+        $share=Share::create([
+            'article_id'=>$validated['article_id'],
+            'sender_id'=>Auth::id(),
+            'comment'=>$validated['comment']
+        ]);
+        if (filter_var( $validated['share'], FILTER_VALIDATE_EMAIL )){
+            $share->update(['email'=>$validated['share']]);
+        }
+        if($validated['selectedUsers']){
+            $share->users()->syncWithoutDetaching(array_column($validated['selectedUsers'],'id'));
+        }
+        if($validated['selectedUsers']) {
+            $share->groups()->syncWithoutDetaching(array_column($validated['selectedGroups'],'id'));
+        }
+
+        ShareEvent::dispatch($share);
+
+        return redirect()->back()
+            ->with('status','Article Successfully shared');
+
     }
 
     /**

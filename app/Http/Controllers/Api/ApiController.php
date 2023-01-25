@@ -29,4 +29,8 @@ class ApiController extends Controller
     public function getCategories(){
         return Category::select('id','name')->get();
     }
+
+    public function getGroups($id){
+        return Group::where('account_id',$id)->select('name','id')->get();
+    }
 }

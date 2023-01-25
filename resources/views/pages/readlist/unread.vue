@@ -2,7 +2,7 @@
     <Head><title>My read list</title></Head>
    <reader>
     <template #sidebar>
-        <readlist-menu :page="route('readlist.index')"></readlist-menu>
+        <readlist-menu :page="route('unread.readlist')"></readlist-menu>
     </template>
     <div class="my-10">
         <div v-for="(article, index) in chunk(articles.data,5)" :key="index">
