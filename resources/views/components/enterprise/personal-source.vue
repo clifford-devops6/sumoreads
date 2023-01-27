@@ -123,8 +123,6 @@ emits("close")
 let props=defineProps({
     show:Boolean,
     mySources:Object,
-
-
 })
 const page=usePage()
 const user=page.props.value.auth.id

@@ -27,4 +27,9 @@ Route::group([], function (){
     Route::get('get/categories',[ApiController::class, 'getCategories']);
     Route::get('get/groups/{id}',[ApiController::class, 'getGroups']);
     Route::get('get/posts',[NewsController::class, 'index']);
+    Route::get('get/enterprise-streams/{id}',[ApiController::class, 'enterpriseStreams']);
+    Route::get('get/enterprise-categories/{id}',[ApiController::class, 'enterpriseCategories']);
+    Route::get('get/personal-streams/{id}',[ApiController::class, 'personalStreams']);
+    Route::get('get/personal-categories/{id}',[ApiController::class, 'personalCategories']);
+
 });

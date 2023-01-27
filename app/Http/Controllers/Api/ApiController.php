@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Account;
 use App\Models\Category;
 use App\Models\Group;
 use App\Models\Source;
@@ -32,5 +33,25 @@ class ApiController extends Controller
 
     public function getGroups($id){
         return Group::where('account_id',$id)->select('name','id')->get();
+    }
+
+    public function enterpriseStreams($id){
+        $account=Account::findOrFail($id);
+        return $account->sources()->get();
+    }
+
+    public function enterpriseCategories($id){
+        $account=Account::findOrFail($id);
+        return $account->categories()->get();
+    }
+
+    public function personalStreams($id){
+        $user=User::findOrFail($id);
+        return $user->sources()->get();
+    }
+
+    public function personalCategories($id){
+        $user=User::findOrFail($id);
+        return $user->categories()->get();
     }
 }

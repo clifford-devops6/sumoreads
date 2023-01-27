@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Enterprise\AccountSetupController;
 use App\Http\Controllers\General\ContactController;
+use App\Http\Controllers\General\HomeController;
 use App\Http\Controllers\General\NewsController;
 use App\Http\Controllers\General\PaymentController;
 use App\Http\Controllers\General\ReportBugController;
@@ -30,6 +31,7 @@ Route::group(['middleware'=>['auth:web']],function (){
     Route::get('payments/callback/{id}',[PaymentController::class, 'callback'])->name('callback');
     Route::resource('payments',PaymentController::class);
     Route::resource('news',NewsController::class);
+    Route::resource('home',HomeController::class);
 });
 
 

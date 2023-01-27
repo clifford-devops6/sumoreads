@@ -40,7 +40,6 @@
     </div>
     <div>
         <share-modal v-if="postModal" :show="postModal" @close="postModal=false" :posts="shareds.data" :currentPost="currentPost"></share-modal>
-
     </div>
 </reader>
 </template>
@@ -51,7 +50,6 @@ import Reader from "@/views/layouts/reader.vue";
 import {Head} from "@inertiajs/inertia-vue3";
 import ShareMenu from "@/views/components/sidebar/share-menu.vue";
 import {chunk} from "@/scripts/use/useChunk";
-import SecondPostModal from "@/views/components/news/second-post-modal.vue";
 import {ref} from "vue";
 import ShareModal from "@/views/components/news/share-modal.vue";
 let props=defineProps({
