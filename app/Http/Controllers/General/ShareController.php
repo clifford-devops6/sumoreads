@@ -4,7 +4,12 @@ namespace App\Http\Controllers\General;
 
 use App\Events\ShareEvent;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\GroupResource;
+use App\Http\Resources\ShareResource;
+use App\Http\Resources\UserResource;
+use App\Models\ReadStatus;
 use App\Models\Share;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -19,8 +24,26 @@ class ShareController extends Controller
     public function index()
     {
         //
+        $user=Auth::user();
+      $share_ids=$user->shares()->pluck('share_id');
+      $groups=$user->groups()->whereHas('shares')->get();
+        foreach ($groups as $group){
+            $real=$group->shares()->pluck('id');
+            foreach ($real as $ids){
+                $share_ids->push($ids);
+            }
 
-        return inertia::render('account.share.index');
+
+        }
+
+      $senders=Auth::user()->shares()->pluck('sender_id');
+      $users=UserResource::collection(User::whereIn('id',$senders)->get());
+      $groups=GroupResource::collection($groups);
+
+
+     $shareds=ShareResource::collection(Share::whereIn('id',$share_ids)->with(['article','sender'])->get());
+
+        return inertia::render('account.share.index', compact('shareds','users','groups'));
     }
 
     /**
@@ -81,6 +104,15 @@ class ShareController extends Controller
     public function show($id)
     {
         //
+
+        $share_ids=Auth::user()->shares()->where('sender_id',$id)->pluck('share_id');
+        $shareds=ShareResource::collection(Share::whereIn('id',$share_ids)->with(['article','sender'])->get());
+        $senders=Auth::user()->shares()->pluck('sender_id');
+        $users=UserResource::collection(User::whereIn('id',$senders)->get());
+        $user_id=$id;
+        $groups=Auth::user()->groups()->whereHas('shares')->get();
+        $groups=GroupResource::collection($groups);
+        return inertia::render('account.share.show', compact('shareds','users','user_id','groups'));
     }
 
     /**
@@ -104,6 +136,11 @@ class ShareController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $read=ReadStatus::updateOrCreate([
+            'user_id'=>Auth::id(),
+            'share_id'=>$id
+        ]);
+        return redirect()->back();
     }
 
     /**
@@ -115,5 +152,16 @@ class ShareController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function groupShare($id){
+        $share_ids=Auth::user()->shares()->where('sender_id',$id)->pluck('share_id');
+        $shareds=ShareResource::collection(Share::whereIn('id',$share_ids)->with(['article','sender'])->get());
+        $senders=Auth::user()->shares()->pluck('sender_id');
+        $users=UserResource::collection(User::whereIn('id',$senders)->get());
+        $user_id=$id;
+        $groups=Auth::user()->groups()->whereHas('shares')->get();
+        $groups=GroupResource::collection($groups);
+        return inertia::render('account.share.group-share', compact('shareds','users','user_id','groups'));
     }
 }

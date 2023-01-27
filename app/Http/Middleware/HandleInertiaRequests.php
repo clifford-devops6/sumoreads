@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\ReadStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Readlist;
@@ -49,7 +50,8 @@ class HandleInertiaRequests extends Middleware
             ];
 
             $readlist=Readlist::where('user_id',Auth::id())->where('read_status',0)->count();
-            $shares=Auth::user()->shares()->where('read_status',0)->count();
+            $reads=ReadStatus::where('user_id',Auth::id())->pluck('share_id');
+            $shares=Auth::user()->shares()->whereNotIn('id',$reads)->count();
 
         }else{
             $auth=null;

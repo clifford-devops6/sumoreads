@@ -22,7 +22,8 @@ class ShareResource extends JsonResource
             'article_id'=>$this->article_id,
             'read_status'=>$this->read_status,
             'sender'=>new UserResource($this->sender),
-            'article'=>new ArticleResource($this->article)
+            'article'=>new ArticleResource($this->article),
+
         ];
     }
 }

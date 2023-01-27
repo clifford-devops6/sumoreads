@@ -21,7 +21,7 @@
                     <Link class="flex" :href="route('readlist.index')" title="My Read list">Read List <span v-if="readlist" class="self-center bg-primary-100 text-white p-1
                         rounded-full ml-2 h-6 w-6 text-xs flex place-content-center"><span>{{ readlist }}</span></span></Link>
                     </li>
-                    <li class="text-gray-800 hover:text-primary-100 font-bold py-5" :class="{ 'border-b border-b-2 border-b-primary-100': $page.url === '/share' }">
+                    <li class="text-gray-800 hover:text-primary-100 font-bold py-5" :class="{ 'border-b border-b-2 border-b-primary-100': $page.url === '/account/share' }">
                         <Link class="flex" :href="route('share.index')" title="Sharing">Sharing
                             <span v-if="shares" class="self-center bg-primary-100 text-white p-1
                         rounded-full ml-2 h-6 w-6 text-xs flex place-content-center"><span>{{ shares }}</span></span>
@@ -133,6 +133,9 @@ let removeEventListener=Inertia.on("finish",()=>{
     }
     if(page.props.value.readlist){
         readlist.value=page.props.value.readlist
+    }
+    if(page.props.value.shares){
+        shares.value=page.props.value.shares
     }
 })
 function remove(){

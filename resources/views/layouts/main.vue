@@ -120,6 +120,12 @@ let removeEventListener=Inertia.on("finish",()=>{
     if (page.props.value.status){
         message.value=page.props.value.status
     }
+    if(page.props.value.readlist){
+        readlist.value=page.props.value.readlist
+    }
+    if(page.props.value.shares){
+        shares.value=page.props.value.shares
+    }
 })
 function remove(){
     message.value=null

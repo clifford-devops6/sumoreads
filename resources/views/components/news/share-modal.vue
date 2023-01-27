@@ -7,7 +7,7 @@
             leave-active-class="transition duration-200"
             leave-from-class="opacity-100 scale-100"
             leave-to-class="opacity-0 scale-125"
-           >
+        >
             <div @click.self="$emit('close')" v-if="show" class="inset-0 fixed bg-black bg-opacity-80 z-[10000] grid place-items-center p-5" >
                 <div class="lg:w-3/5  w-full rounded-xl overflow-hidden">
                     <div class="relative">
@@ -34,7 +34,7 @@
                                 <p class="my-2">{{post.article.description}}</p>
                                 <div class="my-3 flex justify-end gap-2">
                                     <a @click="confirmRead(post.id)" class="btn-secondary" :href="post.article.article_url" target="_blank">Read full article</a>
-                                    <button  type="button" @click="deleteReadlist(post.id)"  class="btn-danger" title="Remove from read list">Remove</button>
+                                    <Link v-show="auth" preserve-scroll as="button" method="patch" :href="route('readlist.update',post.article.id)" class="btn-primary" title="Save to read list">Read later<span class="ml-2"><i class="fa-light fa-bookmark"></i></span></Link>
                                     <button @click="sharePost(post.article)" type="button" v-show="auth"  class="btn-primary" title="Share articles">Share<span class="ml-2"><i class="fa-light fa-share-nodes"></i></span></button>
 
                                 </div>
@@ -87,13 +87,10 @@ function slidePrevious(){
     }
 }
 const slideActive=ref(props.currentPost);
-const deleteReadlist=(article:number)=>{
-   Inertia.delete(route('readlist.destroy',article))
-   emits('close')
-}
+
 
 const confirmRead=(post:number)=>{
-    Inertia.patch(route('confirm.read',post))
+    Inertia.patch(route('share.update',post))
 }
 
 const article=ref()

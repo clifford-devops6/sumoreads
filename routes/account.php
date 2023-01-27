@@ -8,6 +8,7 @@ use App\Http\Controllers\General\ShareController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware'=>['auth:web']],function (){
+    Route::get('account/share/group-share/{id}',[ShareController::class,'groupShare'])->name('group.share');
     Route::resource('account/share',ShareController::class);
     Route::get('readlist/read',[ReadlistController::class,'read'])->name('read.readlist');
     Route::get('readlist/unread',[ReadlistController::class,'unread'])->name('unread.readlist');

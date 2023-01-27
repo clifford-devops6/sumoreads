@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Share extends Model
 {
@@ -27,5 +28,13 @@ class Share extends Model
     public function users()
     {
         return $this->morphedByMany(User::class,'shareable');
+    }
+
+    public function readStatus(){
+        return $this->hasMany(ReadStatus::class);
+    }
+
+    public function read(){
+        return $this->readStatus()->where('id',Auth::id())->first();
     }
 }
