@@ -8,9 +8,12 @@
         </div>
         <div class="py-10">
          <div class="px-14 text-center">
-             <img v-for="source in sources.data" :key="source.id" :src="source.logo" class="h-10 inline-block m-1">
+             <img :alt="source.name" v-for="source in sources.data" :key="source.id" :src="source.logo" class="h-10 inline-block m-1">
          </div>
         </div>
+
+
+
     </div>
     <div class="py-10 bg-primary-400">
         <div class="py-5">
@@ -116,6 +119,7 @@ let props=defineProps({
     enterprise:Object,
     articles:Object
 })
+
 
 
 </script>

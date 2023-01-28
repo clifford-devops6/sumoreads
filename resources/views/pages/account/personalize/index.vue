@@ -4,7 +4,7 @@
     <template #sidebar>
         <personalize-menu @categoriesFilter="switchCategory" @StreamsFilter="switchStream"></personalize-menu>
     </template>
-    <div class="my-10">
+    <div class="my-10 px-3">
         <div v-if="showStreams">
             <div class="flex justify-between px-3">
                 <div>
