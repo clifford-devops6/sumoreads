@@ -115,7 +115,7 @@ const trending_category=ref(props.filters.trending_category?props.filters.trendi
 const trending_source=ref(props.filters.trending_source?props.filters.trending_source:'')
 
 watch([trending_category,trending_source],()=>{
-    Inertia.get(route('news.index'),{
+    Inertia.get(route('home.index'),{
         trending_category:trending_category.value,
         trending_source:trending_source.value
     }, {preserveState:true, replace:true,preserveScroll:true})
@@ -126,7 +126,7 @@ const latest_category=ref(props.filters.latest_category?props.filters.latest_cat
 const latest_source=ref(props.filters.latest_source?props.filters.latest_source:'')
 
 watch([latest_category,latest_source],()=>{
-    Inertia.get(route('news.index'),{
+    Inertia.get(route('home.index'),{
         latest_category:latest_category.value,
         latest_source:latest_source.value
     }, {preserveState:true, replace:true,preserveScroll:true})
@@ -136,7 +136,7 @@ watch([latest_category,latest_source],()=>{
 const source=ref<Number>(props.filters.source?props.filters.source:'')
 const category=ref<Number>(props.filters.category?props.filters.category:'')
 watch([category,source],()=>{
-    Inertia.get(route('news.index'),{
+    Inertia.get(route('home.index'),{
         category:category.value,
         source:source.value
     }, {preserveState:true, replace:true,preserveScroll:true})

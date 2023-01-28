@@ -83,7 +83,7 @@
             </div>
         </aside>
     </div>
-    <div class="col-span-10 mt-16 px-3 w-full">
+    <div class="col-span-10 mt-16  w-full">
         <main>
             <slot />
         </main>

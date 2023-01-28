@@ -24,7 +24,7 @@
                     <ul class="pl-3">
 
                         <li :key="source.id" v-for="source in sources">
-                            <Link :href="route('home.index')" class="py-3 px-3 text-start  w-full h-full" as="button">
+                            <Link :href="route('news.stream',source.slug)" class="py-3 px-3 text-start  w-full h-full" as="button">
                                 {{source.name}}
                             </Link>
                         </li>

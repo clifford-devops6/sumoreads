@@ -8,6 +8,7 @@ use App\Models\Article;
 use App\Models\Category;
 use App\Models\Source;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class HomeController extends Controller
@@ -20,8 +21,8 @@ class HomeController extends Controller
     public function index()
     {
         //
-        $categories=Category::select('id','name')->get();
-        $sources=Source::select('id','name')->get();
+        $categories=Auth::user()->categories()->get();
+        $sources=Auth::user()->sources()->get();
         //trending posts
 
         $trending=ArticleResource::collection(Article::query()

@@ -24,7 +24,7 @@
                     <ul class="pl-3">
 
                         <li :key="category.id" v-for="category in categories">
-                            <Link :href="route('home.index')" class="py-3 px-3 text-start  w-full h-full" as="button">
+                            <Link :href="route('news.category',category.slug)" class="py-3 px-3 text-start  w-full h-full" as="button">
                                 {{category.name}}
                             </Link>
                         </li>

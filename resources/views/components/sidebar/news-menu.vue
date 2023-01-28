@@ -44,7 +44,9 @@ import GroupDropdown from "@/views/components/group-dropdown.vue";
 import EnterpriseCategories from "@/views/components/enterprise-categories.vue";
 import PersonalStream from "@/views/components/personal-stream.vue";
 import PersonalCategories from "@/views/components/personal-categories.vue";
-
+defineProps({
+    page:String
+})
 </script>
 
 <style scoped>
