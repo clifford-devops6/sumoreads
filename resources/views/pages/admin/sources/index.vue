@@ -51,8 +51,12 @@
                     <td class="py-3 px-4">{{source.category.name}}</td>
                     <td class="py-3 px-4 uppercase">{{source.country.code}}</td>
                     <td class="py-3 px-4">
-                        <div v-if="source.pulls"><span class="text-gray-800">Fetching</span></div>
-                        <div v-else>Retry</div>
+                        <div v-if="source.pulls===2"><span class="text-green-500">Fetching</span></div>
+                        <div v-else>
+                            <button class="text-red-500" @click="startFetch(source.id)">
+                                Try fetching <span v-if="fetchStart" class="animate-ping"><i class="fa-solid fa-ellipsis"></i></span>
+                            </button>
+                        </div>
                     </td>
                     <td class="py-3 px-4">
                         <span v-if="source.status.name==='Enabled'">Active</span>
@@ -133,6 +137,13 @@ watch(search, _.debounce(function (value:any) {
         search:value
     }, {preserveState:true, replace:true});
 }, 300))
+
+const fetchStart=ref(false);
+const startFetch=(source:number)=>{
+    fetchStart.value=true
+    Inertia.patch(route('fetch',source))
+    fetchStart.value=false
+}
 </script>
 
 <style scoped>

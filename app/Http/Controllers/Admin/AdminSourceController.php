@@ -8,7 +8,9 @@ use App\Models\Category;
 use App\Models\Country;
 use App\Models\Source;
 use App\Models\Status;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 use function Termwind\render;
 
@@ -156,5 +158,27 @@ class AdminSourceController extends Controller
         $source->delete();
         return redirect()->route('sources.index')
             ->with('status','Source Successfully deleted');
+    }
+
+    public function attemptFetch($id){
+
+        $source=Source::findOrFail($id);
+        $domain=$source->domain;
+        $date=Carbon::today()->toDateString();
+        $response=Http::get('https://newsapi.org/v2/everything?domains='.$domain.'&from='.$date.'&language='.config('news.language').'&apiKey='.config('news.key'));
+        $news=json_decode($response);
+
+        if ($news->articles){
+            $source->update(['pulls'=>2]);
+            return redirect()->back()
+                ->with('status','The news source is successfully fetching articles');
+        }else{
+            $source->update(['pulls'=>0]);
+            return redirect()->back()
+                ->with('status', 'Failed to pull. Please check the source domain and try again');
+        }
+
+
+
     }
 }

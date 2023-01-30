@@ -45,5 +45,10 @@ class Admin extends Authenticatable
     ];
 
 
+    public function shares(){
+        return $this->morphToMany(Share::class,'shareable');
+    }
+
+
 
 }
