@@ -31,5 +31,6 @@ Route::group([], function (){
     Route::get('get/enterprise-categories/{id}',[ApiController::class, 'enterpriseCategories']);
     Route::get('get/personal-streams/{id}',[ApiController::class, 'personalStreams']);
     Route::get('get/personal-categories/{id}',[ApiController::class, 'personalCategories']);
+    Route::get('get/advertisement',[ApiController::class, 'getAdverts']);
 
 });

@@ -30,7 +30,7 @@ class ManageAccountcontroller extends Controller
         $user=Auth::user();
         $account=Auth::user()->account()->first();
         $groups=GroupResource::collection(Group::where('account_id',$account->id)->with(['users','categories','sources'])->get());
-        $account=new AccountResource(Account::with(['users','administrator','invitations'])->findOrFail($account->id));
+        $account=new AccountResource(Account::with(['users','administrator','invitations','type'])->findOrFail($account->id));
 
         return inertia::render('account.manage.index', compact('account', 'groups'));
     }

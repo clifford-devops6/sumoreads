@@ -7,16 +7,16 @@
 
     </subscription-menu>
 </template>
-    <div class="my-10 w-full">
+    <div class="my-10 w-full px-3">
         <h1 class="font-bold text-lg">Subscription</h1>
         <div class="border rounded-lg p-3 my-5">
          <h6 class="font-semibold">{{user.data.name}} {{user.data.last_name}}</h6>
             <div class="flex my-3 gap-3">
                 <p><span class="text-primary-100">Account Type: </span>{{account.type.name}}</p>
-                <p v-if="auth.role==='Enterprise'"><span class="text-primary-100">Groups: </span>{{account.groups_count}}</p>
-                <p v-if="auth.role==='Enterprise'"><span class="text-primary-100">Member(s): </span>{{account.users_count}}</p>
+                <p v-if="auth.role==='Enterprise'"><span class="text-primary-100 font-bold">Groups: </span>{{account.groups_count}}</p>
+                <p v-if="auth.role==='Enterprise'"><span class="text-primary-100 font-bold">Member(s): </span>{{account.users_count}}</p>
                 <p v-if="auth.role==='Enterprise'">{{account.administrator.slot-account.users_count}} of {{account.administrator.slot}} slots Available from current plan</p>
-                <p v-if="auth.role==='Enterprise'"><span class="text-primary-100">Invitations: </span>{{account.invitations_count}}</p>
+                <p v-if="auth.role==='Enterprise'"><span class="text-primary-100 font-bold">Invitations: </span>{{account.invitations_count}}</p>
             </div>
             <div class="my-3">
                <p>Your next bill is for <span class="text-primary-100 font-semibold">USD {{account.type.price*account.administrator.slot}}</span> on {{new Date(token).toDateString()}}</p>
@@ -26,7 +26,7 @@
                     Pay Now
                 </button>
                 <button v-if="auth.role==='Enterprise'" class="btn-primary" @click="slotModal=true">
-                   Add more slots
+                   Add more members
                 </button>
             </div>
         </div>

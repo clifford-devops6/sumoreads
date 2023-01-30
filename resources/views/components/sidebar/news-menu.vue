@@ -10,20 +10,20 @@
             <li>
                 <Link :href="route('home.index')" class="py-4 px-3 text-start hover:bg-white hover:text-primary-100 w-full h-full" as="button"
                       :class="{ 'bg-white text-primary-100': page === route('home.index') }">
-                    <span><span class="mr-2"><i class="fa-regular fa-house-chimney"></i></span>My home</span> </Link>
+                    <span><span class="mr-2"><i class="fa-regular fa-house-chimney"></i></span>My Home</span> </Link>
             </li>
 
             <li>
                 <Link :href="route('readlist.index')" class="py-4 px-3 text-start hover:bg-white hover:text-primary-100 w-full h-full" as="button"
                       :class="{ 'bg-white text-primary-100': page === route('readlist.index') }">
-                    <span><span class="mr-2"><i class="fa-light fa-bookmark"></i></span>My Read list</span> </Link>
+                    <span><span class="mr-2"><i class="fa-light fa-bookmark"></i></span>My Read List</span> </Link>
             </li>
 
-            <li>
+            <li v-show="accounType==='Corporate'">
                 <group-dropdown>
                 </group-dropdown>
             </li>
-            <li>
+            <li v-show="accounType==='Corporate'">
                 <enterprise-categories></enterprise-categories>
             </li>
             <li>
@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import {Link} from "@inertiajs/inertia-vue3";
+import {Link, usePage} from "@inertiajs/inertia-vue3";
 import GroupDropdown from "@/views/components/group-dropdown.vue";
 import EnterpriseCategories from "@/views/components/enterprise-categories.vue";
 import PersonalStream from "@/views/components/personal-stream.vue";
@@ -47,6 +47,8 @@ import PersonalCategories from "@/views/components/personal-categories.vue";
 defineProps({
     page:String
 })
+const type=usePage()
+const accounType=type.props.value.account_type
 </script>
 
 <style scoped>

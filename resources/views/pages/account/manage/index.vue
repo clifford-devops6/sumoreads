@@ -12,11 +12,13 @@
             <div>
                 <p class="font-bold text-primary-100">
                     <span class="mr-2"><i class="fa-sharp fa-solid fa-circle-info"></i></span>
-                    {{account.data.administrator.slot- users.length}} of {{account.data.administrator.slot}} Invites available from your current plan</p>
+                    {{account.data.administrator.slot- users.length}} of {{account.data.administrator.slot}} Invites available from your current plan
+                <span @click="slotModal=true" class="ml-2 text-black cursor-pointer"><span class="mr-2"><i class="fa-solid fa-plus"></i></span>Add Members</span>
+                </p>
             </div>
             <div class="flex justify-between gap-4">
                 <div>
-                    <button @click="addMemberModal=true" class="font-bold text-gray-500"><span class="mr-2"><i class="fa-solid fa-plus"></i></span>Add Members</button>
+                    <button @click="addMemberModal=true" class="font-bold text-gray-500"><span class="mr-2"><i class="fa-solid fa-plus"></i></span>Send Invitation</button>
                 </div>
                 <div>
                     <button @click="addGroupModal=true" class="font-bold text-gray-500"><span class="mr-2"><i class="fa-solid fa-plus"></i></span>Add Group</button>
@@ -27,7 +29,7 @@
         <!--account accordions-->
         <div class="my-10">
            <div class="my-3">
-               <!--memebrs-->
+               <!--members-->
                <accordion>
                    <template #title>
                        <h6 class="font-semibold"> Members ({{users.length}})</h6>
@@ -133,9 +135,12 @@
     <div>
         <add-member :show="addMemberModal" @close="addMemberModal=false" :account="account.data"></add-member><!--add member-->
         <add-group :show="addGroupModal" @close="addGroupModal=false" :account="account.data"></add-group><!--create group-->
-
+        <add-slot :show="slotModal" @close="slotModal=false" :account="account.data"></add-slot>
 
     </div>
+
+    <!--sweet alerts-->
+
 </reader>
 </template>
 
@@ -154,7 +159,7 @@ import UpdateGroup from "@/views/components/enterprise/update-group.vue";
 import GroupUsers from "@/views/components/enterprise/group-users.vue";
 import GroupSource from "@/views/components/enterprise/group-source.vue";
 import GroupCategory from "@/views/components/enterprise/group-category.vue";
-
+import AddSlot from "@/views/components/enterprise/add-slot.vue";
 
 let props=defineProps({
     account:Object,
@@ -162,6 +167,7 @@ let props=defineProps({
 })
 const users=props.account.data.users
 const addMemberModal=ref(false)
+const slotModal= ref(false)
 const cancelSubscription=(user)=>{
     swal({
         title: "Are you sure you?",
@@ -170,8 +176,11 @@ const cancelSubscription=(user)=>{
         buttons: true,
         dangerMode: true,
     })
-        .then(() => {
-            removeUser(user);
+        .then((result) => {
+            if (result.isConfirmed){
+                removeUser(user);
+            }
+
         });
 }
 
@@ -188,8 +197,11 @@ const cancelInvitation=(invite:Number)=>{
         buttons: true,
         dangerMode: true,
     })
-        .then(() => {
-            deleteInvite(invite);
+        .then((result) => {
+            if (result.isConfirmed){
+                deleteInvite(invite);
+            }
+
         });
 }
 

@@ -107,7 +107,8 @@ let props=defineProps({
     sources:Object,
     latest:Object,
     posts:Object,
-    filters:Object
+    filters:Object,
+    adverts:Object
 })
 
 //Filter Trending Post

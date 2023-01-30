@@ -26,25 +26,28 @@ class HomeController extends Controller
         //trending posts
 
         $trending=ArticleResource::collection(Article::query()
+            ->whereIn('source_id', $sources->pluck('id'))
             ->when(request('trending_source'),function ($query,$trending_source){
                 $query->where('source_id',$trending_source);
             })
             ->when(request('trending_category'),function ($query,$trending_category){
                 $query->where('category_id',$trending_category);
             })
-            ->with('source','source.category')->orderBy('published')->limit(12)->get());
+            ->with('source','source.category')->orderBy('published')->limit(15)->get());
 
         $latest=ArticleResource::collection(Article::query()
+            ->whereIn('category_id', $categories->pluck('id'))
             ->when(request('latest_source'),function ($query,$latest_source){
                 $query->where('source_id',$latest_source);
             })
             ->when(request('latest_category'),function ($query,$latest_category) {
                 $query->where('category_id', $latest_category);
             })
-            ->orderBy('published')->with('source','source.category')->limit(6)->get());
+            ->orderBy('published')->with('source','source.category')->limit(9)->get());
 
         // all articles
         $posts=ArticleResource::collection(Article::query()
+            ->whereIn('category_id', $categories->pluck('id'))
             ->when(request('source'),function ($query,$source){
                 $query->where('source_id',$source);
             })

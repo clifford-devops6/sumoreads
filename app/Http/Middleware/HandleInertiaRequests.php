@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Account;
 use App\Models\ReadStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,16 +53,20 @@ class HandleInertiaRequests extends Middleware
             $readlist=Readlist::where('user_id',Auth::id())->where('read_status',0)->count();
             $reads=ReadStatus::where('user_id',Auth::id())->pluck('share_id');
             $shares=Auth::user()->shares()->whereNotIn('id',$reads)->count();
+            $account=Account::findOrFail(Auth::user()->account_id);
+            $account_type=$account->type->name;
 
         }else{
             $auth=null;
             $readlist=0;
             $shares=0;
+            $account_type='Free';
         }
         return array_merge(parent::share($request), [
             'auth' =>$auth,
             'readlist'=>$readlist,
             'shares'=>$shares,
+            'account_type'=>$account_type,
             'status' => $request->session()->get('status')?$request->session()->get('status'):null,
         ]);
     }

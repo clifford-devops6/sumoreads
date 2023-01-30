@@ -54,10 +54,10 @@
                             <div v-if="auth.role==='Enterprise'" class="p-3">
                                 <Link :href="route('manage.index')" class="hover:text-primary-100"><span class="mr-1"><i class="fa-light fa-building"></i></span>Manage Account</Link>
                             </div>
-                            <div class="p-3">
+                            <div class="p-3" v-if="auth.role==='Enterprise'">
                                 <Link :href="route('subscription.index')" class="hover:text-primary-100"><span class="mr-1"><i class="fa-light fa-calendar-range"></i></span>Billing & Subscription</Link>
                             </div>
-                            <div class="p-3">
+                            <div class="p-3" v-if="auth.role==='Free'">
                                 <Link href="#" class="hover:text-primary-100"><span class="mr-1"><i class="fa-solid fa-arrow-up-from-bracket"></i></span>Upgrade Account</Link>
                             </div>
                             <div class="text-center hover:bg-primary-100 hover:text-white ">
@@ -73,51 +73,57 @@
             </div>
         </div>
     </header>
-<div class="grid grid-cols-12 min-h-screen overflow-hidden">
-    <div class="col-span-2 grid overflow-hidden">
-        <aside class="top-0 relative bg-primary-100 min-h-screen shadow-lg overflow-hidden">
-            <div class="min-h-screen  w-full pt-20 overflow-hidden">
-             <div class="fixed w-64 h-screen overflow-hidden">
-                 <slot name="sidebar"></slot>
-             </div>
-            </div>
-        </aside>
+<div>
+
+    <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+        <span class="sr-only">Open sidebar</span>
+        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+        </svg>
+    </button>
+
+    <aside id="default-sidebar" class="fixed top-0 left-0 z-20 w-64 bg-primary-100 h-full" aria-label="Sidebar">
+        <div class="h-full py-5 overflow-y-auto pt-16">
+           <slot name="sidebar"/>
+        </div>
+    </aside>
+
+    <div class="py-10 ml-64 min-h-screen pt-16">
+        <slot/>
     </div>
-    <div class="col-span-10 mt-16  w-full">
-        <main>
-            <slot />
-        </main>
-    </div>
+
 </div>
 
-    <footer class="bg-gray-200 p-2 flex justify-center">
-        <ul class="flex justify-center gap-5 py-3 ">
-            <li>
-                <Link href="#" title="Terms and Conditions" class="font-medium hover:text-primary-100">Terms and Conditions</Link>
-            </li>
-            <li>
-                <Link href="#" title="Privacy Policy" class="font-medium hover:text-primary-100">Privacy policy</Link>
-            </li>
-            <li>
-                <Link href="#" title="Privacy Policy" class="font-medium hover:text-primary-100">FAQS</Link>
-            </li>
-            <li>
-                <Link href="#" title="Partners" class="font-medium hover:text-primary-100">Partners</Link>
-            </li>
-            <li>
-                <Link :href="route('contact-us.index')" title="Contact us" class="font-medium hover:text-primary-100">Contact</Link>
-            </li>
-            <li>
-                <Link :href="route('report-bug.index')" title="Report bug" class="font-medium hover:text-primary-100">Report Bug</Link>
-            </li>
-        </ul>
-    </footer>
+    <footer class="relative bg-gray-200 z-[1000] p-2 flex justify-center">
+           <ul class="flex justify-center gap-5 py-3 ">
+               <li>
+                   <Link href="#" title="Terms and Conditions" class="font-medium hover:text-primary-100">Terms and Conditions</Link>
+               </li>
+               <li>
+                   <Link href="#" title="Privacy Policy" class="font-medium hover:text-primary-100">Privacy policy</Link>
+               </li>
+               <li>
+                   <Link href="#" title="Privacy Policy" class="font-medium hover:text-primary-100">FAQS</Link>
+               </li>
+               <li>
+                   <Link href="#" title="Partners" class="font-medium hover:text-primary-100">Partners</Link>
+               </li>
+               <li>
+                   <Link :href="route('contact-us.index')" title="Contact us" class="font-medium hover:text-primary-100">Contact</Link>
+               </li>
+               <li>
+                   <Link :href="route('report-bug.index')" title="Report bug" class="font-medium hover:text-primary-100">Report Bug</Link>
+               </li>
+           </ul>
+       </footer>
+
 </template>
 
 <script setup lang="ts">
 import {Link,usePage} from "@inertiajs/inertia-vue3";
 import { InertiaProgress } from '@inertiajs/progress'
 import { Dropdown } from 'flowbite-vue'
+import { Sidebar } from 'flowbite-vue'
 InertiaProgress.init()
 import Toast from "@/views/components/toast.vue";
 import {reactive, ref} from "vue";

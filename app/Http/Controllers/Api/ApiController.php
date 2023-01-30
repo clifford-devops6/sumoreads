@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Account;
+use App\Models\Advertisement;
 use App\Models\Category;
 use App\Models\Group;
 use App\Models\Source;
@@ -53,5 +54,10 @@ class ApiController extends Controller
     public function personalCategories($id){
         $user=User::findOrFail($id);
         return $user->categories()->get();
+    }
+
+    public function  getAdverts(){
+        //adverts. pick 20 items in random order
+        return Advertisement::where('status',1)->select('title','id','description','url')->inRandomOrder()->limit(20)->get();
     }
 }

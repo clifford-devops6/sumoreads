@@ -5,7 +5,7 @@
         <profile-menu :page="route('profile.index')">
         </profile-menu>
     </template>
-    <div class="my-10 w-full">
+    <div class="my-10 w-full px-3">
         <h1 class="text-xl font-semibold">General Settings</h1>
         <div class="border rounded-lg p-5 my-5 w-full">
             <h6 class="text-lg my-5">Personal Information</h6>

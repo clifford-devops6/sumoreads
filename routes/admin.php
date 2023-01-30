@@ -22,5 +22,5 @@ Route::Group(['middleware'=>['auth:admin']],function (){
     Route::resource('admin/sources',AdminSourceController::class);
     Route::resource('admin/categories',AdminCategoryController::class);
     Route::resource('admin/languages',AdminLangaugeController::class);
-    Route::resource('admin',AdminController::class);
+    Route::resource('/admin',AdminController::class);
 });

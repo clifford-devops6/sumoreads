@@ -28,6 +28,7 @@
                             {{group.name}}
                           </Link>
                       </li>
+
                   </ul>
                 </div>
 

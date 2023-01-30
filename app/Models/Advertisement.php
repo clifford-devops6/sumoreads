@@ -15,6 +15,11 @@ class Advertisement extends Model implements  HasMedia
         'title','description','url','status','expiry'
     ];
 
+    protected $appends = ["image"];
+
+    public function getImageAttribute()
+    { return $this->getFirstMediaUrl('image','thumb'); }
+
     public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('thumb')

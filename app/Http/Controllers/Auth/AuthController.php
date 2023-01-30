@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Account;
+use App\Models\Category;
+use App\Models\Source;
 use App\Models\Type;
 use App\Models\User;
 use App\Models\Verify;
@@ -67,6 +69,10 @@ class AuthController extends Controller
 
         $user->assignRole($role);
         $user->givePermissionTo($permission);
+        $sources=Source::inRandomOrder()->limit(5)->pluck('id');
+        $categories=Category::inRandomOrder()->limit(5)->pluck('id');
+        $user->sources()->syncWithoutDetaching($sources);
+        $user->categories()->syncWithoutDetaching($categories);
         $user->notify(new WelcomeOnboardNotification());
         Auth::login($user);
 
