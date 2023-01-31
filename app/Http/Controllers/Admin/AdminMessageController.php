@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ContactResource;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -17,7 +18,7 @@ class AdminMessageController extends Controller
     public function index()
     {
         //
-        $contacts=Contact::select('id','name','email','subject','message','created_at','status')->paginate(10);
+        $contacts=ContactResource::collection(Contact::paginate(10));
         return inertia::render('admin.messages.index', compact('contacts'));
     }
 
@@ -51,7 +52,7 @@ class AdminMessageController extends Controller
     public function show($id)
     {
         //
-        $contact=Contact::select('id','name','email','subject','message','created_at','status')->findOrFail($id);
+        $contact=new ContactResource(Contact::findOrFail($id));
         $contact->update(['status'=>0]);
 
         return inertia::render('admin.messages.show', compact('contact'));

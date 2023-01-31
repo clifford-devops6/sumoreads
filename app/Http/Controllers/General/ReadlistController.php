@@ -4,7 +4,9 @@ namespace App\Http\Controllers\General;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ReadlistResource;
+use App\Models\Category;
 use App\Models\Readlist;
+use App\Models\Source;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -19,9 +21,29 @@ class ReadlistController extends Controller
     public function index()
     {
         //
-        $articles=ReadlistResource::collection(Readlist::where('user_id',Auth::id())->with(['article','article.source','article.category'])->get());
+        $categories=Category::select('id','name')->get();
+        $sources=Source::select('id','name')->get();
+        $reads=Readlist::where('user_id',Auth::id())->with(['article','article.source','article.category'])
+            ->when(request('category'), function ($query, $category){
+                $query->whereHas('article', function ($q) use ($category) {
+                    $q->where('category_id', "=", $category);
+                })  ;
+            })
+            ->when(request('source'), function ($query, $source){
+                $query->whereHas('article', function ($q) use ($source) {
+                    $q->where('source_id', "=", $source);
+                })  ;
+            })
+            ->when(request('search'), function ($query, $search){
+                $query->whereHas('article', function ($q) use ($search) {
+                    $q->where('title', 'LIKE', '%' . $search . '%');
+                })  ;
+            })
+            ->get();
+        $articles=ReadlistResource::collection($reads);
+        $filters=request()->only(['category','source','search']);
        // return $articles;
-        return inertia::render('readlist.index', compact('articles'));
+        return inertia::render('readlist.index', compact('articles','sources','categories','filters'));
     }
 
     /**
@@ -121,7 +143,7 @@ class ReadlistController extends Controller
         $articles=ReadlistResource::collection(Readlist::where('user_id',Auth::id())->where('read_status',1)->with(['article','article.source','article.category'])->get());
         // return $articles;
          return inertia::render('readlist.read', compact('articles'));
- 
+
 
     }
 }

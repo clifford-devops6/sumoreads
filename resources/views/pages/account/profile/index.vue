@@ -1,6 +1,7 @@
 <template>
 <reader>
    <!---Sidebar menu-->
+    <Head><title>Profile Settings</title></Head>
     <template #sidebar>
         <profile-menu :page="route('profile.index')">
         </profile-menu>
@@ -55,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import {Link,useForm} from "@inertiajs/inertia-vue3";
+import {Link,useForm, Head} from "@inertiajs/inertia-vue3";
 import Reader from "@/views/layouts/reader.vue";
 import ProfileMenu from "@/views/components/sidebar/profile-menu.vue";
 let props=defineProps({

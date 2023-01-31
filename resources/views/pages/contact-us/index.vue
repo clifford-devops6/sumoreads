@@ -9,7 +9,7 @@
 
                     <div class="mt-5  flex justify-center">
                         <form class="w-full" @submit.prevent="submit">
-                            <div class="grid grid-cols-2 gap-2">
+                            <div v-if="!auth" class="grid grid-cols-2 gap-2">
                                 <div class="mt-3">
                                     <label for="contact-name" class="read-label">Name:</label>
                                     <input type="text" class="read-input" id="contact-name" placeholder="Enter your name" required v-model="form.name"/>
@@ -28,7 +28,11 @@
                             <div class="grid mt-5">
                                 <div >
                                     <label for="contact-subject" class="read-label">Subject:</label>
-                                    <input type="text" class="read-input" id="contact-subject" placeholder="Subject" required v-model="form.subject"/>
+                                    <select required class="read-input" v-model="form.subject">
+                                        <option selected value="">Select Status</option>
+                                        <option :value="subject.id" v-for="subject in subjects" :key="subject.id">{{subject.name}}</option>
+
+                                    </select>
                                     <div v-if="form.errors.subject" class="read-error">
                                         <span>{{ form.errors.subject }}</span>
                                     </div>
@@ -56,11 +60,15 @@
 </template>
 
 <script setup lang="ts">
-import {Head,useForm} from "@inertiajs/inertia-vue3";
-
+import {Head, useForm, usePage} from "@inertiajs/inertia-vue3";
+defineProps({
+    subjects:Object
+})
+const page=usePage()
+const auth=page.props.value.auth
 let form=useForm({
-    name:'',
-    email:'',
+    name:auth?auth.name:'',
+    email:auth?auth.email:'',
     subject:'',
     message:''
 })
@@ -71,6 +79,8 @@ const submit=()=>{
         }
     })
 }
+
+
 </script>
 
 <style scoped>

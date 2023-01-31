@@ -1,17 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Resources\ArticleResource;
-use App\Http\Resources\SourceResource;
-use App\Models\Article;
-use App\Models\Category;
-use App\Models\Source;
-use App\Models\Type;
+use App\Http\Controllers\Controller;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class MainController extends Controller
+class ContactSubjectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,15 +17,8 @@ class MainController extends Controller
     public function index()
     {
         //
-        $sources=SourceResource::collection(Source::inRandomOrder()->limit(100)->get());
-        $free=Type::where('name','Free')->select('id','name','price')->first();
-        $enterprise=Type::where('name','Enterprise')->select('id','name','price')->first();
-        $articles=ArticleResource::collection(Article::with(['source','category'])->latest()->limit(15)->get());
-
-
-
-
-        return inertia::render('welcome', compact('sources','free','enterprise', 'articles'));
+        $subjects=Subject::select('name','created_at','id')->get();
+        return inertia::render('admin.subject.index', compact('subjects'));
     }
 
     /**
@@ -51,6 +40,14 @@ class MainController extends Controller
     public function store(Request $request)
     {
         //
+        $validated=$request->validate([
+            'name'=>'required|string|max:50'
+        ]);
+        $subject=Subject::create([
+            'name'=>$validated['name']
+        ]);
+        return redirect()->back()
+            ->with('status','Subject created successfully');
     }
 
     /**
@@ -85,6 +82,16 @@ class MainController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $validated=$request->validate([
+            'name'=>'required|string|max:50'
+        ]);
+        $subject=Subject::findOrFail($id);
+        $subject->update([
+            'name'=>$validated['name']
+        ]);
+        return redirect()->back()
+            ->with('status','Subject updated successfully');
     }
 
     /**
@@ -96,5 +103,10 @@ class MainController extends Controller
     public function destroy($id)
     {
         //
+        $subject=Subject::findOrFail($id);
+        $subject->delete();
+        return redirect()->back()
+            ->with('status','Subject deleted successfully');
+
     }
 }

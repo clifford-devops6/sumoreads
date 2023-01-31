@@ -14,15 +14,12 @@
                 <li class="hover:text-primary-100 font-bold py-5" :class="{ 'border-b border-b-2 border-b-primary-100': $page.url === '/news' }">
                     <Link :href="route('news.index')" title="News">News</Link>
                 </li>
-                <li class="text-gray-800 hover:text-primary-100 font-bold py-5" :class="{ 'border-b border-b-2 border-b-primary-100': $page.url === '/account/personalize' }">
-                    <Link :href="route('personalize.index')" title="Personalize feeds">Personalize</Link>
-                </li>
+
                 <li class="text-gray-800 hover:text-primary-100 font-bold py-5" :class="{ 'border-b border-b-2 border-b-primary-100': $page.url === '/readlist' }">
-                    <Link class="flex" :href="route('readlist.index')" title="My Read list">Read List <span v-if="readlist" class="self-center bg-primary-100 text-white p-1
-                        rounded-full ml-2 h-6 w-6 text-xs flex place-content-center"><span>{{ readlist }}</span></span></Link>
+                    <Link class="flex" href="#" title="My Read list">FAQs</Link>
                 </li>
                 <li class="text-gray-800 hover:text-primary-100 font-bold py-5" :class="{ 'border-b border-b-2 border-b-primary-100': $page.url === '/share' }">
-                    <Link class="flex" :href="route('share.index')" title="Sharing">Sharing
+                    <Link class="flex" :href="route('contact-us.index')" title="Sharing">Contact us
                         <span v-if="shares" class="self-center bg-primary-100 text-white p-1
                         rounded-full ml-2 h-6 w-6 text-xs flex place-content-center"><span>{{ shares }}</span></span>
                     </Link>
@@ -35,7 +32,7 @@
         </div>
         <div class="py-2 pr-3 col-span-1 flex justify-end">
            <div>
-               <Link v-if="!auth" :href="route('login')" class="flex px-8 h-12 py-2 bg-primary-100 rounded-full text-white hover:bg-opacity-95">
+               <Link v-if="!auth" :href="route('login')" class="flex px-8 h-10 py-1 bg-primary-100 rounded-full text-white hover:bg-opacity-95">
             <span class="self-center">
                 <span class="mr-2"><i class="fa-light fa-user"></i></span>Login
             </span>

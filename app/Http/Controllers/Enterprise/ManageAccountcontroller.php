@@ -136,6 +136,10 @@ class ManageAccountcontroller extends Controller
     public function removeUser($id){
 
      $user=User::findOrFail($id);
+     $account=Account::findOrFail($user->account_id);
+     $administrator=$account->administrator;
+     $administrator->update(['slot'=>$administrator->slot-1]);
+
         $account=Account::create([
             'name'=>$user->name,
             'type_id'=>5,
@@ -155,7 +159,13 @@ class ManageAccountcontroller extends Controller
     }
 
     public function deleteInvite($id){
+
         $invite=Invitation::findOrFail($id);
+        $account=Account::findORFail($invite->account_id);
+        $administrator=$account->administrator;
+
+        $administrator->update(['slot'=>$administrator->slot-1]);
+
         $invite->delete();
         return redirect()->back()
             ->with('status','Invitation successfully deleted');

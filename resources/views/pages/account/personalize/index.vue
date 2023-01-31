@@ -11,7 +11,7 @@
                     <h1 class="font-bold text-xl">Streams</h1>
                 </div>
                 <div class="flex gap-4">
-                    <button @click="enterpriseModal=true" v-if="auth.role==='Enterprise'"  class="font-bold text-primary-100"><span class="mr-2"><i class="fal fa-pen"></i></span>Customize enterprise</button>
+                    <button @click="enterpriseModal=true" v-if="auth.role==='Enterprise'"  class="font-bold text-primary-100"><span class="mr-2"><i class="fal fa-pen"></i></span>Customize Enterprise</button>
                     <button @click="personalSource=true" class="font-bold text-primary-100"><span class="mr-2"><i class="fal fa-pen"></i></span>Customize Personal</button>
                 </div>
             </div>
@@ -47,7 +47,7 @@
                     <h1 class="font-bold text-xl">Categories</h1>
                 </div>
                 <div class="flex gap-4">
-                    <button @click="enterpriseCategory=true" v-if="auth.role==='Enterprise'"  class="font-bold text-primary-100"><span class="mr-2"><i class="fal fa-pen"></i></span>Customize enterprise</button>
+                    <button @click="enterpriseCategory=true" v-if="auth.role==='Enterprise'"  class="font-bold text-primary-100"><span class="mr-2"><i class="fal fa-pen"></i></span>Customize Enterprise</button>
                     <button @click="personalCategory=true" class="font-bold text-primary-100"><span class="mr-2"><i class="fal fa-pen"></i></span>Customize Personal</button>
                 </div>
             </div>

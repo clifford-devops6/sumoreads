@@ -41,9 +41,9 @@
                             <form @submit.prevent="submit">
                                 <div class="grid px-10 my-5">
                                     <div>
-                                        <p>Add multiple emails separated by comma</p>
+                                        <p>Enter email</p>
                                     </div>
-                                    <input type="email"  v-model="form.email" class="read-input" required>
+                                    <input type="email" v-model="form.email" class="read-input" required>
                                     <div v-if="form.errors.email" class="read-error">
                                         <span>{{ form.errors.email }}</span>
                                     </div>

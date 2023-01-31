@@ -154,7 +154,7 @@ onMounted(()=>{
     axios
         .get('api/get/sources')
         .then((response: { data: never[]; }) => {
-            sources.value = response.data;
+            sources.value = response.data.data;
         })
         .catch((error: any) => console.log(error))
 

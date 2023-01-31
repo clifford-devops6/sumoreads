@@ -78,7 +78,8 @@ onMounted(()=>{
     axios
         .get('api/get/personal-streams/'+user)
         .then((response: { data: never[]; }) => {
-            sources.value = response.data;
+            sources.value = response.data.data;
+
 
         })
         .catch((error: any) => console.log(error))
@@ -90,7 +91,7 @@ let removeEventListener=Inertia.on("finish",()=>{
     axios
         .get('api/get/personal-streams/'+user)
         .then((response: { data: never[]; }) => {
-            sources.value = response.data;
+            sources.value = response.data.data;
 
         })
         .catch((error: any) => console.log(error))

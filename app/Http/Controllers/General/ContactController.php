@@ -4,6 +4,7 @@ namespace App\Http\Controllers\General;
 
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -17,8 +18,8 @@ class ContactController extends Controller
     public function index()
     {
         //
-
-        return inertia::render('contact-us.index');
+         $subjects=Subject::select('id','name')->get();
+        return inertia::render('contact-us.index', compact('subjects'));
     }
 
     /**
@@ -43,14 +44,14 @@ class ContactController extends Controller
         $validated=$request->validate([
             'name'=>'required|string|max:255',
             'email'=>'required|string|max:255|email',
-            'subject'=>'required|string|max:255',
+            'subject'=>'required|integer',
             'message'=>'required|max:1000'
         ]);
 
         $message=Contact::create([
             'name'=>$validated['name'],
             'email'=>$validated['email'],
-            'subject'=>$validated['subject'],
+            'subject_id'=>$validated['subject'],
             'message'=>$validated['message']
         ]);
 

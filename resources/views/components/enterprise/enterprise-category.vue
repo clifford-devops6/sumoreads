@@ -58,12 +58,15 @@
                                 <hr class="my-3">
                                 <div class="p-1">
                                     <div class="my-3 space-y-3 h-[180px] overflow-y-auto custom-scrolling">
-                                        <div v-for="category in filteredCategory" :key="category.id" class="">
-                                            <label class="read-label flex gap-3 justify-between">
-                                                <input name="selectedUser" type="checkbox" :value="category.id" class="peer hidden" v-model="selectedCategory">
-                                                <span class="capitalize peer-checked:bg-primary-100 p-1 rounded peer-checked:text-white">{{category.name}}</span>
+                                        <div v-for="category in filteredCategory" :key="category.id" >
+                                            <label class="read-label flex gap-3 justify-between cursor-pointer">
+                                                <input :disabled="ids.includes(category.id)" name="selectedUser" type="checkbox" :value="category.id" class="peer hidden" v-model="selectedCategory">
+                                                <span class="capitalize peer-checked:bg-primary-100 p-1 rounded peer-checked:text-white"
+                                                      :class="{'text-gray-500':ids.includes(category.id)}">
+                                                   <span class="mr-2" v-html="category.icon"></span>
+                                                    {{category.name}}
 
-
+                                                </span>
                                             </label>
                                         </div>
                                     </div>
@@ -90,9 +93,12 @@
                                 <div class="p-1">
                                     <div class="my-3 space-y-3 h-[180px] overflow-y-auto custom-scrolling">
                                         <div v-for="category in myCategories" :key="category.id" class="">
-                                            <label class="read-label flex gap-3 justify-between">
+                                            <label class=" cursor-pointer read-label flex gap-3 justify-between">
                                                 <input name="selectedUser" type="checkbox" :value="category.id" class="peer hidden" v-model="availableCategory">
-                                                <span class="capitalize peer-checked:bg-primary-100 p-1 rounded peer-checked:text-white">{{category.name}}</span>
+                                                <span class="capitalize peer-checked:bg-primary-100 p-1 rounded peer-checked:text-white">
+                                                    <span class="mr-2" v-html="category.icon"></span>
+                                                    {{category.name}}
+                                                </span>
                                             </label>
                                         </div>
                                     </div>
@@ -101,7 +107,7 @@
                         </div>
 
                         <div class="flex justify-end">
-                            <button class="btn-primary" @click="$emit('close')">Save and Close</button>
+                            <button class="btn-primary" @click="$emit('close')">Save</button>
                         </div>
 
                     </div>
@@ -201,6 +207,15 @@ const removeFromGroup=()=>{
         }
     })
 }
+
+const ids= computed(() =>{
+    let items = []
+    props.myCategories.forEach((element) =>{
+        items.push(element.id)
+    })
+
+    return items
+})
 </script>
 
 <style scoped>

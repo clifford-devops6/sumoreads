@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\SourceResource;
 use App\Models\Account;
 use App\Models\Advertisement;
 use App\Models\Category;
@@ -25,11 +26,11 @@ class ApiController extends Controller
     }
 
     public function getSources(){
-        return Source::select('id','name')->get();
+        return SourceResource::collection(Source::all());
     }
 
     public function getCategories(){
-        return Category::select('id','name')->get();
+        return Category::select('id','name','icon')->get();
     }
 
     public function getGroups($id){
@@ -48,7 +49,8 @@ class ApiController extends Controller
 
     public function personalStreams($id){
         $user=User::findOrFail($id);
-        return $user->sources()->get();
+        $source= $user->sources()->pluck('source_id');
+        return SourceResource::collection(Source::whereIn('id', $source)->get());
     }
 
     public function personalCategories($id){

@@ -59,7 +59,7 @@ class AccountSetupController extends Controller
         ]);
         $user=Auth::user();
         $account=$user->account->latest()->first();
-        $administrator=$account->administrator->first();
+        $administrator=$account->administrator->latest()->first();
 
 
         //check for spoofed members

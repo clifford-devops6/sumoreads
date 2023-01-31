@@ -2,48 +2,84 @@
 <div>
 
     <div v-if="articles.length" class="my-5 relative">
-        <div v-show="slideActive===index" class="grid grid-cols-3 gap-2" v-for="(article,index) in chunk(articles,3)" :key="index">
-            <div @click="submitPost(article[0].id)" class="grid cursor-pointer">
-                <div class="rounded-lg overflow-hidden h-[220px] grid">
-                    <img :src="article[0].image" :alt="article[0].title" class="object-cover w-full h-full">
-                </div>
-                <div class="my-2">
-                    <h2 class="font-libre font-bold text-lg">{{useTruncate(article[0].title,60)}}</h2>
-                    <p class="my-1 text-gray-800">{{useTruncate(article[0].description,120)}}</p>
-                </div>
-            </div>
-
-            <div @click="submitPost(article[1].id)" class="grid cursor-pointer">
-                <div class="rounded-lg overflow-hidden h-[220px] grid">
-                    <img :src="article[1].image" :alt="article[1].title" class="object-cover w-full h-full" >
-                </div>
-                <div class="my-2">
-                    <h2 class="font-libre font-bold text-lg">{{useTruncate(article[1].title,60)}}</h2>
-                    <p class="my-1 text-gray-800">{{useTruncate(article[1].description,120)}}</p>
-                </div>
-            </div>
-            <div v-if="article[2] && accountType==='Corporate'" @click="submitPost(article[2].id)" class="grid cursor-pointer">
-                <div class="rounded-lg overflow-hidden h-[220px] grid">
-                    <img :src="article[2].image" :alt="article[2].title" class="object-cover w-full h-full" >
-                </div>
-                <div class="my-2">
-                    <h2 class="font-libre font-bold text-lg">{{useTruncate(article[2].title,60)}}</h2>
-                    <p class="my-1 text-gray-800">{{useTruncate(article[2].description,120)}}</p>
-                </div>
-            </div>
-
-            <div v-else class="grid" v-show="advertActive===index"  v-for="(advert, index) in adverts" :key="advert.id">
-                <a :href="advert.url" target="_blank">
-                    <div class="rounded-lg overflow-hidden h-[220px] grid relative">
-                        <img :src="advert.image" :alt="advert.title" class="object-cover w-full h-full" >
-                        <span class="bg-primary-300 text-white rounded text-xs p-1 my-2 absolute top-1 left-1">Ad</span>
+        <div v-show="slideActive===index"  v-for="(article,index) in chunk(articles,3)" :key="index">
+            <div v-if="(index % 2) === 1" class="grid grid-cols-3 gap-2">
+                <div @click="submitPost(article[0].id)" class="grid cursor-pointer">
+                    <div class="rounded-lg overflow-hidden h-[220px] grid">
+                        <img :src="article[0].image" :alt="article[0].title" class="object-cover w-full h-full">
                     </div>
                     <div class="my-2">
-                        <h2 class="font-libre font-bold text-lg">{{advert.title}}</h2>
-                        <p class="my-1 text-gray-800">{{useTruncate(advert.description,120)}}</p>
+                        <h2 class="font-libre font-bold text-lg">{{useTruncate(article[0].title,60)}}</h2>
+                        <p class="my-1 text-gray-800">{{useTruncate(article[0].description,120)}}</p>
                     </div>
-                </a>
+                </div>
+
+                <div @click="submitPost(article[1].id)" class="grid cursor-pointer">
+                    <div class="rounded-lg overflow-hidden h-[220px] grid">
+                        <img :src="article[1].image" :alt="article[1].title" class="object-cover w-full h-full" >
+                    </div>
+                    <div class="my-2">
+                        <h2 class="font-libre font-bold text-lg">{{useTruncate(article[1].title,60)}}</h2>
+                        <p class="my-1 text-gray-800">{{useTruncate(article[1].description,120)}}</p>
+                    </div>
+                </div>
+                <div v-if="article[2] && accountType==='Corporate'" @click="submitPost(article[2].id)" class="grid cursor-pointer">
+                    <div class="rounded-lg overflow-hidden h-[220px] grid">
+                        <img :src="article[2].image" :alt="article[2].title" class="object-cover w-full h-full" >
+                    </div>
+                    <div class="my-2">
+                        <h2 class="font-libre font-bold text-lg">{{useTruncate(article[2].title,60)}}</h2>
+                        <p class="my-1 text-gray-800">{{useTruncate(article[2].description,120)}}</p>
+                    </div>
+                </div>
+
+                <div v-else class="grid" v-show="advertActive===index"  v-for="(advert, index) in adverts" :key="advert.id">
+                    <a :href="advert.url" target="_blank">
+                        <div class="rounded-lg overflow-hidden h-[220px] grid relative">
+                            <img :src="advert.image" :alt="advert.title" class="object-cover w-full h-full" >
+                            <span class="bg-primary-300 text-white rounded text-xs p-1 my-2 absolute top-1 left-1">Ad</span>
+                        </div>
+                        <div class="my-2">
+                            <h2 class="font-libre font-bold text-lg">{{advert.title}}</h2>
+                            <p class="my-1 text-gray-800">{{useTruncate(advert.description,120)}}</p>
+                        </div>
+                    </a>
+
+                </div>
             </div>
+            <div v-else class="grid grid-cols-3 gap-2">
+                <div @click="submitPost(article[0].id)" class="grid cursor-pointer">
+                    <div class="rounded-lg overflow-hidden h-[220px] grid">
+                        <img :src="article[0].image" :alt="article[0].title" class="object-cover w-full h-full">
+                    </div>
+                    <div class="my-2">
+                        <h2 class="font-libre font-bold text-lg">{{useTruncate(article[0].title,60)}}</h2>
+                        <p class="my-1 text-gray-800">{{useTruncate(article[0].description,120)}}</p>
+                    </div>
+                </div>
+
+                <div @click="submitPost(article[1].id)" class="grid cursor-pointer">
+                    <div class="rounded-lg overflow-hidden h-[220px] grid">
+                        <img :src="article[1].image" :alt="article[1].title" class="object-cover w-full h-full" >
+                    </div>
+                    <div class="my-2">
+                        <h2 class="font-libre font-bold text-lg">{{useTruncate(article[1].title,60)}}</h2>
+                        <p class="my-1 text-gray-800">{{useTruncate(article[1].description,120)}}</p>
+                    </div>
+                </div>
+                <div  @click="submitPost(article[2].id)" class="grid cursor-pointer">
+                    <div class="rounded-lg overflow-hidden h-[220px] grid">
+                        <img :src="article[2].image" :alt="article[2].title" class="object-cover w-full h-full" >
+                    </div>
+                    <div class="my-2">
+                        <h2 class="font-libre font-bold text-lg">{{useTruncate(article[2].title,60)}}</h2>
+                        <p class="my-1 text-gray-800">{{useTruncate(article[2].description,120)}}</p>
+                    </div>
+                </div>
+
+
+            </div>
+
         </div>
         <div>
             <button @click="slidePrevious()" class="absolute rounded-full bg-white/60

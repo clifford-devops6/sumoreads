@@ -29,8 +29,7 @@
                     <div class="p-3">
                         <div>
                             <div class="text-center">
-                                <h6 class="text-lg font-bold">Add Members</h6>
-                                <p class="my-3 text-primary-100 text-lg">{{account.administrator.slot-account.users_count}} of {{account.administrator.slot}} slots Available from current plan</p>
+                                <h6 class="text-lg font-bold my-5">Add Members</h6>
                                 <p>You will be charged USD {{Number(account.type.price).toFixed(2)}} for each slot added</p>
                             </div>
 
@@ -45,7 +44,7 @@
                                     </div>
                                 </div>
                                 <div class="flex justify-center my-10">
-                                    <button class="btn-primary">Add slots <span v-if="form.processing" class="animate-ping"><i class="fa-solid fa-ellipsis"></i></span></button>
+                                    <button class="btn-primary">Add Members <span v-if="form.processing" class="animate-ping"><i class="fa-solid fa-ellipsis"></i></span></button>
                                 </div>
                             </form>
                         </div>

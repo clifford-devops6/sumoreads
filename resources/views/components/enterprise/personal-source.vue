@@ -58,11 +58,14 @@
                                 <hr class="my-3">
                                 <div class="p-1">
                                     <div class="my-3 space-y-3 h-[180px] overflow-y-auto custom-scrolling">
-                                        <div v-for="source in filteredSource" :key="source.id" class="">
-                                            <label class="read-label flex gap-3 justify-between">
-                                                <input name="selectedUser" type="checkbox" :value="source.id" class="peer hidden" v-model="selectedSource">
-                                                <span class="capitalize peer-checked:bg-primary-100 p-1 rounded peer-checked:text-white">{{source.name}}</span>
-
+                                        <div v-for="source in filteredSource" :key="source.id" class="flex gap-2">
+                                            <div class="self-center">
+                                                <img :src="source.logo" :alt="source.name" class="w-8">
+                                            </div>
+                                            <label class="read-label flex gap-3 justify-between cursor-pointer self-center">
+                                                <input :disabled="ids.includes(source.id)" name="selectedUser" type="checkbox" :value="source.id" class="peer hidden" v-model="selectedSource">
+                                                <span class="capitalize peer-checked:bg-primary-100 p-1 rounded peer-checked:text-white"
+                                                      :class="{'text-gray-500':ids.includes(source.id)}">{{source.name}}</span>
 
                                             </label>
                                         </div>
@@ -89,9 +92,13 @@
                                 <hr class="my-3">
                                 <div class="p-1">
                                     <div class="my-3 space-y-3 h-[180px] overflow-y-auto custom-scrolling">
-                                        <div v-for="source in mySources" :key="source.id" class="">
-                                            <label class="read-label flex gap-3 justify-between">
+                                        <div v-for="source in mySources" :key="source.id" class="flex gap-2">
+                                            <div class="self-center">
+                                                <img :src="source.logo" :alt="source.name" class="w-8">
+                                            </div>
+                                            <label class="read-label flex gap-3 self-center cursor-pointer">
                                                 <input name="selectedUser" type="checkbox" :value="source.id" class="peer hidden" v-model="availableSource">
+
                                                 <span class="capitalize peer-checked:bg-primary-100 p-1 rounded peer-checked:text-white">{{source.name}}</span>
                                             </label>
                                         </div>
@@ -152,7 +159,8 @@ onMounted(()=>{
     axios
         .get('api/get/sources')
         .then((response: { data: never[]; }) => {
-            sources.value = response.data;
+            sources.value = response.data.data;
+
         })
         .catch((error: any) => console.log(error))
 
@@ -198,6 +206,15 @@ const removeFromGroup=()=>{
         }
     })
 }
+
+const ids= computed(() =>{
+    let items = []
+    props.mySources.forEach((element) =>{
+        items.push(element.id)
+    })
+
+    return items
+})
 </script>
 
 <style scoped>

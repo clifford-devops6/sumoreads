@@ -5,7 +5,27 @@
         <readlist-menu :page="route('readlist.index')"></readlist-menu>
     </template>
     <div class="px-3">
-        <div v-if="articles.data.length" class="my-10 space-y-2">
+        <div class="flex justify-end my-5">
+
+            <div class="flex gap-1">
+                <div>
+                    <input v-model="search" type="search" placeholder="Search by title" class="rounded-lg h-10 focus:border-primary-100 focus:ring-primary-100 w-56">
+                </div>
+                <div>
+                    <select  v-model="category" class="rounded-lg h-10 focus:border-primary-100 focus:ring-primary-100 w-56">
+                        <option value="" selected>All categories</option>
+                        <option v-for="category in categories" :value="category.id" :key="category.id">{{category.name}}</option>
+                    </select>
+                </div>
+                <div>
+                    <select v-model="source" class="rounded-lg h-10 focus:border-primary-100 focus:ring-primary-100 w-56">
+                        <option value=""  :selected="true">All Streams</option>
+                        <option v-for="source in sources" :value="source.id" :key="source.id">{{source.name}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div v-if="articles.data.length" class="my-5 space-y-2">
             <div v-for="(article, index) in chunk(articles.data,chunker)" :key="index" >
                 <div class="grid grid-cols-2 gap-2">
                     <div @click="submitPost(post.id)" v-for="post in article" :key="post.id"
@@ -73,12 +93,16 @@ import SecondPostModal from "@/views/components/news/second-post-modal.vue"
 import ReadlistMenu from "@/views/components/sidebar/readlist-menu.vue"
 import { useTruncate } from "@/scripts/use/useTruncate";
 import { chunk } from "@/scripts/use/useChunk";
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import {Head, Link, usePage} from "@inertiajs/inertia-vue3";
 import axios from "axios";
+import {Inertia} from "@inertiajs/inertia";
 
 let props=defineProps({
-    articles:Object
+    articles:Object,
+    sources:Object,
+    categories:Object,
+    filters:Object
 })
 
 
@@ -131,4 +155,15 @@ function advertNext(){
 function adsInterval(){
     setInterval(advertNext, 4000)
 }
+
+const category=ref(props.filters.category?props.filters.category:'')
+const source=ref(props.filters.source?props.filters.source:'')
+const search=ref(props.filters.search)
+watch([category,source,search],()=>{
+    Inertia.get(route('readlist.index'),{
+        category:category.value,
+        source:source.value,
+        search:search.value
+    }, {preserveState:true, replace:true,preserveScroll:true})
+})
 </script>

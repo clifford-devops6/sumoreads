@@ -56,4 +56,7 @@ class Source extends Model implements HasMedia
     public function articles(){
         return $this->hasMany(Article::class);
     }
+
+    public function getImageAttribute()
+    { return $this->getFirstMediaUrl('logo','logo-icon'); }
 }

@@ -1,5 +1,6 @@
 <template>
     <reader>
+        <Head><title>Security Settings</title></Head>
         <!---Sidebar menu-->
         <template #sidebar>
             <profile-menu :page="route('profile.security')">
@@ -46,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import {useForm} from "@inertiajs/inertia-vue3";
+import {useForm, Head} from "@inertiajs/inertia-vue3";
 import Reader from "@/views/layouts/reader.vue";
 import ProfileMenu from "@/views/components/sidebar/profile-menu.vue";
 import swal from 'sweetalert';
@@ -70,7 +71,7 @@ const deleteAccount=()=>{
         dangerMode: true,
     })
         .then((result) => {
-            if (result.isConfirmed){
+            if (result){
                 deleteUser();
             }
 

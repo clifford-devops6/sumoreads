@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\confirmEmailChange;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -113,6 +114,7 @@ class AccountProfileController extends Controller
      ]);
      $user=User::findOrFail($id);
      $user->update(['email'=>$validated['email']]);
+        $user->notify(new confirmEmailChange($user));
      return redirect()->back()
          ->with('status','Email updated Successfully');
     }

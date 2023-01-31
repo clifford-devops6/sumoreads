@@ -29,7 +29,7 @@
                 <td class="py-3 px-4">{{ new Date(contact.created_at).toDateString() }}</td>
                 <td class="py-3 px-4">{{ contact.name }}</td>
                 <td class="py-3 px-4">{{ contact.email }}</td>
-                <td class="py-3 px-4">{{ contact.subject}}</td>
+                <td class="py-3 px-4">{{ contact.subject.name}}</td>
                 <td class="py-3 px-4">
                     <span v-if="contact.status">Read</span>
                     <span v-else class="text-green-900">Unread</span>

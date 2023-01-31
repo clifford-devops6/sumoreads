@@ -53,8 +53,16 @@ class HandleInertiaRequests extends Middleware
             $readlist=Readlist::where('user_id',Auth::id())->where('read_status',0)->count();
             $reads=ReadStatus::where('user_id',Auth::id())->pluck('share_id');
             $shares=Auth::user()->shares()->whereNotIn('id',$reads)->count();
-            $account=Account::findOrFail(Auth::user()->account_id);
-            $account_type=$account->type->name;
+
+                $account=Account::find(Auth::user()->account_id);
+                if ($account){
+                    $account_type=$account->type->name;
+                }else{
+                    $account_type='Free';
+                }
+
+
+
 
         }else{
             $auth=null;

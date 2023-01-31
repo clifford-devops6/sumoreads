@@ -16,7 +16,7 @@ class Account extends Model
         return $this->belongsTo(Type::class);
     }
     public  function administrator(){
-        return $this->hasOne(Administrator::class);
+        return $this->hasOne(Administrator::class)->latest();
     }
     public  function company(){
         return $this->hasOne(Company::class);

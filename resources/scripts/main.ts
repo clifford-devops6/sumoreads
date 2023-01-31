@@ -3,7 +3,7 @@ import { createInertiaApp } from '@inertiajs/inertia-vue3'
 import { resolvePageComponent } from 'vite-plugin-laravel/inertia'
 import axios from "axios";
 axios.defaults.baseURL=import.meta.env.VITE_APP_URL;
-import VueClickAway from "vue3-click-away";
+
 
 createInertiaApp({
 	resolve: (name) => resolvePageComponent(name, import.meta.glob('../views/pages/**/*.vue')),
@@ -11,7 +11,6 @@ createInertiaApp({
 		createApp({ render: () => h(app, props), })
 
 			.use(plugin)
-            .use(VueClickAway)
             .mixin({ methods: { route: window.route } })
 			.mount(el)
 	},

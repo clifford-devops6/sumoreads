@@ -9,10 +9,12 @@ use App\Http\Controllers\Admin\AdminMessageController;
 use App\Http\Controllers\Admin\AdminNewsController;
 use App\Http\Controllers\Admin\AdminSourceController;
 use App\Http\Controllers\Admin\AdvertisementController;
+use App\Http\Controllers\Admin\ContactSubjectController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::Group(['middleware'=>['auth:admin']],function (){
+    Route::resource('admin/subject',ContactSubjectController::class);
     Route::resource('admin/advertisement',AdvertisementController::class);
     Route::resource('admin/account-types',AdminAccountTypes::class);
     Route::resource('admin/bugs',AdminBugController::class);

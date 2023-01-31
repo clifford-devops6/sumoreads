@@ -13,15 +13,18 @@
                 <p class="font-bold text-primary-100">
                     <span class="mr-2"><i class="fa-sharp fa-solid fa-circle-info"></i></span>
                     {{account.data.administrator.slot- users.length}} of {{account.data.administrator.slot}} Invites available from your current plan
-                <span @click="slotModal=true" class="ml-2 text-black cursor-pointer"><span class="mr-2"><i class="fa-solid fa-plus"></i></span>Add Members</span>
+
                 </p>
             </div>
-            <div class="flex justify-between gap-4">
+            <div class="flex justify-between gap-2">
                 <div>
-                    <button @click="addMemberModal=true" class="font-bold text-gray-500"><span class="mr-2"><i class="fa-solid fa-plus"></i></span>Send Invitation</button>
+                    <button @click="slotModal=true" class="btn-primary btn-small"><span class="mr-2"><i class="fa-solid fa-plus"></i></span>Add Members</button>
                 </div>
                 <div>
-                    <button @click="addGroupModal=true" class="font-bold text-gray-500"><span class="mr-2"><i class="fa-solid fa-plus"></i></span>Add Group</button>
+                    <button @click="addMemberModal=true" class="btn-primary btn-small"><span class="mr-2"><i class="fa-solid fa-plus"></i></span>Invite</button>
+                </div>
+                <div>
+                    <button @click="addGroupModal=true" class="btn-primary btn-small"><span class="mr-2"><i class="fa-solid fa-plus"></i></span>New Group</button>
                 </div>
             </div>
         </div>
@@ -32,7 +35,7 @@
                <!--members-->
                <accordion>
                    <template #title>
-                       <h6 class="font-semibold"> Members ({{users.length}})</h6>
+                       <h6 class="font-semibold"> Members ({{users.length+account.data.invitations.length}})</h6>
 
                    </template>
                    <div>
@@ -47,27 +50,20 @@
                                </div>
                            </div>
                        </div>
+                       <div class="divide-y space-y-2">
+                           <div class=" text-gray-500 flex justify-between py-2 " v-for="invite in account.data.invitations" :key="invite.id">
+                               <div>
+                                   <p class="flex gap-3">{{invite.email}} (Pending Acceptance)</p>
+                               </div>
+                               <div>
+                                   <button @click="cancelInvitation(invite.id)"  class="text-gray-800 font-bold">Cancel Subscription</button>
+                               </div>
+                           </div>
+                       </div>
                    </div>
                </accordion>
            </div>
-            <div class="my-3">
-                <accordion>
-                    <template #title>
-                        <h6 class="font-semibold"> Invitations ({{account.data.invitations.length}})</h6>
 
-                    </template>
-                    <div class="divide-y space-y-2">
-                        <div class="flex justify-between py-2 " v-for="invite in account.data.invitations" :key="invite.id">
-                            <div>
-                                <p class="flex gap-3">{{invite.email}}</p>
-                            </div>
-                            <div>
-                                <button @click="cancelInvitation(invite.id)"  class="text-gray-800 font-bold">Delete Invite</button>
-                            </div>
-                        </div>
-                    </div>
-                </accordion>
-            </div>
         </div>
 
         <!--groups-->
@@ -177,7 +173,7 @@ const cancelSubscription=(user)=>{
         dangerMode: true,
     })
         .then((result) => {
-            if (result.isConfirmed){
+            if (result){
                 removeUser(user);
             }
 
@@ -198,7 +194,8 @@ const cancelInvitation=(invite:Number)=>{
         dangerMode: true,
     })
         .then((result) => {
-            if (result.isConfirmed){
+            console.log(result)
+            if (result){
                 deleteInvite(invite);
             }
 

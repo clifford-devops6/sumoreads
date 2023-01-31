@@ -162,6 +162,14 @@ function remove(){
                                     </Link>
                                 </li>
 
+                                <li>
+                                    <Link :href="route('subject.index')">
+                                        <div class="w-full rounded-md px-3 py-1">
+                                            <p class="font-semibold hover:text-primary-200 text-sm text-gray-800"><span class="mr-2 text-primary-200"><i class="far fa-angle-right"></i></span>Message Subject</p>
+                                        </div>
+                                    </Link>
+                                </li>
+
                             </ul>
 
                         </div>

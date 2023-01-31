@@ -13,16 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('contacts', function (Blueprint $table) {
+        Schema::create('subjects', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->string('email');
-            $table->bigInteger('subject_id')->unsigned()->index();
-            $table->text('message');
-            $table->integer('status')->default(0);
-            $table->foreign('subject_id')->references('id')
-                ->on('subjects')->cascadeOnDelete();
         });
     }
 
@@ -33,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contacts');
+        Schema::dropIfExists('subjects');
     }
 };
