@@ -3,7 +3,7 @@
     <div class="flex place-content-center h-screen">
         <div class="bg-white shadow-xl rounded-xl self-center md:w-1/2 p-4">
             <div class="flex justify-between">
-                <Link href="/" class="text-primary-100">
+                <Link :href="route('clearBalance', balance.id)" as="button" method="patch" class="text-primary-100">
                     <span class="mr-3"><i class="fa-light fa-arrow-left-long"></i></span>Back
                 </Link>
                 <Link href="/" class="text-white bg-primary-100 p-1 rounded-full h-8 w-8" as="button">
@@ -14,7 +14,8 @@
             </div>
             <div class="text-center mt-5 px-8">
                 <h6 class="font-bold text-xl">Please Process Payments</h6>
-                <p class="my-5 text-primary-100">Subscription for {{type.name}} Account</p>
+                <p v-if="balance.balance_type==='Conversion-Enterprise'" class="my-5 text-primary-100">Upgrade to Enterprise Account</p>
+                <p v-else class="my-5 text-primary-100">Subscription for {{type.name}} Account</p>
                 <hr>
             </div>
             <div class="my-16 px-8">

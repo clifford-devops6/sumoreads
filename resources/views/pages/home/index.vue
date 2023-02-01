@@ -84,7 +84,7 @@
                         </div>
                     </div>
                 </div>
-                <all-news :articles="posts.data" :link="route('news.index')"></all-news>
+                <all-news :articles="posts.data" :link="route('home.index')"></all-news>
             </div>
         </div>
     </reader>

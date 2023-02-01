@@ -58,7 +58,7 @@
                                 <Link :href="route('subscription.index')" class="hover:text-primary-100"><span class="mr-1"><i class="fa-light fa-calendar-range"></i></span>Billing & Subscription</Link>
                             </div>
                             <div class="p-3" v-if="auth.role==='Free'">
-                                <Link href="#" class="hover:text-primary-100"><span class="mr-1"><i class="fa-solid fa-arrow-up-from-bracket"></i></span>Upgrade Account</Link>
+                                <Link :href="route('account.upgrade')" class="hover:text-primary-100"><span class="mr-1"><i class="fa-solid fa-arrow-up-from-bracket"></i></span>Upgrade Account</Link>
                             </div>
                             <div class="text-center hover:bg-primary-100 hover:text-white ">
                                 <Link as="button" :href="route('logout')"

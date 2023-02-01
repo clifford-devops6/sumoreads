@@ -40,7 +40,7 @@
                                    </div>
                                </div>
                            </div>
-                           <div v-if="trend[4] && accountType==='Corporate'" @click="submitPost(trend[4].id)" class="cursor-pointer grid bg-no-repeat bg-cover bg-center rounded-lg overflow-hidden w-full h-full" :style="{ 'background-image': 'url(' + trend[4].image + ')' }">
+                           <div v-if="trend[4] && accountType==='Enterprise'" @click="submitPost(trend[4].id)" class="cursor-pointer grid bg-no-repeat bg-cover bg-center rounded-lg overflow-hidden w-full h-full" :style="{ 'background-image': 'url(' + trend[4].image + ')' }">
                                <div class="grid relative bg-gradient-to-b from-transparent to-black h-full w-full">
                                    <div class="absolute bottom-2 p-2 text-white w-full">
                                        <h6 class="font-libre text-lg font-bold">{{useTruncate(trend[4].title,60)}}</h6>

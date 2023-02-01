@@ -19,11 +19,11 @@
                     <span><span class="mr-2"><i class="fa-light fa-bookmark"></i></span>My Read List</span> </Link>
             </li>
 
-            <li v-show="accounType==='Corporate'">
+            <li v-show="accounType==='Enterprise'">
                 <group-dropdown>
                 </group-dropdown>
             </li>
-            <li v-show="accounType==='Corporate'">
+            <li v-show="accounType==='Enterprise'">
                 <enterprise-categories></enterprise-categories>
             </li>
             <li>

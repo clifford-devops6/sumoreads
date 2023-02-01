@@ -5,6 +5,7 @@ use App\Http\Controllers\General\ContactController;
 use App\Http\Controllers\General\HomeController;
 use App\Http\Controllers\General\NewsCategoryController;
 use App\Http\Controllers\General\NewsController;
+use App\Http\Controllers\General\NewsGroupController;
 use App\Http\Controllers\General\NewsStreamsController;
 use App\Http\Controllers\General\PaymentController;
 use App\Http\Controllers\General\ReportBugController;
@@ -29,13 +30,18 @@ Route::group([], function (){
     Route::resource('report-bug',ReportBugController::class);
 });
 
-Route::group(['middleware'=>['auth:web']],function (){
+Route::group(['middleware'=>['auth:web','check_balance']],function (){
+    Route::get('news/groups/{id}',[NewsGroupController::class, 'groups'])->name('news.group');
     Route::get('news/streams/{id}',[NewsStreamsController::class, 'stream'])->name('news.stream');
     Route::get('news/categories/{id}',[NewsCategoryController::class, 'category'])->name('news.category');
-    Route::get('payments/callback/{id}',[PaymentController::class, 'callback'])->name('callback');
-    Route::resource('payments',PaymentController::class);
     Route::resource('news',NewsController::class);
     Route::resource('home',HomeController::class);
+});
+
+Route::group(['middleware'=>['auth:web']], function (){
+    Route::get('payments/callback/{id}',[PaymentController::class, 'callback'])->name('callback');
+    Route::patch('payments/clear-balance/{id}',[PaymentController::class,'clearBalance'])->name('clearBalance');
+    Route::resource('payments',PaymentController::class);
 });
 
 

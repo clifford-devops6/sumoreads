@@ -70,7 +70,7 @@
                         </div>
                     </div>
                 </div>
-                <all-news :articles="posts.data" :link="route('news.index')"></all-news>
+                <all-news :articles="posts.data" :link="route('news.category',category.slug)"></all-news>
             </div>
         </div>
     </reader>

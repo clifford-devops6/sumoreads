@@ -7,7 +7,7 @@ use App\Http\Controllers\Enterprise\ManageAccountcontroller;
 use App\Http\Controllers\General\PersonalizeController;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['middleware'=>['auth:web','role:Enterprise|super-admin']],function (){
+Route::group(['middleware'=>['auth:web','role:Enterprise|super-admin','check_balance']],function (){
     Route::post('enterprise/remove-categories',[PersonalizeController::class,'removeCategory'])->name('enterprise.remove.category');
     Route::post('enterprise/add-categories',[PersonalizeController::class,'addCategory'])->name('enterprise.add.category');
 

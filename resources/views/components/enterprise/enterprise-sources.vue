@@ -1,4 +1,7 @@
 <template>
+    <Teleport to="body">
+        <toast :message="message" @remove="remove()"></toast>
+    </Teleport>
     <teleport to="body">
         <Transition
             enter-from-class="opacity-0 scale-125"
@@ -108,7 +111,7 @@
                         </div>
 
                         <div class="flex justify-end">
-                            <button class="btn-primary" @click="$emit('close')">Save and Close</button>
+                            <button class="btn-primary" @click="saveClose">Save and Close</button>
                         </div>
 
                     </div>
@@ -121,11 +124,13 @@
 
 <script setup lang="ts">
 import {useForm, usePage} from "@inertiajs/inertia-vue3";
-import {computed, reactive, ref,onMounted} from "vue";
+import {computed,  ref,onMounted} from "vue";
 import axios from "axios";
 import {Link} from "@inertiajs/inertia-vue3";
 import {Inertia} from "@inertiajs/inertia";
+import Toast from "@/views/components/toast.vue";
 const emits=defineEmits(['close'])
+
 emits("close")
 let props=defineProps({
     show:Boolean,
@@ -215,6 +220,14 @@ const ids= computed(() =>{
 
     return items
 })
+const message=ref('')
+function remove(){
+    message.value=null
+}
+const saveClose=()=>{
+    emits('close')
+    message.value='Sources Successfully updated'
+}
 </script>
 
 <style scoped>

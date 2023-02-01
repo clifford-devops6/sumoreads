@@ -194,22 +194,6 @@ class PaymentController extends Controller
                         'token'=>Str::random(60),
                         'slots'=>$balance->slots
                     ]);
-                }elseif ($balance->balance_type=='Conversion-Standard'){
-                    $user->syncPermissions([]);
-                    $user->syncRoles([]);
-                    $user->givePermissionTo('standard-account');
-                    $user->assignRole('Standard');
-                    $account->update([
-                        'type_id'=>2
-                    ]);
-                    $token=Token::create([
-                        'account_id'=>$balance->account_id,
-                        'payment_id'=>$payment->id,
-                        'expiry'=>$balance->expires,
-                        'balance_id'=>$balance->id,
-                        'token'=>Str::random(60),
-                        'slots'=>$balance->slots
-                    ]);
                 }
 
                 Mail::to($user->email)->send(new PaymentReciept($user,$account,$payment));
@@ -224,5 +208,12 @@ class PaymentController extends Controller
             return redirect()->route('payments.index')
                 ->with('status', 'Payment status could not be verified');
         }
+    }
+
+    public function clearBalance($id){
+        $balance=Balance::findOrFail($id);
+
+        $balance->delete();
+        return redirect('/');
     }
 }

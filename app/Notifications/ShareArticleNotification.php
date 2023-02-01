@@ -47,7 +47,7 @@ class ShareArticleNotification extends Notification
             ->lineIf($this->share->comment,$this->share->comment.':')
             ->lineIf(!$this->share->comment,'A read has been shared with you:')
             ->line($this->share->article->title)
-            ->action('Read full article', route('share.show',$this->share->article->slug));
+            ->action('Read full article', route('article.share',$this->share->article->slug));
     }
 
     /**

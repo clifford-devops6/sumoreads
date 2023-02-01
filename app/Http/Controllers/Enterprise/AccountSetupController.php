@@ -24,11 +24,8 @@ class AccountSetupController extends Controller
         //
         $user=Auth::user();
         $account=$user->account()->latest()->first();
-        if ($account->type->name=='Corporate'){
-            $min_slots=50;
-        }elseif ($account->type->name=='Enterprise'){
-            $min_slots=5;
-        }
+        $min_slots=5;
+
         $account=new AccountResource(Account::with(['administrator','type'])->findOrFail($account->id));
 
         return inertia::render('account-setup.index', compact('account','min_slots'));
@@ -54,32 +51,15 @@ class AccountSetupController extends Controller
     {
         //
         $validated=$request->validate([
-            'members'=>'required|integer'
+            'members'=>'required|integer|min:5'
 
         ]);
         $user=Auth::user();
         $account=$user->account->latest()->first();
-        $administrator=$account->administrator->latest()->first();
-
+        $administrator=$account->administrator;
 
         //check for spoofed members
 
-
-        if ($account->type->name=='Corporate'){
-            if ($validated['members']<50){
-                return redirect()->back()
-                    ->withErrors(
-                        ['members'=>'Please add more than 50 memebrs']
-                    )->onlyInput('members');
-            }
-        }elseif ($account->type->name=='Enterprise'){
-            if ($validated['members']<5){
-                return redirect()->back()
-                    ->withErrors(
-                        ['members'=>'Please add more than 5 memebrs']
-                    )->onlyInput('members');
-            }
-        }
 
         $administrator->update(['slot'=>$validated['members']]);
 

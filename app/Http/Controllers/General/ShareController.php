@@ -4,9 +4,11 @@ namespace App\Http\Controllers\General;
 
 use App\Events\ShareEvent;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ArticleResource;
 use App\Http\Resources\GroupResource;
 use App\Http\Resources\ShareResource;
 use App\Http\Resources\UserResource;
+use App\Models\Article;
 use App\Models\ReadStatus;
 use App\Models\Share;
 use App\Models\User;
@@ -163,5 +165,11 @@ class ShareController extends Controller
         $groups=Auth::user()->groups()->whereHas('shares')->get();
         $groups=GroupResource::collection($groups);
         return inertia::render('account.share.group-share', compact('shareds','users','user_id','groups'));
+    }
+
+
+    public function articleShare($id){
+        $article=new ArticleResource(Article::findBySlugOrFail($id));
+        return inertia::render('share.article', compact('article'));
     }
 }

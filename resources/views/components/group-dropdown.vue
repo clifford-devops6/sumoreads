@@ -24,7 +24,7 @@
                   <ul class="pl-3">
 
                       <li :key="group.id" v-for="group in groups">
-                          <Link :href="route('home.index')" class="py-3 px-3 text-start  w-full h-full" as="button">
+                          <Link :href="route('news.group',group.slug)" class="py-3 px-3 text-start  w-full h-full" as="button">
                             {{group.name}}
                           </Link>
                       </li>

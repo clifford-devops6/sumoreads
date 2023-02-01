@@ -2,12 +2,15 @@
 
 use App\Http\Controllers\Account\AccountProfileController;
 use App\Http\Controllers\Account\AccountSubscriptionController;
+use App\Http\Controllers\Account\UpgradeController;
 use App\Http\Controllers\General\PersonalizeController;
 use App\Http\Controllers\General\ReadlistController;
 use App\Http\Controllers\General\ShareController;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['middleware'=>['auth:web']],function (){
+Route::group(['middleware'=>['auth:web','check_balance']],function (){
+    Route::post('account/initiate-upgrade/{id}',[UpgradeController::class,'initiateUpgrade'])->name('initiate.upgrade');
+    Route::get('account/share/article/{id}',[ShareController::class,'articleShare'])->name('article.share');
     Route::get('account/share/group-share/{id}',[ShareController::class,'groupShare'])->name('group.share');
     Route::resource('account/share',ShareController::class);
     Route::get('readlist/read',[ReadlistController::class,'read'])->name('read.readlist');

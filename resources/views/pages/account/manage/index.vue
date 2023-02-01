@@ -42,15 +42,13 @@
                        <div class="divide-y space-y-2">
                            <div class="flex justify-between py-2 " v-for="user in account.data.users" :key="user.id">
                                <div>
-                                   <p class="capitalize flex gap-3"><span>{{user.name}}</span><span>{{user.last_name}}</span>
+                                   <p class="capitalize flex gap-1"><span>{{user.name}}</span><span>{{user.last_name}}</span>
                                    <span v-if="user.id===account.data.administrator.user_id" class="text-primary-100">(Primary user)</span></p>
                                </div>
                                <div>
                                    <button @click="cancelSubscription(user.id)" v-if="user.id!==account.data.administrator.user_id" class="text-gray-800 font-bold">Cancel Subscription</button>
                                </div>
                            </div>
-                       </div>
-                       <div class="divide-y space-y-2">
                            <div class=" text-gray-500 flex justify-between py-2 " v-for="invite in account.data.invitations" :key="invite.id">
                                <div>
                                    <p class="flex gap-3">{{invite.email}} (Pending Acceptance)</p>
@@ -60,6 +58,7 @@
                                </div>
                            </div>
                        </div>
+
                    </div>
                </accordion>
            </div>

@@ -101,7 +101,7 @@
                         </div>
 
                         <div class="flex justify-end">
-                            <button class="btn-primary" @click="$emit('close')">Save and Close</button>
+                            <button class="btn-primary" @click="$emit('close')">Close</button>
                         </div>
 
                     </div>

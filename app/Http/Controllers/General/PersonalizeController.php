@@ -103,8 +103,7 @@ class PersonalizeController extends Controller
 
         $account=Account::findOrFail($validated['account_id']);
         $account->sources()->syncWithoutDetaching($validated['ids']);
-        return redirect()->back()
-            ->with('status','Sources successfully added to enterprise account');
+        return redirect()->back();
 
     }
 
@@ -116,8 +115,7 @@ class PersonalizeController extends Controller
 
         $account=Account::findOrFail($validated['account_id']);
         $account->sources()->detach($validated['ids']);
-        return redirect()->back()
-            ->with('status','Sources successfully removed from enterprise account');
+        return redirect()->back();
 
     }
     //personal sources
@@ -130,8 +128,7 @@ class PersonalizeController extends Controller
 
         $user=User::findOrFail($validated['user_id']);
         $user->sources()->syncWithoutDetaching($validated['ids']);
-        return redirect()->back()
-            ->with('status','Sources successfully saved');
+        return redirect()->back();
 
     }
 
@@ -143,8 +140,7 @@ class PersonalizeController extends Controller
 
         $user=User::findOrFail($validated['user_id']);
         $user->sources()->detach($validated['ids']);
-        return redirect()->back()
-            ->with('status','Sources successfully removed');
+        return redirect()->back();
 
     }
 
@@ -158,8 +154,7 @@ class PersonalizeController extends Controller
 
         $account=Account::findOrFail($validated['account_id']);
         $account->categories()->syncWithoutDetaching($validated['ids']);
-        return redirect()->back()
-            ->with('status','Categories successfully added to enterprise account');
+        return redirect()->back();
 
     }
 
@@ -171,8 +166,7 @@ class PersonalizeController extends Controller
 
         $account=Account::findOrFail($validated['account_id']);
         $account->categories()->detach($validated['ids']);
-        return redirect()->back()
-            ->with('status','Categories successfully removed from enterprise account');
+        return redirect()->back();
 
     }
 
@@ -184,8 +178,7 @@ class PersonalizeController extends Controller
 
         $user=User::findOrFail($validated['user_id']);
         $user->categories()->syncWithoutDetaching($validated['ids']);
-        return redirect()->back()
-            ->with('status','Sources successfully saved');
+        return redirect()->back();
 
     }
 
@@ -197,8 +190,7 @@ class PersonalizeController extends Controller
 
         $user=User::findOrFail($validated['user_id']);
         $user->categories()->detach($validated['ids']);
-        return redirect()->back()
-            ->with('status','Sources successfully removed');
+        return redirect()->back();
 
     }
 }

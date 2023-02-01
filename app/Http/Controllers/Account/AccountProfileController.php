@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AccountResource;
+use App\Models\Account;
+use App\Models\Type;
 use App\Models\User;
 use App\Notifications\confirmEmailChange;
 use Illuminate\Http\Request;
@@ -152,6 +155,12 @@ class AccountProfileController extends Controller
     }
 
     public function upgrade(){
-        return inertia::render('account.upgrade');
+        $user=Auth::user();
+        $account=$user->account()->latest()->first();
+        $min_slots=5;
+        $account=new AccountResource(Account::findOrFail($account->id));
+        $type=Type::select('id','name','price')->findOrFail(2);
+
+        return inertia::render('account.upgrade', compact('account', 'min_slots','type'));
     }
 }

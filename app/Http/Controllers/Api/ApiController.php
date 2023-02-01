@@ -34,7 +34,7 @@ class ApiController extends Controller
     }
 
     public function getGroups($id){
-        return Group::where('account_id',$id)->select('name','id')->get();
+        return Group::where('account_id',$id)->select('name','id','slug')->get();
     }
 
     public function enterpriseStreams($id){
