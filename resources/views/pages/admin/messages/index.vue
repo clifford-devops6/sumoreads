@@ -27,7 +27,7 @@
             <tr class="border-b"  v-for="contact in contacts.data" :key="contact.id">
                 <td class="py-3 px-4">{{ contact.id }}</td>
                 <td class="py-3 px-4">{{ new Date(contact.created_at).toDateString() }}</td>
-                <td class="py-3 px-4">{{ contact.name }}</td>
+                <td class="py-3 px-4">{{ contact.name }} {{ contact.last_name }}</td>
                 <td class="py-3 px-4">{{ contact.email }}</td>
                 <td class="py-3 px-4">{{ contact.subject.name}}</td>
                 <td class="py-3 px-4">

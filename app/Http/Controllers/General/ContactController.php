@@ -43,6 +43,7 @@ class ContactController extends Controller
         //
         $validated=$request->validate([
             'name'=>'required|string|max:255',
+            'last_name'=>'required|string|max:255',
             'email'=>'required|string|max:255|email',
             'subject'=>'required|integer',
             'message'=>'required|max:1000'
@@ -50,6 +51,7 @@ class ContactController extends Controller
 
         $message=Contact::create([
             'name'=>$validated['name'],
+            'last_name'=>$validated['last_name'],
             'email'=>$validated['email'],
             'subject_id'=>$validated['subject'],
             'message'=>$validated['message']

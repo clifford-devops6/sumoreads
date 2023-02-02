@@ -18,7 +18,16 @@
                                     </div>
                                 </div>
                                 <div class="mt-3">
-                                    <label for="contact-email" class="read-label">Last name:</label>
+                                    <label for="contact-last_name" class="read-label">Last name:</label>
+                                    <input type="text" class="read-input" id="contact-last_name" placeholder="Enter your Last name" required v-model="form.last_name"/>
+                                    <div v-if="form.errors.last_name" class="read-error">
+                                        <span>{{ form.errors.last_name }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid mt-5">
+                                <div>
+                                    <label for="contact-email" class="read-label">Email:</label>
                                     <input type="email" class="read-input" id="contact-email" placeholder="Enter your email" required v-model="form.email"/>
                                     <div v-if="form.errors.email" class="read-error">
                                         <span>{{ form.errors.email }}</span>
@@ -68,6 +77,7 @@ const page=usePage()
 const auth=page.props.value.auth
 let form=useForm({
     name:auth?auth.name:'',
+    last_name:auth?auth.last_name:'',
     email:auth?auth.email:'',
     subject:'',
     message:''

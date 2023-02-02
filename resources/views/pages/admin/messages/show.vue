@@ -9,7 +9,7 @@
         </template>
     </title-block>
     <div class="my-10 px-3">
-     <h6 class="font-bold text-lg"> From {{contact.name}}</h6>
+     <h6 class="font-bold text-lg"> From {{contact.name}} {{contact.last_name}}</h6>
         <p><span class="text-primary-100">Subject:</span> {{ contact.subject.name}}</p>
         <p><span class="text-primary-100">Date:</span> {{ new Date(contact.created_at).toDateString() }}</p>
         <p><span class="text-primary-100">Email:</span> {{ contact.email }}</p>
