@@ -15,9 +15,11 @@ class NewsCategoryController extends Controller
     //
     public function category($id){
         $category=Category::findBySlugOrFail($id);
-        $sources=Source::where('category_id',$category->id)->select('id','name')->get();
+        $sources=Source::select('id','name')->get();
+
 
         $trending=ArticleResource::collection(Article::query()
+            ->where('category_id',$category->id)
             ->when(request('trending_source'),function ($query,$trending_source){
                 $query->where('source_id',$trending_source);
             })
@@ -25,6 +27,7 @@ class NewsCategoryController extends Controller
             ->with('source','source.category')->orderBy('published')->limit(12)->get());
 
         $latest=ArticleResource::collection(Article::query()
+            ->where('category_id',$category->id)
             ->when(request('latest_source'),function ($query,$latest_source){
                 $query->where('source_id',$latest_source);
             })
@@ -33,6 +36,7 @@ class NewsCategoryController extends Controller
 
         // all articles
         $posts=ArticleResource::collection(Article::query()
+            ->where('category_id',$category->id)
             ->when(request('source'),function ($query,$source){
                 $query->where('source_id',$source);
             })

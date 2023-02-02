@@ -27,7 +27,7 @@ class AccountSubscriptionController extends Controller
         $user=new UserResource(User::findOrFail(Auth::id()));
         $account=Auth::user()->account()->first();
         $account=Account::select('id','name','type_id')->withCount(['users','invitations','groups'])->with(['administrator','type'])->findOrFail($account->id);
-        $token=$account->tokens()->where('expiry','>',Carbon::today())->latest()->firstOrFail()->pluck('expiry');
+        $token=$account->tokens()->where('expiry','>',Carbon::today())->latest()->firstOrFail();
         return inertia::render('account.subscription.index', compact('user', 'account','token'));
     }
 

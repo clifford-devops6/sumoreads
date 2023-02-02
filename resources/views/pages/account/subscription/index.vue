@@ -19,7 +19,7 @@
                 <p v-if="auth.role==='Enterprise'"><span class="text-primary-100 font-bold">Invitations: </span>{{account.invitations_count}}</p>
             </div>
             <div class="my-3">
-               <p>Your next bill is for <span class="text-primary-100 font-semibold">USD {{account.type.price*account.administrator.slot}}</span> on {{new Date(token).toDateString()}}</p>
+               <p>Your next bill is for <span class="text-primary-100 font-semibold">USD {{account.type.price*account.administrator.slot}}</span> on <span class="font-bold">{{new Date(token.expiry).toDateString()}}</span></p>
             </div>
             <div class="py-5 flex gap-2">
                 <button class="btn-primary" @click="payModal=true">
@@ -56,7 +56,7 @@ import AddSlot from "@/views/components/enterprise/add-slot.vue";
 defineProps({
     user:Object,
     account:Object,
-    token:String
+    token:Object
 })
 const page=usePage()
 const auth = page.props.value.auth

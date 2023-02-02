@@ -30,7 +30,7 @@ Route::group([], function (){
     Route::resource('report-bug',ReportBugController::class);
 });
 
-Route::group(['middleware'=>['auth:web','check_balance']],function (){
+Route::group(['middleware'=>['auth:web','check_balance','check_token']],function (){
     Route::get('news/groups/{id}',[NewsGroupController::class, 'groups'])->name('news.group');
     Route::get('news/streams/{id}',[NewsStreamsController::class, 'stream'])->name('news.stream');
     Route::get('news/categories/{id}',[NewsCategoryController::class, 'category'])->name('news.category');

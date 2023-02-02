@@ -23,9 +23,14 @@
                 <div class="custom-scrolling max-h-[250px] overflow-y-auto">
                   <ul class="pl-3">
 
-                      <li :key="group.id" v-for="group in groups">
+                      <li v-if="groups.length" :key="group.id" v-for="group in groups">
                           <Link :href="route('news.group',group.slug)" class="py-3 px-3 text-start  w-full h-full" as="button">
                             {{group.name}}
+                          </Link>
+                      </li>
+                      <li v-else>
+                          <Link href="#" class="py-3 px-3 text-start  w-full h-full" as="button">
+                             No groups available
                           </Link>
                       </li>
 

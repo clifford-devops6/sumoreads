@@ -34,7 +34,7 @@
                <!--latest news filter-->
                <div class="flex justify-between my-3">
                    <div>
-                       <h1 class="font-bold text-3xl">Latest News</h1>
+                       <h1 class="font-bold text-3xl">All News</h1>
                    </div>
                    <div class="flex gap-1">
                        <div>

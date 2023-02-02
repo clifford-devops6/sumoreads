@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\CheckBalance;
+use App\Http\Middleware\CheckToken;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -68,6 +69,7 @@ class Kernel extends HttpKernel
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
-        'check_balance'=>CheckBalance::class
+        'check_balance'=>CheckBalance::class,
+        'check_token'=>CheckToken::class,
     ];
 }

@@ -23,9 +23,14 @@
                 <div class="custom-scrolling max-h-[250px] overflow-y-auto">
                     <ul class="pl-3">
 
-                        <li :key="category.id" v-for="category in categories">
+                        <li v-if="categories.length" :key="category.id" v-for="category in categories">
                             <Link :href="route('news.category',category.slug)" class="py-3 px-3 text-start  w-full h-full" as="button">
                                 {{category.name}}
+                            </Link>
+                        </li>
+                        <li v-else>
+                            <Link href="#" class="py-3 px-3 text-start  w-full h-full" as="button">
+                                No categories available
                             </Link>
                         </li>
                     </ul>

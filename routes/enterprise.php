@@ -7,7 +7,7 @@ use App\Http\Controllers\Enterprise\ManageAccountcontroller;
 use App\Http\Controllers\General\PersonalizeController;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['middleware'=>['auth:web','role:Enterprise|super-admin','check_balance']],function (){
+Route::group(['middleware'=>['auth:web','role:Enterprise|super-admin','check_balance','check_token']],function (){
     Route::post('enterprise/remove-categories',[PersonalizeController::class,'removeCategory'])->name('enterprise.remove.category');
     Route::post('enterprise/add-categories',[PersonalizeController::class,'addCategory'])->name('enterprise.add.category');
 
@@ -26,7 +26,11 @@ Route::group(['middleware'=>['auth:web','role:Enterprise|super-admin','check_bal
     Route::patch('account/manage/remove-user/{id}',[ManageAccountcontroller::class,'removeUser'])->name('remove.user');
     Route::post('account/manage/send-invitation',[ManageAccountcontroller::class,'sendInvitation'])->name('send.invitation');
     Route::resource('account/manage',ManageAccountcontroller::class);
+
+
+
+});
+
+Route::group(['middleware'=>['auth:web','role:Enterprise|super-admin']], function (){
     Route::resource('account-setup',AccountSetupController::class);
-
-
 });
