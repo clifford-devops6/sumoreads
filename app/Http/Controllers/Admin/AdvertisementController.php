@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AdvertisementResource;
 use App\Models\Advertisement;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -18,8 +19,25 @@ class AdvertisementController extends Controller
     public function index()
     {
         //
-        $adverts=AdvertisementResource::collection(Advertisement::paginate(20));
-        return inertia::render('admin.advertisement.index', compact('adverts'));
+        $adverts=Advertisement::query()
+            ->when(request('search'), function ($query, $search){
+                $query->where('title','like', '%'.$search.'%');
+            })
+            ->when(request('status'), function ($query, $status){
+                $query->where('status',$status);
+            })
+            ->when(request('start'), function ($query, $start){
+                $query->where('start','>=',$start);
+            })
+            ->when(request('end'), function ($query, $end){
+                $query->where('expiry','<=',$end);
+            })
+        ->paginate(20);
+        $adverts=AdvertisementResource::collection($adverts);
+
+        //remember to attach filters
+        $filters=request()->only(['search','start','end','status']);
+        return inertia::render('admin.advertisement.index', compact('adverts','filters'));
     }
 
     /**
@@ -47,16 +65,29 @@ class AdvertisementController extends Controller
            'title'=>'required|string|max:100',
            'description'=>'required|string|max:500',
            'expiry'=>'required|date',
-           'status'=>'integer|required',
-           'image'=>'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-           'url'=>'required|string|max:355'
+           'image'=>'required|image|mimes:jpeg,png,jpg,gif|max:2048|dimensions:width=600,height=400',
+           'url'=>'required|string|max:355',
+           'start'=>'required|date',
+           'remarks'=>'nullable|max:1000',
+           'price'=>'nullable'
        ]);
-        $advert=Advertisement::create([
+
+
+       if (Carbon::parse($validated['start'])->isToday()){
+           $status=1;
+       }else{
+           $status=2;
+       }
+
+       $advert=Advertisement::create([
             'title'=>$validated['title'],
             'description'=>$validated['description'],
             'expiry'=>$validated['expiry'],
-            'status'=>$validated['status'],
-            'url'=>$validated['url']
+            'status'=>$status,
+            'url'=>$validated['url'],
+            'remarks'=>$validated['remarks'],
+            'start'=>$validated['start'],
+            'price'=>$validated['price']
         ]);
 
         if($image=$request->file('image')) {
@@ -108,18 +139,27 @@ class AdvertisementController extends Controller
             'title'=>'required|string|max:100',
             'description'=>'required|string|max:500',
             'expiry'=>'required|date',
-            'status'=>'integer|required',
-            'image'=>'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'url'=>'required|string|max:355'
+            'image'=>'nullable|image|mimes:jpeg,png,jpg,gif|max:2048|dimensions:width=600,height=400',
+            'url'=>'required|string|max:355',
+            'start'=>'required|date',
+            'remarks'=>'nullable|max:1000',
+            'price'=>'nullable'
         ]);
+        if (Carbon::parse($validated['start'])->isToday()){
+            $status=1;
+        }else{
+            $status=2;
+        }
         $advert=Advertisement::findOrFail($id);
-
         $advert->update([
             'title'=>$validated['title'],
             'description'=>$validated['description'],
             'expiry'=>$validated['expiry'],
-            'status'=>$validated['status'],
-            'url'=>$validated['url']
+            'status'=>$status,
+            'url'=>$validated['url'],
+            'remarks'=>$validated['remarks'],
+            'start'=>$validated['start'],
+            'price'=>$validated['price']
         ]);
 
         if($files=$request->file('image')) {

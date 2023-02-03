@@ -12,7 +12,7 @@ class Advertisement extends Model implements  HasMedia
 {
     use HasFactory, InteractsWithMedia;
     protected $fillable=[
-        'title','description','url','status','expiry'
+        'title','description','url','status', 'start','expiry','price','remarks'
     ];
 
     protected $appends = ["image"];

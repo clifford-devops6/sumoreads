@@ -20,7 +20,15 @@
                 </div>
                 <div class="grid grid-cols-2 mt-5 gap-2">
                     <div>
-                        <label for="source-name" class="read-label">Expiry Date:</label>
+                        <label for="source-name" class="read-label">Start Date:</label>
+                        <input type="date" class="read-input" id="source-name"
+                               required v-model="form.start"/>
+                        <div v-if="form.errors.start" class="read-error">
+                            <span>{{ form.errors.start}}</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="source-name" class="read-label">End Date:</label>
                         <input type="date" class="read-input" id="source-name"
                                required v-model="form.expiry"/>
                         <div v-if="form.errors.expiry" class="read-error">
@@ -28,20 +36,6 @@
                         </div>
                     </div>
 
-                    <div>
-                        <div>
-                            <label class="read-label">Select Status:</label>
-                            <select required class="read-input" v-model="form.status">
-                                <option selected value="">Select Status</option>
-                                <option value="1" >Active</option>
-                                <option value="0" >Inactive</option>
-
-                            </select>
-                            <div v-if="form.errors.status" class="creative-error">
-                                <span>{{ form.errors.status}}</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="grid mt-3">
                     <label for="source-name" class="read-label">Advert Description:</label>
@@ -66,13 +60,37 @@
                         <label for="source-logo" class="read-label">Advert image:</label>
                     </div>
                     <div>
-                        <span class="text-xs">Maximum file size 2MB. Allowed formats are jpeg,png,jpg, and gif</span>
+                    <span class="text-xs">Maximum file size 2MB. Allowed formats are jpeg,png,jpg, and gif.
+                    <span class="font-bold">Allowed dimensions 600px by 400px</span></span>
                     </div>
                     <input type="file"  id="source-logo" class="mt-3"
                             @input="form.image=$event.target.files[0]" accept="image/*"/>
 
                     <div v-if="form.errors.image" class="read-error">
                         <span>{{ form.errors.image }}</span>
+                    </div>
+                </div>
+                <div class="my-3">
+                    <hr>
+                </div>
+                <div class="grid grid-cols-2 mt-5 gap-2">
+                    <div class="col-span-1">
+                        <label for="source-name" class="read-label">Pricing:</label>
+                        <div>
+                            <small>Advert pricing (USD). The total amount charged for running the advert</small>
+                        </div>
+                        <input type="text" class="read-input" id="source-name" placeholder="Enter price in USD"
+                               required v-model="form.price"/>
+                        <div v-if="form.errors.price" class="read-error">
+                            <span>{{ form.errors.price }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid mt-5">
+                    <label for="source-name" class="read-label">Remarks(optional):</label>
+                    <textarea v-model="form.remarks" placeholder="Enter your remarks (optional)" rows="5" class="read-text-input"></textarea>
+                    <div v-if="form.errors.remarks" class="read-error">
+                        <span>{{ form.errors.remarks }}</span>
                     </div>
                 </div>
                 <div class="my-3 flex justify-end">
@@ -102,10 +120,12 @@ const advert=props.advert.data
 let form=useForm({
     title:advert.title,
     description:advert.description,
-    status:advert.status,
     image:'',
     url:advert.url,
     expiry:advert.expiry,
+    start:advert.start,
+    remarks:advert.remarks,
+    price:advert.price,
     _method:'PATCH'
 })
 </script>

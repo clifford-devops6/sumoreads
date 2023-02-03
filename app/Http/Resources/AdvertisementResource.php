@@ -17,6 +17,9 @@ class AdvertisementResource extends JsonResource
         return [
             'id'=>$this->id,
             'title'=>$this->title,
+            'start'=>$this->start,
+            'remarks'=>$this->remarks,
+            'price'=>$this->price,
             'created_at'=>$this->created_at,
             'expiry'=>$this->expiry,
             'url'=>$this->url,

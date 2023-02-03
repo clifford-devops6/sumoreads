@@ -49,3 +49,7 @@
     @apply rounded checked:outline-primary-100
      focus:outline-primary-100 checked:bg-primary-100 checked:ring-primary-100 focus:ring-primary-100
 }
+
+.filter-select{
+    @apply w-full  rounded-lg border bg-gray-50 border border-gray-300 text-gray-900 focus:ring-gray-800 focus:border-gray-800 outline-0 block h-9 p-1
+}

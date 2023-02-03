@@ -49,3 +49,12 @@ require __DIR__.'/admin.php';
 require __DIR__.'/auth.php';
 require __DIR__.'/enterprise.php';
 require __DIR__.'/account.php';
+
+
+Route::get('/clear', function () {
+    Artisan::call('cache:clear');
+    Artisan::call('view:clear');
+    Artisan::call('config:cache');
+    Artisan::call('optimize');
+    echo "Config cleared<br>";
+});

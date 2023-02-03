@@ -20,7 +20,10 @@ return new class extends Migration
             $table->integer('status')->default(1);
             $table->text('description');
             $table->string('url');
+            $table->date('start');
             $table->date('expiry');
+            $table->float('price',8,2)->nullable();
+            $table->text('remarks')->nullable();
         });
     }
 
