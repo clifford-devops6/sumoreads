@@ -18,6 +18,8 @@ let removeEventListener=Inertia.on("finish",()=>{
 function remove(){
     message.value=null
 }
+
+const  auth=page.props.value.auth
 </script>
 <template>
     <Teleport to="body">
@@ -101,7 +103,7 @@ function remove(){
                         </div>
                         <div class="mt-8 mx-4">
                             <h5 class="font-semibold text-lg text-primary-200">Links</h5>
-                            <ul>
+                            <ul class="h-[250px] overflow-y-auto custom-scrolling">
                                 <li>
                                     <Link :href="route('languages.index')">
                                         <div class="w-full rounded-md px-3 py-1">
@@ -166,6 +168,21 @@ function remove(){
                                     <Link :href="route('subject.index')">
                                         <div class="w-full rounded-md px-3 py-1">
                                             <p class="font-semibold hover:text-primary-200 text-sm text-gray-800"><span class="mr-2 text-primary-200"><i class="far fa-angle-right"></i></span>Message Subject</p>
+                                        </div>
+                                    </Link>
+                                </li>
+
+                                <li>
+                                    <Link :href="route('users.index')">
+                                        <div class="w-full rounded-md px-3 py-1">
+                                            <p class="font-semibold hover:text-primary-200 text-sm text-gray-800"><span class="mr-2 text-primary-200"><i class="far fa-angle-right"></i></span>Users</p>
+                                        </div>
+                                    </Link>
+                                </li>
+                                <li v-show="auth.role==='super-admin'">
+                                    <Link :href="route('roles.index')">
+                                        <div class="w-full rounded-md px-3 py-1">
+                                            <p class="font-semibold hover:text-primary-200 text-sm text-gray-800"><span class="mr-2 text-primary-200"><i class="far fa-angle-right"></i></span>Roles</p>
                                         </div>
                                     </Link>
                                 </li>

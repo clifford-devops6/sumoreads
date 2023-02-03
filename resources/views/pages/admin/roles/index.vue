@@ -36,7 +36,7 @@
                     <th class="text-start py-3 px-4">Id</th>
                     <th class="text-start py-3 px-4">Name</th>
                     <th class="text-start py-3 px-4">Guard</th>
-                    <th class="py-3 px-4 text-start">Action</th>
+                    <th v-show="auth.role==='super-admin'" class="py-3 px-4 text-start">Action</th>
 
 
                 </tr>
@@ -46,7 +46,7 @@
                     <td class="py-3 px-4">{{ role.id }}</td>
                     <td class="py-3 px-4">{{ role.name }}</td>
                     <td class="py-3 px-4">{{ role.guard_name }}</td>
-                    <td class="py-3 px-4">
+                    <td v-show="auth.role==='super-admin'" class="py-3 px-4">
                         <dropdown placement="bottom">
                             <template #trigger="{ toggle }">
                                 <Button @click="toggle" >
@@ -97,10 +97,8 @@
 
 
         <template #sidebar>
-            <sidelink :link="route('roles.index')" class="text-teal-900">Roles</sidelink>
-            <sidelink :link="route('permissions.index')">Permissions</sidelink>
             <div>
-                <button type="button" class="btn-primary btn-small m-1" @click="showModal=true"> <span class="mr-2"><i class="fal fa-plus"></i></span>role</button>
+                <button type="button" class="btn-primary btn-small m-1" @click="showModal=true"> <span class="mr-2"><i class="fal fa-plus"></i></span>New role</button>
             </div>
 
             <!--Role create modal-->
@@ -112,18 +110,18 @@
                 <div>
                     <form @submit.prevent="submit" id="role-form">
                         <div class="mt-3">
-                            <label for="role-name" class="creative-label">Role Name:</label>
-                            <input type="text" class="creative-input" id="role-name" placeholder="Enter role name"
+                            <label for="role-name" class="read-label">Role Name:</label>
+                            <input type="text" class="read-input" id="role-name" placeholder="Enter role name"
                                    required v-model="form.name"/>
-                            <div v-if="form.errors.name" class="creative-error">
+                            <div v-if="form.errors.name" class="read-error">
                                 <span>{{ form.errors.name }}</span>
                             </div>
                         </div>
                         <div class="mt-5">
-                            <label for="role-guard" class="creative-label">Role Guard:</label>
-                            <input type="text" class="creative-input" id="role-guard" placeholder="Enter role guard"
+                            <label for="role-guard" class="read-label">Role Guard:</label>
+                            <input type="text" class="read-input" id="role-guard" placeholder="Enter role guard (admin or web)"
                                    required v-model="form.guard_name"/>
-                            <div v-if="form.errors.guard_name" class="creative-error">
+                            <div v-if="form.errors.guard_name" class="read-error">
                                 <span>{{ form.errors.guard_name }}</span>
                             </div>
                         </div>
@@ -146,18 +144,18 @@
                 <div>
                     <form @submit.prevent="update" id="role-form-update">
                         <div class="mt-3">
-                            <label for="role-name" class="creative-label">Role Name:</label>
-                            <input type="text" class="creative-input" id="role-name" placeholder="Enter role name"
+                            <label for="role-name" class="read-label">Role Name:</label>
+                            <input type="text" class="read-input" id="role-name" placeholder="Enter role name"
                                    required v-model="updateForm.name"/>
-                            <div v-if="updateForm.errors.name" class="creative-error">
+                            <div v-if="updateForm.errors.name" class="read-error">
                                 <span>{{updateForm.errors.name }}</span>
                             </div>
                         </div>
                         <div class="mt-5">
-                            <label for="role-guard" class="creative-label">Role Guard:</label>
-                            <input type="text" class="creative-input" id="role-guard" placeholder="Enter role guard"
+                            <label for="role-guard" class="read-label">Role Guard:</label>
+                            <input type="text" class="read-input" id="role-guard" placeholder="Enter role guard"
                                    required v-model="updateForm.guard_name"/>
-                            <div v-if="updateForm.errors.guard_name" class="creative-error">
+                            <div v-if="updateForm.errors.guard_name" class="read-error">
                                 <span>{{updateForm.errors.guard_name }}</span>
                             </div>
                         </div>
@@ -179,7 +177,7 @@
 <script setup lang="ts">
 import { Dropdown} from 'flowbite-vue'
 import Admin from "@/views/layouts/admin.vue";
-import {Head} from "@inertiajs/inertia-vue3";
+import {Head, usePage} from "@inertiajs/inertia-vue3";
 import TitleBlock from "@/views/components/title-block.vue";
 import {Link} from "@inertiajs/inertia-vue3";
 import Sidelink from "@/views/components/sidelink.vue";
@@ -240,6 +238,9 @@ let update=()=>{
 
         }
     })}
+
+const page=usePage()
+const auth=page.props.value.auth
 </script>
 
 <style scoped>
