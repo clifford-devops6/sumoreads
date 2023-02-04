@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\AdminLangaugeController;
 use App\Http\Controllers\Admin\AdminMessageController;
 use App\Http\Controllers\Admin\AdminNewsController;
+use App\Http\Controllers\Admin\AdminPermissionController;
 use App\Http\Controllers\Admin\AdminRolesController;
 use App\Http\Controllers\Admin\AdminSourceController;
 use App\Http\Controllers\Admin\AdminUserController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::Group(['middleware'=>['auth:admin']],function (){
+    Route::resource('admin/permissions',AdminPermissionController::class);
     Route::resource('admin/roles',AdminRolesController::class);
     Route::resource('admin/users',AdminUserController::class);
     Route::resource('admin/subject',ContactSubjectController::class);

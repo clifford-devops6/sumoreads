@@ -5,16 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
-class AdminRolesController extends Controller
+class AdminPermissionController extends Controller
 {
 
     public function __construct()
     {
-       $this->middleware('role:super-admin');
+        $this->middleware('role:super-admin');
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +22,8 @@ class AdminRolesController extends Controller
     public function index()
     {
         //
-        $roles=Role::query()
+
+        $permissions=Permission::query()
             ->when(request('search'),function ($query,$search){
                 $query->where('name','like', '%'.$search.'%');
             })
@@ -37,7 +37,8 @@ class AdminRolesController extends Controller
             });
 
         $filters=request()->only(['search']);
-        return inertia::render('admin.roles.index', compact('roles','filters'));
+
+        return inertia::render('permissions.index', compact('filters','permissions'));
     }
 
     /**
@@ -59,19 +60,18 @@ class AdminRolesController extends Controller
     public function store(Request $request)
     {
         //
-
         $validated=$request->validate([
-            'name'=>'required|string|max:25|unique:roles',
+            'name'=>'required|string|max:25|unique:permissions',
             'guard_name'=>'required|string|max:25'
         ]);
 
-        $role=Role::create([
+        $permission=Permission::create([
             'name'=>$validated['name'],
             'guard_name'=>$validated['guard_name']
         ]);
 
         return redirect()->back()
-            ->with('status','Role created Successfully');
+            ->with('status','Permission created Successfully');
     }
 
     /**
@@ -110,15 +110,14 @@ class AdminRolesController extends Controller
             'name'=>'required|string|max:25',
             'guard_name'=>'required|string|max:25'
         ]);
-        $role=Role::findOrFail($id);
-        $role->update([
+        $permission=Permission::findOrFail($id);
+        $permission->update([
             'name'=>$validated['name'],
             'guard_name'=>$validated['guard_name']
         ]);
 
         return redirect()->back()
-            ->with('status','Role updated Successfully');
-
+            ->with('status','Permission updated Successfully');
     }
 
     /**

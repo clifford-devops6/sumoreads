@@ -187,6 +187,14 @@ const  auth=page.props.value.auth
                                     </Link>
                                 </li>
 
+                                <li v-show="auth.role==='super-admin'">
+                                    <Link :href="route('permissions.index')">
+                                        <div class="w-full rounded-md px-3 py-1">
+                                            <p class="font-semibold hover:text-primary-200 text-sm text-gray-800"><span class="mr-2 text-primary-200"><i class="far fa-angle-right"></i></span>Permissions</p>
+                                        </div>
+                                    </Link>
+                                </li>
+
                             </ul>
 
                         </div>
