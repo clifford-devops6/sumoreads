@@ -63,7 +63,7 @@ class GroupController extends Controller
             'ids'=>'required|array',
             'group'=>'required|integer'
         ]);
-        return $validate;
+
      $group=Group::findOrFail($validate['group']);
      $group->users()->detach($validate['ids']);
         return redirect()->back()

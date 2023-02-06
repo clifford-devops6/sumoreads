@@ -83,7 +83,7 @@
     </button>
 
     <aside id="default-sidebar" class="fixed top-0 left-0 z-20 w-64 bg-primary-100 h-full" aria-label="Sidebar">
-        <div class="h-full py-5 overflow-y-auto pt-16">
+        <div class="h-full py-4 overflow-y-auto pt-[65px]">
            <slot name="sidebar"/>
         </div>
     </aside>

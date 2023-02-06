@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('url');
             $table->mediumText('description');
-            $table->integer('status')->default(1);
+            $table->integer('status')->default(0);
         });
     }
 

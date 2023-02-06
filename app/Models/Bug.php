@@ -10,5 +10,5 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 class Bug extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
-    protected $fillable=['url','description'];
+    protected $fillable=['url','description','status'];
 }

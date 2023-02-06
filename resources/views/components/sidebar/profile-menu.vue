@@ -1,6 +1,6 @@
 <template>
 <div class="text-white">
-    <div class="py-3 border-b border-b-white px-2">
+    <div class="py-4 border-b border-b-white px-2">
         <h6 class="font-bold text-xl">Profile Settings</h6>
     </div>
     <ul class="divide-y font-semibold">

@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advertisement;
+use App\Models\Article;
+use App\Models\Bug;
+use App\Models\Contact;
+use App\Models\Source;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -15,7 +20,16 @@ class AdminController extends Controller
     public function index()
     {
         //
-        return inertia::render('admin.index');
+        $articles=Article::count();
+        $active_advert=Advertisement::where('status',1)->count();
+        $inactive_advert=Advertisement::where('status',0)->count();
+        $scheduled_advert=Advertisement::where('status',2)->count();
+        $bugs=Bug::where('status',0)->count();
+        $messages=Contact::where('status',0)->count();
+        $sources=Source::count();
+        return inertia::render('admin.index',
+            compact('articles','active_advert','inactive_advert',
+                'scheduled_advert','bugs','messages', 'sources'));
     }
 
     /**

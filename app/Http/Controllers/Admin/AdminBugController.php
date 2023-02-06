@@ -51,7 +51,9 @@ class AdminBugController extends Controller
     public function show($id)
     {
         //
+
         $bug=Bug::select('id','created_at','url','description','status')->with('media')->findOrFail($id);
+        $bug->update(['status'=>1]);
         return inertia::render('admin.bugs.show', compact('bug'));
     }
 

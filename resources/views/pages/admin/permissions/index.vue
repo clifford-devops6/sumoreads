@@ -36,7 +36,7 @@
                     <th class="text-start py-3 px-4">Id</th>
                     <th class="text-start py-3 px-4">Name</th>
                     <th class="text-start py-3 px-4">Guard</th>
-                    <th v-show="auth.permission==='super-admin'" class="py-3 px-4 text-start">Action</th>
+                    <th v-show="auth.role==='super-admin'" class="py-3 px-4 text-start">Action</th>
 
 
                 </tr>

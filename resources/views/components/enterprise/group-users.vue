@@ -59,9 +59,9 @@
                                <div class="p-1">
                                    <div class="my-3 space-y-3 h-[180px] overflow-y-auto custom-scrolling">
                                        <div v-for="user in filteredPeople" :key="user.id" class="">
-                                           <label class="read-label flex gap-3 justify-between">
-                                               <input name="selectedUser" type="checkbox" :value="user.id" class="peer hidden" v-model="selectedUser">
-                                               <span class="capitalize peer-checked:bg-primary-100 p-1 rounded peer-checked:text-white">{{user.name}} {{user.last_name}}</span>
+                                           <label class="read-label flex gap-3 justify-between" >
+                                               <input :disabled="ids.includes(user.id)" name="selectedUser" type="checkbox" :value="user.id" class="peer hidden" v-model="selectedUser">
+                                               <span class="capitalize peer-checked:bg-primary-100 p-1 rounded peer-checked:text-white" :class="{'text-gray-400 cursor-not-allowed':ids.includes(user.id)}">{{user.name}} {{user.last_name}}</span>
                                                <span v-if="user.id===admin" class="p-1 text-primary-100">Primary User</span>
 
                                            </label>
@@ -202,6 +202,15 @@ const removeFromGroup=()=>{
         }
     })
 }
+
+const ids= computed(() =>{
+    let items = []
+    props.group.users.forEach((element) =>{
+        items.push(element.id)
+    })
+
+    return items
+})
 </script>
 
 <style scoped>

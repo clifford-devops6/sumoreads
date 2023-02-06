@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('retrieve:articles')->hourly();
         $schedule->command('deactivate:advert')->daily();
+        $schedule->command('toggle:advert')->daily();
     }
 
     /**

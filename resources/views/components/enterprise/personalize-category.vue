@@ -65,7 +65,7 @@
                                             <label class="read-label flex gap-3 justify-between cursor-pointer">
                                                 <input :disabled="ids.includes(category.id)" name="selectedUser" type="checkbox" :value="category.id" class="peer hidden" v-model="selectedCategory">
                                                 <span class="capitalize peer-checked:bg-primary-100 p-1 rounded peer-checked:text-white"
-                                                :class="{'text-gray-500':ids.includes(category.id)}">
+                                                :class="{'text-gray-400 cursor-not-allowed':ids.includes(category.id)}">
                                                    <span class="mr-2" v-html="category.icon"></span>
                                                     {{category.name}}
 
