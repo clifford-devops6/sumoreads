@@ -19,7 +19,7 @@
                 </div>
 
                 <div v-show="accountType==='Free'">
-                    <a target="_blank" :href="advert.url" :title="advert.title" v-show="advertActive===index"  v-for="(advert, index) in adverts" :key="advert.id">
+                    <a target="_blank" :href="advert.url" :title="advert.title" v-show="advertActive===count"  v-for="(advert, count) in arrayShuffle(adverts)" :key="advert.id">
                         <div
                              class="grid grid-cols-6 gap-1 rounded-lg overflow-hidden h-[150px] border shadow cursor-pointer">
                             <div class="col-span-2 grid bg-cover bg-center bg-black" :style="{ 'background-image': 'url(' + advert.image + ')' }">
@@ -64,6 +64,7 @@ import {useTruncate} from "@/scripts/use/useTruncate";
 import {Link, usePage} from "@inertiajs/inertia-vue3";
 import {Inertia} from "@inertiajs/inertia";
 import axios from "axios";
+import arrayShuffle from 'array-shuffle';
 let props=defineProps({
     articles:Object,
     link:String

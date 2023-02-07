@@ -1,6 +1,6 @@
 <template layout="main">
 <Head><title>Contact Us</title></Head>
-    <div class="my-10">
+    <div class="my-10 min-h-screen">
         <div class="flex justify-center w-full">
             <div class="py-3 w-1/2">
                 <div class="w-full ">
@@ -25,7 +25,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="grid mt-5">
+                            <div class="grid mt-5" v-if="!auth">
                                 <div>
                                     <label for="contact-email" class="read-label">Email:</label>
                                     <input type="email" class="read-input" id="contact-email" placeholder="Enter your email" required v-model="form.email"/>

@@ -9,6 +9,26 @@
         </template>
     </title-block>
     <div class="my-10">
+        <div class="flex justify-end my-5 px-3">
+
+            <div class="flex gap-1">
+                <div>
+                    <input v-model="search" type="search" placeholder="Search by title" class="rounded-lg h-10 focus:border-primary-100 focus:ring-primary-100 w-56">
+                </div>
+                <div>
+                    <select  v-model="category" class="rounded-lg h-10 focus:border-primary-100 focus:ring-primary-100 w-56">
+                        <option value="" selected>All categories</option>
+                        <option v-for="category in categories" :value="category.id" :key="category.id">{{category.name}}</option>
+                    </select>
+                </div>
+                <div>
+                    <select v-model="source" class="rounded-lg h-10 focus:border-primary-100 focus:ring-primary-100 w-56">
+                        <option value=""  :selected="true">All Streams</option>
+                        <option v-for="source in sources" :value="source.id" :key="source.id">{{source.name}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
         <table class="table-auto w-full mt-3 border-t">
             <thead>
             <tr class="bg-gray-50 h-10 text-teal-900 font-bold text-sm">
@@ -66,8 +86,24 @@ import Admin from "@/views/layouts/admin.vue";
 import TitleBlock from "@/views/components/title-block.vue"
 import { Dropdown} from 'flowbite-vue'
 import Pagination from "@/views/components/pagination.vue";
-defineProps({
-    articles:Object
+import {ref, watch} from "vue";
+import {Inertia} from "@inertiajs/inertia";
+let props=defineProps({
+    articles:Object,
+    filters:Object,
+    sources:Object,
+    categories:Object
+})
+
+const category=ref(props.filters.category?props.filters.category:'')
+const source=ref(props.filters.source?props.filters.source:'')
+const search=ref(props.filters.search)
+watch([category,source,search],()=>{
+    Inertia.get(route('articles.index'),{
+        category:category.value,
+        source:source.value,
+        search:search.value
+    }, {preserveState:true, replace:true,preserveScroll:true})
 })
 </script>
 

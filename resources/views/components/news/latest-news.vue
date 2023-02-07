@@ -16,7 +16,7 @@
 
                 <div @click="submitPost(article[1].id)" class="grid cursor-pointer">
                     <div class="rounded-lg overflow-hidden h-[220px] grid">
-                        <img :src="article[1].image" :alt="article[1].title" class="object-cover w-full h-full" >
+                        <img :src="article[1].image?article[1].image:'no-image.jpg'" :alt="article[1].title" class="object-cover w-full h-full" >
                     </div>
                     <div class="my-2">
                         <h2 class="font-libre font-bold text-lg">{{useTruncate(article[1].title,60)}}</h2>
@@ -25,7 +25,7 @@
                 </div>
                 <div v-if="article[2] && accountType==='Corporate'" @click="submitPost(article[2].id)" class="grid cursor-pointer">
                     <div class="rounded-lg overflow-hidden h-[220px] grid">
-                        <img :src="article[2].image" :alt="article[2].title" class="object-cover w-full h-full" >
+                        <img :src="article[2].image?article[2].image:'no-image.jpg'" :alt="article[2].title" class="object-cover w-full h-full" >
                     </div>
                     <div class="my-2">
                         <h2 class="font-libre font-bold text-lg">{{useTruncate(article[2].title,60)}}</h2>
@@ -50,7 +50,7 @@
             <div v-else class="grid grid-cols-3 gap-2">
                 <div @click="submitPost(article[0].id)" class="grid cursor-pointer">
                     <div class="rounded-lg overflow-hidden h-[220px] grid">
-                        <img :src="article[0].image" :alt="article[0].title" class="object-cover w-full h-full">
+                        <img :src="article[0].image?article[0].image:'no-image.jpg'" :alt="article[0].title" class="object-cover w-full h-full">
                     </div>
                     <div class="my-2">
                         <h2 class="font-libre font-bold text-lg">{{useTruncate(article[0].title,60)}}</h2>
@@ -60,7 +60,7 @@
 
                 <div @click="submitPost(article[1].id)" class="grid cursor-pointer">
                     <div class="rounded-lg overflow-hidden h-[220px] grid">
-                        <img :src="article[1].image" :alt="article[1].title" class="object-cover w-full h-full" >
+                        <img :src="article[1].image?article[1].image:'no-image.jpg'" :alt="article[1].title" class="object-cover w-full h-full" >
                     </div>
                     <div class="my-2">
                         <h2 class="font-libre font-bold text-lg">{{useTruncate(article[1].title,60)}}</h2>
@@ -69,7 +69,7 @@
                 </div>
                 <div  @click="submitPost(article[2].id)" class="grid cursor-pointer">
                     <div class="rounded-lg overflow-hidden h-[220px] grid">
-                        <img :src="article[2].image" :alt="article[2].title" class="object-cover w-full h-full" >
+                        <img :src="article[2].image?article[2].image:'no-image.jpg'" :alt="article[2].title" class="object-cover w-full h-full" >
                     </div>
                     <div class="my-2">
                         <h2 class="font-libre font-bold text-lg">{{useTruncate(article[2].title,60)}}</h2>

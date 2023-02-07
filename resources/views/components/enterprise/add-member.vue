@@ -32,9 +32,6 @@
                          <p class="font-bold my-3">
                              {{account.administrator.slot-account.users.length}} of {{account.administrator.slot}}
                              slots available from your current plan
-                         <Link :href="route('subscription.index')" class="text-primary-100 underline">
-                             Add slots here
-                         </Link>
                          </p>
                      </div>
                         <div>

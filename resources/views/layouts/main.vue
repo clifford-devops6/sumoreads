@@ -15,10 +15,10 @@
                     <Link :href="route('news.index')" title="News">News</Link>
                 </li>
 
-                <li class="text-gray-800 hover:text-primary-100 font-bold py-5" :class="{ 'border-b border-b-2 border-b-primary-100': $page.url === '/readlist' }">
+                <li class="text-gray-800 hover:text-primary-100 font-bold py-5">
                     <Link class="flex" href="#" title="My Read list">FAQs</Link>
                 </li>
-                <li class="text-gray-800 hover:text-primary-100 font-bold py-5" :class="{ 'border-b border-b-2 border-b-primary-100': $page.url === '/share' }">
+                <li class="text-gray-800 hover:text-primary-100 font-bold py-5" :class="{ 'border-b border-b-2 border-b-primary-100': $page.url === '/contact-us' }">
                     <Link class="flex" :href="route('contact-us.index')" title="Sharing">Contact us
                         <span v-if="shares" class="self-center bg-primary-100 text-white p-1
                         rounded-full ml-2 h-6 w-6 text-xs flex place-content-center"><span>{{ shares }}</span></span>

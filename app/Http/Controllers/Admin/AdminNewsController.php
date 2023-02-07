@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ArticleResource;
 use App\Models\Article;
+use App\Models\Category;
+use App\Models\Source;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -18,8 +20,21 @@ class AdminNewsController extends Controller
     public function index()
     {
         //
-        $articles=ArticleResource::collection(Article::paginate(15));
-        return inertia::render('admin.articles.index', compact('articles'));
+        $categories=Category::select('id','name')->get();
+        $sources=Source::select('id','name')->get();
+        $articles=ArticleResource::collection(Article::query()
+            ->when(request('category'), function ($query, $category){
+                $query->where('category_id', "=", $category);
+            })
+            ->when(request('source'), function ($query, $source){
+                $query->where('source_id', "=", $source);
+            })
+            ->when(request('search'), function ($query, $search){
+                $query->where('title', 'LIKE', '%' . $search . '%');
+            })
+        ->paginate(15));
+        $filters=request()->only(['category','source','search']);
+        return inertia::render('admin.articles.index', compact('articles','categories','sources','filters'));
     }
 
     /**

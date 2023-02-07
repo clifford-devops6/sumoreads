@@ -56,8 +56,9 @@
                     <div v-for="category in account.data.categories"
                          class="p-2 m-1 inline-block border rounded-lg text-center bg-white">
                         <div class="grid justify-center">
+                            <h5 class="font-bold text-lg"><span class="mr-2" v-html="category.icon"></span></h5>
 
-                            <h6><span class="mr-2" v-html="category.icon"></span>{{ category.name }}</h6>
+                            <h6>{{ category.name }}</h6>
                             <div>
                                 <span class="text-[9px] bg-primary-300 text-white p-1 rounded">Enterprise</span>
                             </div>
@@ -69,7 +70,8 @@
                     <div v-for="category in user.data.categories"
                          class="p-2 m-1 inline-block border rounded-lg text-center bg-white">
                         <div class="grid justify-center">
-                            <h6><span class="mr-2" v-html="category.icon"></span>{{ category.name }}</h6>
+                            <h5 class="font-bold text-lg"><span class="mr-2" v-html="category.icon"></span></h5>
+                            <h6>{{ category.name }}</h6>
                         </div>
                     </div>
                 </div>

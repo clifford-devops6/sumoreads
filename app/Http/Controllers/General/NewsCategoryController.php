@@ -43,7 +43,7 @@ class NewsCategoryController extends Controller
 
             ->orderBy('published')->with('source','source.category')->limit(20+request('limit'))->get());
 
-
+//dd($latest);
         $filters=request()->only(['trending_category','trending_source','category','source','latest_category','latest_source']);
         return inertia::render('news.categories', compact('trending','sources','category','latest','filters','posts'));
     }
